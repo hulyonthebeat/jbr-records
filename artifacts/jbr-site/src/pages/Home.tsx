@@ -331,8 +331,8 @@ function FeatureStack() {
         artist="JOE LEONE"
         title={<>OVER UNDER<br />/ SAVE FACE</>}
         blurb={'Two songs, one 7\u2033. Joe\u2019s first release of 2026 pairs a slow-burn ballad with a wide-eyed pop song \u2014 both cut at Sunset Sound and mixed to tape.'}
-        primaryCta={{ label: 'PRE-ORDER 7"', href: "#" }}
-        secondaryCta={{ label: 'WATCH "OVER UNDER"', href: "#" }}
+        primaryCta={{ label: 'LISTEN NOW', href: "https://joeleone.lnk.to/overunder-saveface" }}
+        secondaryCta={{ label: 'WATCH "OVER UNDER"', href: "https://youtu.be/pcS4FCyoD20" }}
         cover={<img src="/covers/joe-leone-over-under.png" alt="Joe Leone — Over Under / Save Face cover" />}
       />
       <ReleasePoster
@@ -343,8 +343,8 @@ function FeatureStack() {
         artist="ERIC BENÉT"
         title="DUETS"
         blurb="A grown record. Eric Benét's long-awaited duets album — ten songs cut with the voices he's wanted to sing with for years, recorded in Burbank in the spring of 2024 and pressed to vinyl this spring."
-        primaryCta={{ label: "BUY VINYL", href: "#" }}
-        secondaryCta={{ label: "LISTEN ON DSP", href: "#" }}
+        primaryCta={{ label: "LISTEN NOW", href: "https://ericbenet.lnk.to/duets" }}
+        secondaryCta={{ label: "SPOTIFY", href: "https://open.spotify.com/album/34lwRHpFW4m8x0bxfSoiBO" }}
         cover={<img src="/covers/eric-benet-duets.png" alt="Eric Benét — Duets cover" />}
       />
       <ReleasePoster
@@ -402,6 +402,7 @@ function NewReleasesSection() {
         </div>
         <div className="grid-5">
           <Tile
+            href="https://joeleone.lnk.to/overunder-saveface"
             tag={{ kind: "new", label: "NEW" }}
             cover={<img src="/covers/joe-leone-over-under.png" alt="Joe Leone — Over Under / Save Face" />}
             title="OVER UNDER / SAVE FACE"
@@ -418,41 +419,46 @@ function NewReleasesSection() {
             price="$26"
           />
           <Tile
+            href="https://ericbenet.lnk.to/duets"
             tag={{ kind: "new", label: "NEW" }}
             cover={<img src="/covers/eric-benet-duets.png" alt="Eric Benét — Duets" />}
-            title="DUETS"
+            title="DUETS EP"
             artist="Eric Benét"
-            format="LP"
+            format="DSP · August 23"
             price="$28"
           />
           <Tile
-            cover={<CoverSunsetSessions />}
-            title="SUNSET SESSIONS VOL. II"
-            artist="Various Artists"
-            format="Vinyl"
-            price="$32"
-          />
-          <Tile
-            tag={{ kind: "sold", label: "SOLD OUT" }}
-            cover={<img className="is-sold" src="/covers/joe-leone-over-under.png" alt="Joe Leone — Over Under (Test Pressing)" />}
-            title="OVER UNDER (TEST PRESSING)"
+            href="https://joeleone.lnk.to/thegift"
+            tag={{ kind: "new", label: "NEW" }}
+            cover={<img src="/covers/joe-leone-the-gift.jpg" alt="Joe Leone — The Gift" />}
+            title="THE GIFT (w/ ASTYN TURR)"
             artist="Joe Leone"
-            format="Numbered /50"
-            price="$48"
+            format="Single"
+            price="$12"
           />
           <Tile
-            cover={<CoverBsides />}
-            title="B-SIDES & RARITIES"
-            artist="Eric Benét"
-            format="2xLP"
-            price="$36"
+            href="https://joeleone.lnk.to/invited"
+            cover={<img src="/covers/joe-leone-invited.jpg" alt="Joe Leone — Invited" />}
+            title="INVITED"
+            artist="Joe Leone"
+            format="Single"
+            price="$12"
           />
           <Tile
-            cover={<CoverWindows />}
-            title='WINDOWS — 7"'
-            artist="Autumn Paige"
-            format='7" Single'
-            price="$14"
+            href="https://joeleone.lnk.to/gods-favorite"
+            cover={<img src="/covers/joe-leone-gods-favorite.jpg" alt="Joe Leone — God's Favorite" />}
+            title="GOD'S FAVORITE"
+            artist="Joe Leone"
+            format="Single"
+            price="$12"
+          />
+          <Tile
+            href="https://joeleone.lnk.to/wherehaveyoubeen"
+            cover={<img src="/covers/joe-leone-where-have-you-been.jpg" alt="Joe Leone — Where Have You Been" />}
+            title="WHERE HAVE YOU BEEN"
+            artist="Joe Leone"
+            format="Single"
+            price="$12"
           />
           <Tile
             cover={<CoverLiveTroubadour />}
@@ -462,11 +468,12 @@ function NewReleasesSection() {
             price="$34"
           />
           <Tile
-            cover={<CoverDubSeries />}
-            title="DUB SERIES 04"
-            artist="Various Artists"
-            format='12" Single'
-            price="$18"
+            href="https://joeleone.lnk.to/discipline"
+            cover={<img src="/covers/joe-leone-discipline.jpg" alt="Joe Leone — Discipline" />}
+            title="DISCIPLINE"
+            artist="Joe Leone"
+            format="Single"
+            price="$12"
           />
           <Tile
             cover={<CoverALittleLonger />}
@@ -503,8 +510,8 @@ function FeaturedRelease() {
             </p>
           </div>
           <div className="featured-ctas">
-            <a className="btn-light btn-light-primary" href="#">PRE-ORDER VINYL</a>
-            <a className="btn-light" href="#">READ THE STORY</a>
+            <a className="btn-light btn-light-primary" href="https://ericbenet.lnk.to/duets">LISTEN NOW</a>
+            <a className="btn-light" href="https://open.spotify.com/album/34lwRHpFW4m8x0bxfSoiBO">SPOTIFY</a>
           </div>
         </div>
       </div>
@@ -558,10 +565,10 @@ function MerchSection() {
 /* ─── Artists Section ───────────────────────────────────────────── */
 
 const ARTISTS = [
-  { name: "JOE LEONE", genre: "R&B · SOUL", photo: "/photos/joe-leone.jpg" },
-  { name: "ERIC BENÉT", genre: "R&B · CLASSIC", photo: "/photos/eric-benet.jpg" },
-  { name: "CHANTÉ MOORE", genre: "R&B · NEO SOUL", photo: "/photos/chante-moore.jpg" },
-  { name: "AUTUMN PAIGE", genre: "INDIE FOLK · R&B", photo: "/photos/autumn-paige.jpg" },
+  { name: "JOE LEONE", genre: "R&B · SOUL", photo: "/photos/joe-leone.jpg", href: "https://joeleone.lnk.to/music" },
+  { name: "ERIC BENÉT", genre: "R&B · CLASSIC", photo: "/photos/eric-benet.jpg", href: "https://ericbenet.lnk.to/music" },
+  { name: "CHANTÉ MOORE", genre: "R&B · NEO SOUL", photo: "/photos/chante-moore.jpg", href: "#" },
+  { name: "AUTUMN PAIGE", genre: "INDIE FOLK · R&B", photo: "/photos/autumn-paige.jpg", href: "#" },
 ];
 
 function ArtistsSection() {
@@ -574,7 +581,7 @@ function ArtistsSection() {
         </div>
         <div className="grid-4">
           {ARTISTS.map((a) => (
-            <a key={a.name} className="tile" href="#">
+            <a key={a.name} className="tile" href={a.href} target={a.href !== "#" ? "_blank" : undefined} rel="noopener noreferrer">
               <div className="tile-cover" style={{ aspectRatio: "3/4", overflow: "hidden" }}>
                 <img src={a.photo} alt={a.name} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
               </div>
