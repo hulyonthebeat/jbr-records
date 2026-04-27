@@ -1,4 +1,95 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
+
+/* ─── Carousel ──────────────────────────────────────────────────── */
+
+interface CarouselSlide {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+const HERO_SLIDES: CarouselSlide[] = [
+  { src: "/carousel/01-eric-benet.jpg", alt: "Eric Benét", caption: "ERIC BENÉT" },
+  { src: "/carousel/02-chante-moore.jpg", alt: "Chanté Moore", caption: "CHANTÉ MOORE" },
+  { src: "/carousel/03-autumn-paige.jpg", alt: "Autumn Paige", caption: "AUTUMN PAIGE" },
+  { src: "/carousel/04-joe-leone.jpg", alt: "Joe Leone on stage with guitar", caption: "JOE LEONE" },
+  { src: "/carousel/05-jbr-team.png", alt: "JBR team", caption: "JBR CREATIVE GROUP" },
+  { src: "/carousel/06-portrait.jpg", alt: "Studio session", caption: "IN THE STUDIO" },
+];
+
+function Carousel({ slides, interval = 5000 }: { slides: CarouselSlide[]; interval?: number }) {
+  const [idx, setIdx] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused || slides.length <= 1) return;
+    const id = window.setInterval(() => {
+      setIdx((i) => (i + 1) % slides.length);
+    }, interval);
+    return () => window.clearInterval(id);
+  }, [paused, interval, slides.length]);
+
+  const go = (next: number) => setIdx((next + slides.length) % slides.length);
+
+  return (
+    <div
+      className="carousel"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      aria-roledescription="carousel"
+      aria-label="JBR Creative Group artists"
+    >
+      <div className="carousel-stage">
+        {slides.map((s, i) => (
+          <div
+            key={s.src}
+            className={`carousel-slide${i === idx ? " is-active" : ""}`}
+            aria-hidden={i !== idx}
+          >
+            <img src={s.src} alt={s.alt} loading={i === 0 ? "eager" : "lazy"} />
+            {s.caption && <div className="carousel-caption">{s.caption}</div>}
+          </div>
+        ))}
+        <button
+          type="button"
+          className="carousel-arrow prev"
+          aria-label="Previous slide"
+          onClick={() => go(idx - 1)}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          className="carousel-arrow next"
+          aria-label="Next slide"
+          onClick={() => go(idx + 1)}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
+      <div className="carousel-dots" role="tablist" aria-label="Carousel pagination">
+        {slides.map((s, i) => (
+          <button
+            key={s.src}
+            type="button"
+            role="tab"
+            aria-selected={i === idx}
+            aria-label={`Show slide ${i + 1}: ${s.alt}`}
+            className={`carousel-dot${i === idx ? " is-active" : ""}`}
+            onClick={() => go(i)}
+          />
+        ))}
+        <span className="carousel-counter">
+          {String(idx + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
+        </span>
+      </div>
+    </div>
+  );
+}
 
 /* ─── Header ────────────────────────────────────────────────────── */
 
@@ -76,12 +167,7 @@ function Hero() {
             <a className="btn" href="#roster">MEET THE ROSTER</a>
           </div>
         </div>
-        <div className="hero-collage">
-          <div className="collage-cell tall"><img src="/photos/eric-benet-hero.jpg" alt="Eric Benét" /></div>
-          <div className="collage-cell"><img src="/photos/joe-leone-jbr.jpg" alt="Joe Leone" /></div>
-          <div className="collage-cell"><img src="/photos/autumn-paige-jbr.jpg" alt="Autumn Paige" /></div>
-          <div className="collage-cell wide"><img src="/photos/jbr-team.jpg" alt="JBR Creative Group team" /></div>
-        </div>
+        <Carousel slides={HERO_SLIDES} />
       </div>
     </section>
   );
