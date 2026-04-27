@@ -99,13 +99,8 @@ function Header() {
   return (
     <header className="topbar">
       <div className="topbar-inner">
-        <a href="#top" className="brand" onClick={closeMobile}>
-          <div className="mark">
-            <span className="j">J</span>
-            <span className="b">B</span>
-            <span className="r">R</span>
-          </div>
-          <div className="word">Creative Group</div>
+        <a href="#top" className="brand" onClick={closeMobile} aria-label="JBR Creative Group home">
+          <img className="brand-logo" src="/brand/jbr-logo.png" alt="JBR Creative Group" />
         </a>
         <nav className="topnav">
           <a href="#about">About</a>
@@ -303,7 +298,7 @@ const ARTISTS = [
     name: "AUTUMN PAIGE",
     role: "Recording Artist",
     photo: "/photos/autumn-paige-jbr.jpg",
-    href: "#roster",
+    href: "https://www.aspiremusicgroup.com/autumnpaige",
   },
   {
     name: "JOE LEONE",
@@ -478,12 +473,7 @@ function Footer() {
     <footer className="footer">
       <div className="footer-inner footer-inner--simple">
         <div className="footer-mark">
-          <div className="mark">
-            <span className="j">J</span>
-            <span className="b">B</span>
-            <span className="r">R</span>
-          </div>
-          <div className="word">Creative Group</div>
+          <img className="footer-logo" src="/brand/jbr-logo.png" alt="JBR Creative Group" />
           <div className="footer-addr">
             Los Angeles, CA<br />
             <a href="mailto:info@jbrcreativegroup.com">

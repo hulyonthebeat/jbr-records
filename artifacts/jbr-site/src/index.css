@@ -30,12 +30,11 @@ img, svg { max-width: 100%; display: block; }
 /* TOPBAR */
 .topbar { z-index: 80; background: var(--bg); border-bottom: 1px solid var(--ink); position: sticky; top: 0; }
 .topbar-inner { grid-template-columns: auto 1fr auto; align-items: center; gap: 32px; max-width: 1400px; margin: 0 auto; padding: 14px 28px; display: grid; }
-.brand { align-items: baseline; gap: 10px; font-family: 'Bebas Neue', sans-serif; line-height: 1; display: flex; cursor: pointer; }
-.brand .mark { letter-spacing: .04em; font-size: 28px; }
-.brand .mark .j { color: var(--jbr-red); }
-.brand .mark .b { color: var(--ink); }
-.brand .mark .r { color: var(--jbr-blue); }
-.brand .word { letter-spacing: .22em; color: var(--muted); text-transform: uppercase; font-family: 'DM Mono', monospace; font-size: 10px; }
+.brand { display: inline-flex; align-items: center; cursor: pointer; }
+.brand-logo { height: 56px; width: auto; display: block; }
+@media (max-width: 880px) {
+  .brand-logo { height: 44px; }
+}
 .topnav { letter-spacing: .18em; justify-self: center; gap: 28px; font-family: 'Bebas Neue', sans-serif; font-size: 16px; display: flex; }
 .topnav a { transition: color var(--t); position: relative; cursor: pointer; }
 .topnav a:hover { color: var(--jbr-red); }
@@ -154,11 +153,7 @@ img, svg { max-width: 100%; display: block; }
 .footer ul { list-style: none; }
 .footer ul li { margin-bottom: 6px; }
 .footer a:hover { color: var(--jbr-blue); cursor: pointer; }
-.footer-mark .mark { letter-spacing: .04em; font-family: 'Bebas Neue', sans-serif; font-size: 38px; line-height: 1; }
-.footer-mark .mark .j { color: var(--jbr-red); }
-.footer-mark .mark .b { color: #fff; }
-.footer-mark .mark .r { color: var(--jbr-blue); }
-.footer-mark .word { letter-spacing: .22em; color: #888; text-transform: uppercase; margin-top: 4px; font-family: 'DM Mono', monospace; font-size: 10px; }
+.footer-logo { height: 96px; width: auto; display: block; }
 .footer-addr { letter-spacing: .06em; color: #888; margin-top: 18px; font-family: 'DM Mono', monospace; font-size: 11px; line-height: 1.6; }
 .footer-bottom { letter-spacing: .18em; text-transform: uppercase; color: #666; border-top: 1px solid #222; flex-wrap: wrap; justify-content: space-between; gap: 8px; max-width: 1400px; margin: 0 auto; padding: 18px 28px; font-family: 'DM Mono', monospace; font-size: 10px; display: flex; }
 
