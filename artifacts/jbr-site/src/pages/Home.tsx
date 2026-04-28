@@ -112,6 +112,7 @@ export function Header() {
           <img className="brand-logo" src="/brand/jbr-logo.png" alt="JBR Creative Group" />
         </Link>
         <nav className="topnav">
+          <Link href="/">Home</Link>
           <Link href="/about">About</Link>
           <a href={h("roster")}>Roster</a>
           <a href={h("releases")}>Releases</a>
@@ -136,6 +137,7 @@ export function Header() {
       </div>
       {mobileOpen && (
         <div className="mobile-nav">
+          <Link href="/" onClick={closeMobile}>Home</Link>
           <Link href="/about" onClick={closeMobile}>About</Link>
           <a href={h("roster")} onClick={closeMobile}>Roster</a>
           <a href={h("releases")} onClick={closeMobile}>Releases</a>
