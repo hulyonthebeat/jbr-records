@@ -383,14 +383,14 @@ img, svg { max-width: 100%; display: block; }
 /* ─── About page ───────────────────────────────────────────────── */
 .about-page { background: var(--paper); }
 .about-hero {
-  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
   gap: 0; align-items: stretch;
   min-height: calc(100vh - 88px);
 }
 .about-hero-text {
   padding: 40px clamp(24px, 3.5vw, 56px) 40px clamp(28px, 5vw, 80px);
   display: flex; flex-direction: column; justify-content: flex-start;
-  max-width: 760px;
+  max-width: none;
 }
 .about-eyebrow {
   letter-spacing: .25em; text-transform: uppercase; color: var(--jbr-red);
@@ -401,7 +401,7 @@ img, svg { max-width: 100%; display: block; }
   font-size: clamp(36px, 4.4vw, 64px);
   line-height: .95; letter-spacing: .02em; margin: 0 0 20px;
 }
-.about-copy { max-width: 62ch; }
+.about-copy { max-width: 78ch; }
 .about-copy p {
   color: #1f1f1f; font-size: 14px; line-height: 1.55;
   margin: 0 0 12px;
