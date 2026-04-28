@@ -55,7 +55,6 @@ img, svg { max-width: 100%; display: block; }
 .release-poster { border-bottom: 1px solid var(--rule); }
 .release-poster:last-child { border-bottom: none; }
 .release-poster-inner { grid-template-columns: 1fr 1fr; align-items: center; gap: 64px; max-width: 1400px; margin: 0 auto; padding: 56px 28px; display: grid; }
-.release-poster.flip .release-poster-inner { grid-template-columns: 1fr 1fr; }
 .release-poster.flip .cover-wrap { order: 2; }
 .cover-wrap { aspect-ratio: 1; width: 100%; max-width: 580px; margin: 0 auto; position: relative; box-shadow: 0 30px 60px -20px rgba(0,0,0,0.4); }
 .cover-wrap svg, .cover-wrap img { object-fit: cover; width: 100%; height: 100%; display: block; }
@@ -290,6 +289,25 @@ img, svg { max-width: 100%; display: block; }
   .section { padding: 40px 0 48px; }
   .section-inner { padding: 0 20px; }
   .section-title { font-size: 24px; }
+  .carousel-arrow { width: 34px; height: 34px; }
+  .carousel-arrow.prev { left: 8px; }
+  .carousel-arrow.next { right: 8px; }
+  .carousel-caption { padding: 10px 14px; font-size: 10px; letter-spacing: .22em; }
+}
+@media (max-width: 480px) {
+  .hero-inner { padding: 32px 18px 40px; }
+  .hero-title { font-size: 44px; }
+  .hero-cta { flex-wrap: wrap; gap: 10px; }
+  .hero-cta .btn { flex: 1 1 auto; text-align: center; justify-content: center; }
+  .release-poster-inner { padding: 32px 18px; gap: 24px; }
+  .release-title { font-size: clamp(36px, 9vw, 56px); }
+  .release-blurb { font-size: 15px; }
+  .release-ctas .btn { width: 100%; text-align: center; justify-content: center; }
+  .section-inner { padding: 0 18px; }
+  .section { padding: 32px 0 40px; }
+  .footer-inner { grid-template-columns: 1fr; gap: 18px; padding: 32px 18px; }
+  .news-item { grid-template-columns: 76px 1fr; gap: 12px; padding: 16px 0; }
+  .grid-5, .grid-4 { gap: 14px 12px; }
 }
 
 /* ─── Artist Page ─────────────────────────────────────────────── */
