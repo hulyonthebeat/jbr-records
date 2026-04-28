@@ -63,6 +63,7 @@ export default function About() {
                       <img
                         src={`${import.meta.env.BASE_URL}about/alison-ball.jpg`}
                         alt="Alison Ball"
+                        style={{ objectPosition: "center 8%" }}
                       />
                     </div>
                     <div className="leader-meta">
