@@ -477,15 +477,16 @@ img[data-fadein][data-loaded] {
 /* ─── About page ───────────────────────────────────────────────── */
 .about-page { background: var(--paper); }
 .about-hero {
-  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-  gap: 0; align-items: stretch;
+  display: block;
   min-height: calc(100vh - 88px);
 }
 .about-hero-text {
-  padding: 40px clamp(24px, 3.5vw, 56px) 40px clamp(28px, 5vw, 80px);
+  padding: 40px clamp(28px, 5vw, 80px);
   display: flex; flex-direction: column; justify-content: flex-start;
-  max-width: none;
+  max-width: 1200px;
 }
+/* Hide the hero photo on desktop — it only shows on mobile */
+.about-hero-image { display: none; }
 .about-eyebrow {
   letter-spacing: .25em; text-transform: uppercase; color: var(--jbr-red);
   margin-bottom: 10px; font-family: 'DM Mono', monospace; font-size: 11px;
@@ -546,13 +547,18 @@ img[data-fadein][data-loaded] {
 }
 
 @media (max-width: 960px) {
-  .about-hero {
-    grid-template-columns: 1fr; min-height: 0;
-  }
-  .about-hero-text { padding: 36px 20px 32px; max-width: 100%; }
+  .about-hero { min-height: 0; display: flex; flex-direction: column; }
+  .about-hero-text { padding: 36px 20px 32px; max-width: 100%; order: 2; }
+  /* On mobile, show the hero photo and place it at the top */
   .about-hero-image {
-    border-left: 0; border-top: 1px solid var(--ink);
+    display: block;
+    margin: 0; background: #000; overflow: hidden;
+    border-top: 0; border-bottom: 1px solid var(--ink);
     aspect-ratio: 4 / 3;
+    order: 1;
+  }
+  .about-hero-image img {
+    display: block; width: 100%; height: 100%; object-fit: cover;
   }
   .about-leadership { margin-top: 24px; }
   .leader-grid { grid-template-columns: 1fr; gap: 14px; }
