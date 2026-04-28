@@ -383,7 +383,7 @@ img, svg { max-width: 100%; display: block; }
 /* ─── About page ───────────────────────────────────────────────── */
 .about-page { background: var(--paper); }
 .about-hero {
-  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   gap: 0; align-items: stretch;
   min-height: calc(100vh - 88px);
 }
