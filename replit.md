@@ -34,7 +34,7 @@ See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and pa
 - **Preview path**: `/`
 - **Stack**: React, TypeScript, Vite, Google Fonts (Bebas Neue, Inter, DM Mono)
 - **Description**: JBR Creative Group music label website. Faithful rebuild of jbrcreativegroup.com — no merch/store/tours.
-- **Routes** (wouter): `/` (Home), `/artists/:slug` (Artist subpage), `*` (404).
+- **Routes** (wouter): `/` (Home), `/about` (About), `/artists/:slug` (Artist subpage), `/contact` (Contact), `*` (404).
 - **Home sections**: header (logo + nav), hero (headline + auto-advancing carousel), about, releases, roster (3 artist cards linking to subpages), news, contact (mailto only), newsletter, footer.
 - **Artist subpages** (`src/pages/Artist.tsx`, data in `src/data/artists.ts`): hero with photo + LISTEN NOW + back-to-roster, biography, discography grid (`disc-card`), press articles (omitted when empty), social chips, "Other Artists" cross-promo cards.
 - **Artists**: Eric Benét (`/artists/eric-benet`), Joe Leone (`/artists/joe-leone`), Autumn Paige (`/artists/autumn-paige`).

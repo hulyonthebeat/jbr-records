@@ -379,3 +379,63 @@ img, svg { max-width: 100%; display: block; }
   .contact-form { padding: 24px; box-shadow: 6px 6px 0 var(--ink); }
   .contact-row { grid-template-columns: 1fr; }
 }
+
+/* ─── About page ───────────────────────────────────────────────── */
+.about-page { background: var(--paper); padding: 80px 0 96px; }
+.about-page-inner { max-width: 980px; margin: 0 auto; padding: 0 32px; }
+.about-eyebrow {
+  letter-spacing: .25em; text-transform: uppercase; color: var(--jbr-red);
+  margin-bottom: 12px; font-family: 'DM Mono', monospace; font-size: 11px;
+}
+.about-page-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 6vw, 76px);
+  line-height: 1; letter-spacing: .02em; margin: 0 0 36px;
+}
+.about-banner {
+  margin: 0 0 48px; border: 1px solid var(--ink);
+  box-shadow: 10px 10px 0 var(--ink); background: #000;
+}
+.about-banner img { display: block; width: 100%; height: auto; }
+.about-copy { max-width: 70ch; }
+.about-copy p {
+  color: #1f1f1f; font-size: 17px; line-height: 1.7;
+  margin: 0 0 20px;
+}
+.about-copy .about-lede { font-size: 19px; }
+.about-copy strong { color: var(--ink); font-weight: 600; }
+
+.leadership-eyebrow {
+  margin: 64px 0 20px; letter-spacing: .25em; text-transform: uppercase;
+  color: var(--jbr-red); font-family: 'DM Mono', monospace; font-size: 11px;
+  border-top: 1px solid var(--ink); padding-top: 24px;
+}
+.leader-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+}
+.leader-card {
+  background: #fff; border: 1px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink); overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.leader-photo { aspect-ratio: 4 / 5; background: #000; overflow: hidden; }
+.leader-photo img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.leader-meta { padding: 20px 22px 24px; border-top: 1px solid var(--ink); }
+.leader-card-name {
+  font-family: 'Bebas Neue', sans-serif; font-size: 28px;
+  letter-spacing: .04em; margin: 0 0 6px; line-height: 1;
+}
+.leader-card-role {
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  letter-spacing: .15em; text-transform: uppercase; color: var(--jbr-red);
+}
+
+@media (max-width: 760px) {
+  .about-page { padding: 56px 0 72px; }
+  .about-page-inner { padding: 0 20px; }
+  .about-banner { box-shadow: 6px 6px 0 var(--ink); margin-bottom: 32px; }
+  .leader-grid { grid-template-columns: 1fr; gap: 24px; }
+  .leader-card { box-shadow: 6px 6px 0 var(--ink); }
+}

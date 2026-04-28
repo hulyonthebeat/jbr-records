@@ -112,7 +112,7 @@ export function Header() {
           <img className="brand-logo" src="/brand/jbr-logo.png" alt="JBR Creative Group" />
         </Link>
         <nav className="topnav">
-          <a href={h("about")}>About</a>
+          <Link href="/about">About</Link>
           <a href={h("roster")}>Roster</a>
           <a href={h("releases")}>Releases</a>
           <a href={h("news")}>News</a>
@@ -136,7 +136,7 @@ export function Header() {
       </div>
       {mobileOpen && (
         <div className="mobile-nav">
-          <a href={h("about")} onClick={closeMobile}>About</a>
+          <Link href="/about" onClick={closeMobile}>About</Link>
           <a href={h("roster")} onClick={closeMobile}>Roster</a>
           <a href={h("releases")} onClick={closeMobile}>Releases</a>
           <a href={h("news")} onClick={closeMobile}>News</a>
@@ -172,50 +172,6 @@ function Hero() {
           </div>
         </div>
         <Carousel slides={HERO_SLIDES} />
-      </div>
-    </section>
-  );
-}
-
-/* ─── About ─────────────────────────────────────────────────────── */
-
-function About() {
-  return (
-    <section className="section section--paper" id="about">
-      <div className="section-inner about-grid">
-        <div>
-          <div className="section-eyebrow">ABOUT</div>
-          <h2 className="about-headline">
-            Combining over three decades of industry experience to uplift
-            artists through innovative technology.
-          </h2>
-        </div>
-        <div className="about-body">
-          <p>
-            JBR Creative Group is the brainchild of Grammy-nominated neo-soul
-            act <strong>Eric Benét</strong> and veteran entertainment executive
-            {" "}<strong>Alison Ball</strong>. Together, they are pioneering
-            significant change across music, film/TV, and tech — with an
-            emphasis on empowering the creative community and championing an
-            equal playing field.
-          </p>
-          <p>
-            Since its inception, the agency has routinely shared knowledge and
-            resources with the online community, introducing state-of-the-art
-            solutions to the challenges that emerging artists and legacy acts
-            face in today's industry.
-          </p>
-          <div className="about-leaders">
-            <div className="leader">
-              <div className="leader-name">ERIC BENÉT</div>
-              <div className="leader-role">President</div>
-            </div>
-            <div className="leader">
-              <div className="leader-name">ALISON BALL</div>
-              <div className="leader-role">CEO</div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
@@ -593,7 +549,7 @@ export function Footer() {
         <div>
           <h4>EXPLORE</h4>
           <ul>
-            <li><a href={h("about")}>About</a></li>
+            <li><Link href="/about">About</Link></li>
             <li><a href={h("roster")}>Roster</a></li>
             <li><a href={h("releases")}>Releases</a></li>
             <li><a href={h("news")}>News</a></li>
@@ -637,7 +593,6 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <About />
         <Releases />
         <RosterSection />
         <NewsSection />
