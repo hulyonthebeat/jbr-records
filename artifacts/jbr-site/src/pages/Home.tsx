@@ -162,7 +162,7 @@ function Hero() {
           </h1>
           <p className="hero-blurb">
             A multidisciplinary powerhouse pioneering change in music, film/TV,
-            and tech — and championing an equal playing field for the artists
+            and tech, and championing an equal playing field for the artists
             who make the work.
           </p>
           <div className="hero-ctas">
