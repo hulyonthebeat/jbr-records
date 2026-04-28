@@ -78,10 +78,10 @@ img, svg { max-width: 100%; display: block; }
 .btn-light-primary:hover { background: var(--jbr-red); border-color: var(--jbr-red); color: #fff; }
 
 /* SECTION */
-.section { border-bottom: 1px solid var(--ink); padding: 56px 0 64px; }
+.section { padding: 56px 0 64px; }
 .section--paper { background: var(--paper); }
 .section-inner { max-width: 1400px; margin: 0 auto; padding: 0 28px; }
-.section-head { border-bottom: 1px solid var(--ink); justify-content: space-between; align-items: baseline; margin-bottom: 32px; padding-bottom: 14px; display: flex; }
+.section-head { justify-content: space-between; align-items: baseline; margin-bottom: 32px; padding-bottom: 14px; display: flex; }
 .section-title { letter-spacing: .04em; font-family: 'Bebas Neue', sans-serif; font-size: 32px; line-height: 1; }
 .section-title .accent { color: var(--jbr-red); }
 .section-link { letter-spacing: .18em; text-transform: uppercase; border-bottom: 1px solid var(--ink); transition: color var(--t), border-color var(--t); padding-bottom: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; }
