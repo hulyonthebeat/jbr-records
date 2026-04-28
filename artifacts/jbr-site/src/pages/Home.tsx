@@ -16,12 +16,25 @@ function useHashHref() {
  *   the Home component picks it up on mount and scrolls there.
  */
 const PENDING_SCROLL_KEY = "jbr-pending-scroll";
+/** On narrow screens, prefer scrolling to the inner cards so the heading
+ *  doesn't push the first card halfway off the screen. */
+function resolveScrollTarget(section: string): HTMLElement | null {
+  const root = document.getElementById(section);
+  if (!root) return null;
+  const isMobile = window.matchMedia("(max-width: 760px)").matches;
+  if (isMobile && section === "news") {
+    const grid = root.querySelector<HTMLElement>(".news-grid");
+    if (grid) return grid;
+  }
+  return root;
+}
+
 function useGoToSection() {
   const [location, setLocation] = useLocation();
   return (section: string) => {
     const onHome = location === "/" || location === "";
     if (onHome) {
-      const el = document.getElementById(section);
+      const el = resolveScrollTarget(section);
       if (el) {
         el.scrollIntoView({ behavior: "auto", block: "start" });
         if (window.location.hash !== `#${section}`) {
@@ -680,7 +693,7 @@ export default function Home() {
     if (!target) return;
 
     const jump = () => {
-      const el = document.getElementById(target);
+      const el = resolveScrollTarget(target);
       if (!el) return;
       el.scrollIntoView({ behavior: "auto", block: "start" });
     };

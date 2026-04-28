@@ -570,10 +570,12 @@ img[data-fadein][data-loaded] {
 [id="news"], [id="releases"], [id="roster"], [id="about"], [id="contact"] {
   scroll-margin-top: 105px;
 }
+.news-grid { scroll-margin-top: 105px; }
 @media (max-width: 760px) {
   [id="news"], [id="releases"], [id="roster"], [id="about"], [id="contact"] {
     scroll-margin-top: 88px;
   }
+  .news-grid { scroll-margin-top: 88px; }
 }
 
 /* ─── Nav social icons (replaces email button) ───────────────── */
