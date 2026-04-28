@@ -6,6 +6,7 @@ import Contact from "@/pages/Contact";
 import About from "@/pages/About";
 import Roster from "@/pages/Roster";
 import NotFound from "@/pages/not-found";
+import CookieBanner from "@/components/CookieBanner";
 
 function Router() {
   return (
@@ -98,6 +99,7 @@ function App() {
       <RouteFade>
         <Router />
       </RouteFade>
+      <CookieBanner />
     </WouterRouter>
   );
 }
