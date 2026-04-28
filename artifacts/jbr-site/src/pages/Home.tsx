@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent, type MouseEvent } from "react";
+import { useEffect, useLayoutEffect, useState, type FormEvent, type MouseEvent } from "react";
 import { Link, useLocation } from "wouter";
 
 /** Returns "#section" on the home route, or "/#section" elsewhere, so in-page nav works from any route. */
@@ -23,7 +23,7 @@ function useGoToSection() {
     if (onHome) {
       const el = document.getElementById(section);
       if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        el.scrollIntoView({ behavior: "auto", block: "start" });
         if (window.location.hash !== `#${section}`) {
           window.history.replaceState(null, "", `#${section}`);
         }
@@ -668,34 +668,44 @@ export function Footer() {
 /* ─── Home Page ─────────────────────────────────────────────────── */
 
 export default function Home() {
-  useEffect(() => {
-    // Either a stashed target from a cross-page nav (e.g. About → News),
-    // or the URL hash on a direct/refresh load.
+  // Either a stashed target from a cross-page nav (e.g. About → News),
+  // or the URL hash on a direct/refresh load.
+  // useLayoutEffect runs after DOM commit but BEFORE paint, so the user
+  // never sees the top of the page flash by — first paint is already at
+  // the target section.
+  useLayoutEffect(() => {
     const pending = sessionStorage.getItem(PENDING_SCROLL_KEY);
     sessionStorage.removeItem(PENDING_SCROLL_KEY);
     const target = pending || window.location.hash.replace(/^#/, "");
     if (!target) return;
 
-    let raf1 = 0, raf2 = 0, timer = 0;
-    const scroll = () => {
+    const jump = () => {
       const el = document.getElementById(target);
       if (!el) return;
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-      if (pending && window.location.hash !== `#${target}`) {
-        window.history.replaceState(null, "", `#${target}`);
-      }
+      el.scrollIntoView({ behavior: "auto", block: "start" });
     };
-    // Two frames + a small delay so the news/roster sections have actually
-    // rendered (and images have laid out) before we measure the scroll target.
-    raf1 = requestAnimationFrame(() => {
-      raf2 = requestAnimationFrame(() => {
-        timer = window.setTimeout(scroll, 60);
-      });
-    });
+
+    // Disable any global smooth-scroll for the duration of the jump so a
+    // browser-level setting can't override behavior:"auto".
+    const html = document.documentElement;
+    const prev = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto";
+
+    // Initial sync jump (pre-paint).
+    jump();
+    // Re-jump on the next two frames in case images above shifted layout
+    // between commit and paint. Both jumps are instant, so no animation.
+    const raf1 = requestAnimationFrame(jump);
+    const raf2 = requestAnimationFrame(() => requestAnimationFrame(jump));
+
+    if (pending && window.location.hash !== `#${target}`) {
+      window.history.replaceState(null, "", `#${target}`);
+    }
+
     return () => {
       cancelAnimationFrame(raf1);
       cancelAnimationFrame(raf2);
-      window.clearTimeout(timer);
+      html.style.scrollBehavior = prev;
     };
   }, []);
 
