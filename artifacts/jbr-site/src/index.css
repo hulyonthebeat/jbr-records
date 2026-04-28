@@ -477,14 +477,17 @@ img[data-fadein][data-loaded] {
 /* ─── About page ───────────────────────────────────────────────── */
 .about-page { background: var(--paper); }
 .about-hero {
-  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-  gap: 0; align-items: stretch;
-  min-height: calc(100vh - 88px);
+  max-width: 1100px; margin: 0 auto;
+  padding: clamp(36px, 5vw, 72px) clamp(20px, 5vw, 40px) 0;
+  display: flex; flex-direction: column;
+}
+.about-hero-head {
+  margin-bottom: clamp(24px, 3.5vw, 40px);
 }
 .about-hero-text {
-  padding: 40px clamp(24px, 3.5vw, 56px) 40px clamp(28px, 5vw, 80px);
-  display: flex; flex-direction: column; justify-content: flex-start;
-  max-width: none;
+  padding: clamp(28px, 4vw, 48px) 0 clamp(40px, 5vw, 64px);
+  display: flex; flex-direction: column;
+  max-width: 760px;
 }
 .about-eyebrow {
   letter-spacing: .25em; text-transform: uppercase; color: var(--jbr-red);
@@ -492,20 +495,22 @@ img[data-fadein][data-loaded] {
 }
 .about-page-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(36px, 4.4vw, 64px);
-  line-height: .95; letter-spacing: .02em; margin: 0 0 20px;
+  font-size: clamp(40px, 6vw, 88px);
+  line-height: .95; letter-spacing: .02em; margin: 0;
 }
 .about-copy { max-width: none; }
 .about-copy p {
   color: #1f1f1f; font-size: 17px; line-height: 1.6;
-  margin: 0 0 14px;
+  margin: 0 0 18px;
 }
 .about-copy p:last-child { margin-bottom: 0; }
-.about-copy .about-lede { font-size: 18px; }
+.about-copy .about-lede { font-size: 19px; }
 .about-copy strong { color: var(--ink); font-weight: 600; }
 .about-hero-image {
   margin: 0; background: #000; overflow: hidden;
-  border-left: 1px solid var(--ink);
+  border: 1px solid var(--ink);
+  width: 100%;
+  aspect-ratio: 16 / 9;
 }
 .about-hero-image img {
   display: block; width: 100%; height: 100%; object-fit: cover;
@@ -545,15 +550,8 @@ img[data-fadein][data-loaded] {
   letter-spacing: .15em; text-transform: uppercase; color: var(--jbr-red);
 }
 
-@media (max-width: 960px) {
-  .about-hero {
-    grid-template-columns: 1fr; min-height: 0;
-  }
-  .about-hero-text { padding: 36px 20px 32px; max-width: 100%; }
-  .about-hero-image {
-    border-left: 0; border-top: 1px solid var(--ink);
-    aspect-ratio: 4 / 3;
-  }
+@media (max-width: 760px) {
+  .about-hero-image { aspect-ratio: 4 / 3; }
   .about-leadership { margin-top: 24px; }
   .leader-grid { grid-template-columns: 1fr; gap: 14px; }
 }

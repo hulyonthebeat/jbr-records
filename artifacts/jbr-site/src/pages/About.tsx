@@ -12,9 +12,19 @@ export default function About() {
       <main>
         <section className="about-page">
           <div className="about-hero">
-            <div className="about-hero-text">
+            <div className="about-hero-head">
               <div className="about-eyebrow">ABOUT</div>
               <h1 className="about-page-title">JBR CREATIVE GROUP</h1>
+            </div>
+
+            <figure className="about-hero-image">
+              <img
+                src={`${import.meta.env.BASE_URL}about/jbr-banner.png`}
+                alt="Eric Benét and Alison Ball, founders of JBR Creative Group"
+              />
+            </figure>
+
+            <div className="about-hero-text">
               <div className="about-copy">
                 <p className="about-lede">
                   JBR Creative Group is a multidisciplinary powerhouse
@@ -74,13 +84,6 @@ export default function About() {
                 </div>
               </div>
             </div>
-
-            <figure className="about-hero-image">
-              <img
-                src={`${import.meta.env.BASE_URL}about/jbr-banner.png`}
-                alt="Eric Benét and Alison Ball, founders of JBR Creative Group"
-              />
-            </figure>
           </div>
         </section>
       </main>
