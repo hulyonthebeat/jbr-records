@@ -58,14 +58,17 @@ body::before {
   transform: scale(1);
 }
 
-/* IMAGE FADE-IN (smooth load instead of pop) */
+/* IMAGE FADE-IN + ZOOM (smooth load with smaller→bigger scale) */
 img[data-fadein] {
   opacity: 0;
-  transition: opacity .55s cubic-bezier(.4, 0, .2, 1);
-  will-change: opacity;
+  transform: scale(.84);
+  transition: opacity 1.2s cubic-bezier(.4, 0, .2, 1),
+              transform 1.2s cubic-bezier(.4, 0, .2, 1);
+  will-change: opacity, transform;
 }
 img[data-fadein][data-loaded] {
   opacity: 1;
+  transform: scale(1);
 }
 
 /* SOFT SHIMMER while images load — gives empty image frames a subtle "alive" feel */
