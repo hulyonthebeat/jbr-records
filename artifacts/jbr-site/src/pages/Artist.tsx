@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link, useParams } from "wouter";
 import { Header, Footer } from "./Home";
 import { ARTISTS, ARTIST_ORDER } from "../data/artists";
+import EricBenetLanding from "./EricBenetLanding";
 
 export default function Artist() {
   const params = useParams<{ slug: string }>();
@@ -11,6 +12,16 @@ export default function Artist() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [slug]);
+
+  if (slug === "eric-benet") {
+    return (
+      <>
+        <Header />
+        <EricBenetLanding />
+        <Footer />
+      </>
+    );
+  }
 
   if (!artist) {
     return (

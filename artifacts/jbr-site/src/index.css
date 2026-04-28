@@ -474,3 +474,154 @@ img, svg { max-width: 100%; display: block; }
     scroll-margin-top: 88px;
   }
 }
+
+/* ─── Eric Benét landing page (linkfire-style) ───────────────── */
+.lnk-page {
+  background: #0f0f0f; color: #f4f1ea;
+  min-height: calc(100vh - 88px);
+  padding: 32px 16px 64px;
+}
+.lnk-shell {
+  max-width: 520px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 24px;
+}
+.lnk-back {
+  align-self: flex-start;
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: #f4f1ea; opacity: .7; text-decoration: none;
+  padding: 6px 10px; border: 1px solid #2a2a2a; border-radius: 2px;
+  transition: opacity .15s, border-color .15s;
+}
+.lnk-back:hover { opacity: 1; border-color: #555; }
+
+.lnk-hero { text-align: center; }
+.lnk-hero-cover {
+  width: 280px; aspect-ratio: 1/1; margin: 8px auto 18px;
+  overflow: hidden; border: 1px solid #2a2a2a;
+  box-shadow: 8px 8px 0 #000;
+}
+.lnk-hero-cover img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.lnk-artist {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 7vw, 56px);
+  letter-spacing: .03em; margin: 0 0 6px; line-height: 1;
+}
+.lnk-subtitle {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; letter-spacing: .25em; text-transform: uppercase;
+  margin: 0; opacity: .75;
+}
+
+.lnk-socials {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+}
+.lnk-social {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: .18em; text-transform: uppercase;
+  padding: 8px 14px; border: 1px solid #2a2a2a;
+  color: #f4f1ea; text-decoration: none;
+  transition: background .15s, border-color .15s;
+}
+.lnk-social:hover { background: #1a1a1a; border-color: #555; }
+
+.lnk-card {
+  background: #161616; border: 1px solid #2a2a2a;
+  padding: 20px; display: flex; flex-direction: column; gap: 18px;
+}
+.lnk-release {
+  display: flex; gap: 16px; align-items: center;
+}
+.lnk-release-cover {
+  flex: 0 0 96px; width: 96px; aspect-ratio: 1/1;
+  overflow: hidden; border: 1px solid #2a2a2a;
+}
+.lnk-release-cover img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.lnk-release-meta { flex: 1; min-width: 0; }
+.lnk-release-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: .25em; text-transform: uppercase;
+  color: var(--jbr-red); margin-bottom: 6px;
+}
+.lnk-release-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px; letter-spacing: .03em; margin: 0 0 6px; line-height: 1.05;
+}
+.lnk-release-note {
+  margin: 0; font-size: 12px; opacity: .7;
+}
+
+.lnk-services {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.lnk-service {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; border: 1px solid #2a2a2a;
+  background: #0f0f0f; color: #f4f1ea; text-decoration: none;
+  font-family: 'DM Mono', monospace; font-size: 13px;
+  letter-spacing: .04em;
+  transition: background .15s, border-color .15s, transform .12s;
+}
+.lnk-service:hover {
+  background: #1a1a1a; border-color: #777; transform: translateX(2px);
+}
+.lnk-service-name { font-weight: 500; }
+.lnk-service-cta {
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  opacity: .7;
+}
+
+.lnk-section { display: flex; flex-direction: column; gap: 12px; }
+.lnk-section-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: .25em; text-transform: uppercase;
+  color: var(--jbr-red); text-align: center;
+}
+.lnk-videos {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.lnk-video {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 14px 16px; border: 1px solid #2a2a2a;
+  background: #161616; color: #f4f1ea; text-decoration: none;
+  transition: background .15s, border-color .15s;
+}
+.lnk-video:hover { background: #1f1f1f; border-color: #555; }
+.lnk-video-title {
+  font-size: 13px; line-height: 1.35; flex: 1; min-width: 0;
+}
+.lnk-video-cta {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: .2em; text-transform: uppercase; opacity: .7;
+  white-space: nowrap;
+}
+
+.lnk-bigcta {
+  display: block; padding: 18px 20px; text-align: center;
+  background: var(--jbr-red); color: #f4f1ea; text-decoration: none;
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  letter-spacing: .25em; text-transform: uppercase;
+  border: 1px solid #000; box-shadow: 6px 6px 0 #000;
+  transition: transform .12s, box-shadow .12s;
+}
+.lnk-bigcta:hover {
+  transform: translate(-2px, -2px); box-shadow: 8px 8px 0 #000;
+}
+
+.lnk-footer {
+  text-align: center; font-size: 11px; opacity: .55;
+  border-top: 1px solid #2a2a2a; padding-top: 18px;
+}
+.lnk-footer strong { color: #f4f1ea; font-weight: 600; }
+
+@media (max-width: 480px) {
+  .lnk-hero-cover { width: 240px; }
+  .lnk-card { padding: 16px; }
+  .lnk-release-cover { flex-basis: 80px; width: 80px; }
+}
