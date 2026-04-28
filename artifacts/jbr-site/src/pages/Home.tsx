@@ -28,14 +28,35 @@ const HERO_SLIDES: CarouselSlide[] = [
 function Carousel({ slides, interval = 5000 }: { slides: CarouselSlide[]; interval?: number }) {
   const [idx, setIdx] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [hidden, setHidden] = useState(
+    typeof document !== "undefined" ? document.hidden : false
+  );
+
+  // Always start on the first photo when this component mounts.
+  useEffect(() => {
+    setIdx(0);
+  }, []);
+
+  // Pause rotation when the page (or canvas iframe) isn't visible,
+  // and reset to the first photo when it becomes visible again so
+  // visitors always land on slide 1.
+  useEffect(() => {
+    const onVisibility = () => {
+      const isHidden = document.hidden;
+      setHidden(isHidden);
+      if (!isHidden) setIdx(0);
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
 
   useEffect(() => {
-    if (paused || slides.length <= 1) return;
+    if (paused || hidden || slides.length <= 1) return;
     const id = window.setInterval(() => {
       setIdx((i) => (i + 1) % slides.length);
     }, interval);
     return () => window.clearInterval(id);
-  }, [paused, interval, slides.length]);
+  }, [paused, hidden, interval, slides.length]);
 
   const go = (next: number) => setIdx((next + slides.length) % slides.length);
 
