@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
 import Home from "@/pages/Home";
 import Artist from "@/pages/Artist";
@@ -22,7 +22,7 @@ function Router() {
 }
 
 function useImageFadeIn() {
-  useEffect(() => {
+  useLayoutEffect(() => {
     const markLoaded = (img: HTMLImageElement) => {
       // Defer one frame so the browser paints the initial (zoomed + faded)
       // state before transitioning — otherwise cached images skip the animation.
@@ -92,7 +92,12 @@ const REVEAL_SELECTORS = [
 function useScrollReveal() {
   const [location] = useLocation();
 
-  useEffect(() => {
+  // useLayoutEffect runs synchronously after React commits but BEFORE the
+  // browser paints. This is critical for SPA navigation — we need to tag
+  // elements with their initial (small + faded) state before the new page
+  // is shown to the user, otherwise they see the page already at full size
+  // and the transition gets skipped.
+  useLayoutEffect(() => {
     const observed = new WeakSet<Element>();
 
     const observer = new IntersectionObserver(
