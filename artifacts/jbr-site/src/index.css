@@ -439,3 +439,14 @@ img, svg { max-width: 100%; display: block; }
   .leader-grid { grid-template-columns: 1fr; gap: 24px; }
   .leader-card { box-shadow: 6px 6px 0 var(--ink); }
 }
+
+/* Offset hash-anchor scrolls so they land below the sticky header */
+.topbar { scroll-margin-top: 0; }
+[id="news"], [id="releases"], [id="roster"], [id="about"], [id="contact"] {
+  scroll-margin-top: 110px;
+}
+@media (max-width: 760px) {
+  [id="news"], [id="releases"], [id="roster"], [id="about"], [id="contact"] {
+    scroll-margin-top: 88px;
+  }
+}
