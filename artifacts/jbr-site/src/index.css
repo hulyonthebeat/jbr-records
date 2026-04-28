@@ -547,13 +547,19 @@ img[data-fadein][data-loaded] {
 }
 
 @media (max-width: 960px) {
+  /* Switch to flex so we can put the hero image at the top on mobile */
   .about-hero {
-    grid-template-columns: 1fr; min-height: 0;
+    display: flex; flex-direction: column;
+    grid-template-columns: none; min-height: 0;
   }
-  .about-hero-text { padding: 36px 20px 32px; max-width: 100%; }
   .about-hero-image {
-    border-left: 0; border-top: 1px solid var(--ink);
+    order: 1;
+    border-left: 0; border-bottom: 1px solid var(--ink);
     aspect-ratio: 4 / 3;
+  }
+  .about-hero-text {
+    order: 2;
+    padding: 36px 20px 32px; max-width: 100%;
   }
   .about-leadership { margin-top: 24px; }
   .leader-grid { grid-template-columns: 1fr; gap: 14px; }
