@@ -403,11 +403,11 @@ img, svg { max-width: 100%; display: block; }
 }
 .about-copy { max-width: 78ch; }
 .about-copy p {
-  color: #1f1f1f; font-size: 14px; line-height: 1.55;
-  margin: 0 0 12px;
+  color: #1f1f1f; font-size: 17px; line-height: 1.6;
+  margin: 0 0 14px;
 }
 .about-copy p:last-child { margin-bottom: 0; }
-.about-copy .about-lede { font-size: 15px; }
+.about-copy .about-lede { font-size: 18px; }
 .about-copy strong { color: var(--ink); font-weight: 600; }
 .about-hero-image {
   margin: 0; background: #000; overflow: hidden;
