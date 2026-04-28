@@ -55,7 +55,6 @@ function Carousel({ slides, interval = 5000 }: { slides: CarouselSlide[]; interv
             aria-hidden={i !== idx}
           >
             <img src={s.src} alt={s.alt} loading={i === 0 ? "eager" : "lazy"} />
-            {s.caption && <div className="carousel-caption">{s.caption}</div>}
           </div>
         ))}
         <button

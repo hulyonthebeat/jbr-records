@@ -466,7 +466,7 @@ img, svg { max-width: 100%; display: block; }
 /* Offset hash-anchor scrolls so they land below the sticky header */
 .topbar { scroll-margin-top: 0; }
 [id="news"], [id="releases"], [id="roster"], [id="about"], [id="contact"] {
-  scroll-margin-top: 110px;
+  scroll-margin-top: 105px;
 }
 @media (max-width: 760px) {
   [id="news"], [id="releases"], [id="roster"], [id="about"], [id="contact"] {
