@@ -45,24 +45,28 @@ body::before {
   body::before { animation: none; display: none; }
 }
 
-/* ROUTE FADE-IN (on every navigation) */
+/* ROUTE FADE-IN + ZOOM (on every navigation) */
 .route-fade {
-  animation: jbr-route-fade .85s cubic-bezier(.22, .61, .36, 1) both;
+  animation: jbr-route-fade .9s cubic-bezier(.22, .61, .36, 1) both;
+  transform-origin: center 35%;
   will-change: opacity, transform;
 }
 @keyframes jbr-route-fade {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: scale(.965) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* IMAGE FADE-IN (smooth load instead of pop) */
+/* IMAGE FADE-IN + ZOOM (smooth load instead of pop) */
 img[data-fadein] {
   opacity: 0;
-  transition: opacity .55s cubic-bezier(.22, .61, .36, 1);
-  will-change: opacity;
+  transform: scale(1.035);
+  transition: opacity .65s cubic-bezier(.22, .61, .36, 1),
+              transform .8s cubic-bezier(.22, .61, .36, 1);
+  will-change: opacity, transform;
 }
 img[data-fadein][data-loaded] {
   opacity: 1;
+  transform: scale(1);
 }
 
 /* SOFT SHIMMER while images load — gives empty image frames a subtle "alive" feel */
