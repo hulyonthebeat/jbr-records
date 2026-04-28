@@ -258,7 +258,8 @@ const ARTISTS = [
     name: "AUTUMN PAIGE",
     role: "Recording Artist",
     photo: "/photos/autumn-paige-jbr.jpg",
-    href: "/artists/autumn-paige",
+    href: "https://www.autumnpaige.com/",
+    external: true,
   },
   {
     name: "JOE LEONE",
@@ -568,7 +569,7 @@ export function Footer() {
           <ul>
             <li><a href="https://ericbenet.lnk.to/music" target="_blank" rel="noopener noreferrer">Eric Benét</a></li>
             <li><a href="https://joeleone.lnk.to/music" target="_blank" rel="noopener noreferrer">Joe Leone</a></li>
-            <li><Link href="/artists/autumn-paige">Autumn Paige</Link></li>
+            <li><a href="https://www.autumnpaige.com/" target="_blank" rel="noopener noreferrer">Autumn Paige</a></li>
           </ul>
         </div>
         <div>

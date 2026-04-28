@@ -3,24 +3,26 @@ import { Link, useParams } from "wouter";
 import { Header, Footer } from "./Home";
 import { ARTISTS, ARTIST_ORDER } from "../data/artists";
 
+const ARTIST_REDIRECTS: Record<string, string> = {
+  "eric-benet": "https://ericbenet.lnk.to/music",
+  "joe-leone": "https://joeleone.lnk.to/music",
+  "autumn-paige": "https://www.autumnpaige.com/",
+};
+
 export default function Artist() {
   const params = useParams<{ slug: string }>();
   const slug = params.slug;
   const artist = slug ? ARTISTS[slug] : undefined;
 
   useEffect(() => {
-    if (slug === "eric-benet") {
-      window.location.replace("https://ericbenet.lnk.to/music");
-      return;
-    }
-    if (slug === "joe-leone") {
-      window.location.replace("https://joeleone.lnk.to/music");
+    if (slug && ARTIST_REDIRECTS[slug]) {
+      window.location.replace(ARTIST_REDIRECTS[slug]);
       return;
     }
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [slug]);
 
-  if (slug === "eric-benet" || slug === "joe-leone") {
+  if (slug && ARTIST_REDIRECTS[slug]) {
     return null;
   }
 
@@ -206,15 +208,11 @@ export default function Artist() {
                     <div className="roster-cta">VIEW ARTIST &rarr;</div>
                   </>
                 );
-                const externalLinks: Record<string, string> = {
-                  "eric-benet": "https://ericbenet.lnk.to/music",
-                  "joe-leone": "https://joeleone.lnk.to/music",
-                };
-                if (externalLinks[s]) {
+                if (ARTIST_REDIRECTS[s]) {
                   return (
                     <a
                       key={s}
-                      href={externalLinks[s]}
+                      href={ARTIST_REDIRECTS[s]}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="roster-card"
