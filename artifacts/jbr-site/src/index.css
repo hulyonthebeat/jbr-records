@@ -625,3 +625,31 @@ img, svg { max-width: 100%; display: block; }
   .lnk-card { padding: 16px; }
   .lnk-release-cover { flex-basis: 80px; width: 80px; }
 }
+
+/* ─── Nav social icons (replaces email button) ───────────────── */
+.nav-socials {
+  display: flex; align-items: center; gap: 6px;
+  list-style: none; padding: 0; margin: 0;
+}
+.nav-social {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px;
+  color: var(--ink); text-decoration: none;
+  border: 1px solid transparent;
+  transition: color var(--t), border-color var(--t), background var(--t);
+}
+.nav-social svg {
+  width: 18px; height: 18px; fill: currentColor; display: block;
+}
+.nav-social:hover {
+  color: var(--jbr-red);
+  border-color: var(--ink);
+}
+.mobile-socials {
+  display: flex; padding: 16px 0 4px;
+}
+
+/* Keep the social icons visible on mobile too */
+@media (max-width: 760px) {
+  .top-utility { display: none; }
+}

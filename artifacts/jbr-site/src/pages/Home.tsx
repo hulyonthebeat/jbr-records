@@ -118,9 +118,7 @@ export function Header() {
           <Link href="/contact">Contact</Link>
         </nav>
         <div className="top-utility">
-          <a href="mailto:info@jbrcreativegroup.com" className="contact-btn">
-            info@jbrcreativegroup.com
-          </a>
+          <NavSocials />
         </div>
         <button
           className="mobile-menu-btn"
@@ -140,12 +138,62 @@ export function Header() {
           <Link href="/roster" onClick={closeMobile}>Roster</Link>
           <a href={h("news")} onClick={closeMobile}>News</a>
           <Link href="/contact" onClick={closeMobile}>Contact</Link>
-          <a href="mailto:info@jbrcreativegroup.com" onClick={closeMobile}>
-            info@jbrcreativegroup.com
-          </a>
+          <div className="mobile-socials" onClick={closeMobile}>
+            <NavSocials />
+          </div>
         </div>
       )}
     </header>
+  );
+}
+
+const NAV_SOCIALS = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/jbrcreativegroup/",
+    path: "M12 2.2c3.2 0 3.6 0 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s0 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58 0-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.21 15.6 2.2 15.22 2.2 12s0-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2Zm0 1.8c-3.15 0-3.5 0-4.74.07-1.07.05-1.65.23-2.04.38-.51.2-.88.44-1.27.83-.39.39-.63.76-.83 1.27-.15.39-.33.97-.38 2.04C2.67 8.5 2.66 8.85 2.66 12s.01 3.5.08 4.74c.05 1.07.23 1.65.38 2.04.2.51.44.88.83 1.27.39.39.76.63 1.27.83.39.15.97.33 2.04.38 1.24.07 1.59.07 4.74.07s3.5 0 4.74-.07c1.07-.05 1.65-.23 2.04-.38.51-.2.88-.44 1.27-.83.39-.39.63-.76.83-1.27.15-.39.33-.97.38-2.04.07-1.24.07-1.59.07-4.74s0-3.5-.07-4.74c-.05-1.07-.23-1.65-.38-2.04a3.4 3.4 0 0 0-.83-1.27 3.4 3.4 0 0 0-1.27-.83c-.39-.15-.97-.33-2.04-.38C15.5 4.07 15.15 4 12 4Zm0 3.04a4.96 4.96 0 1 1 0 9.92 4.96 4.96 0 0 1 0-9.92Zm0 1.8a3.16 3.16 0 1 0 0 6.32 3.16 3.16 0 0 0 0-6.32Zm5.16-2.05a1.16 1.16 0 1 1 0 2.32 1.16 1.16 0 0 1 0-2.32Z",
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/jbrcreativegroup1/",
+    path: "M13.5 21.5v-8h2.7l.4-3.1h-3.1V8.4c0-.9.25-1.5 1.55-1.5h1.65V4.13a22 22 0 0 0-2.4-.13c-2.38 0-4 1.45-4 4.1v2.3H7.6v3.1h2.7v8h3.2Z",
+  },
+  {
+    label: "X",
+    href: "https://twitter.com/jbrcreativegrp",
+    path: "M18.244 3H21l-6.55 7.49L22 21h-6.05l-4.74-6.2L5.78 21H3l7.02-8.02L2.5 3h6.18l4.28 5.66L18.24 3Zm-2.12 16.2h1.68L7.97 4.7H6.18l9.94 14.5Z",
+  },
+  {
+    label: "YouTube",
+    href: "https://youtube.com/@JBRcreativegroup",
+    path: "M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.27 5 12 5 12 5s-6.27 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.76 1.77C5.73 19 12 19 12 19s6.27 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77c.27-1.57.4-3.16.4-4.8a26 26 0 0 0-.4-4.8ZM10 15V9l5.2 3L10 15Z",
+  },
+  {
+    label: "TikTok",
+    href: "https://tiktok.com/@jbrcreativegroup",
+    path: "M19.6 8.34a6.5 6.5 0 0 1-3.78-1.2 6.46 6.46 0 0 1-2.55-3.6h-3.1v11.05a2.65 2.65 0 1 1-2.65-2.65c.27 0 .53.04.78.12V8.94a5.85 5.85 0 1 0 5.07 5.8V9.83a9.5 9.5 0 0 0 5.78 1.95l.45-.01V8.34Z",
+  },
+];
+
+function NavSocials() {
+  return (
+    <ul className="nav-socials" aria-label="JBR Creative Group on social media">
+      {NAV_SOCIALS.map((s) => (
+        <li key={s.label}>
+          <a
+            href={s.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={s.label}
+            className="nav-social"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d={s.path} />
+            </svg>
+          </a>
+        </li>
+      ))}
+    </ul>
   );
 }
 
