@@ -41,6 +41,37 @@ export default function About() {
                   trail-blazing innovation.
                 </p>
               </div>
+
+              <div className="about-leadership">
+                <div className="leadership-eyebrow">LEADERSHIP</div>
+                <div className="leader-grid">
+                  <article className="leader-card">
+                    <div className="leader-photo">
+                      <img
+                        src={`${import.meta.env.BASE_URL}about/eric-benet.jpg`}
+                        alt="Eric Benét"
+                      />
+                    </div>
+                    <div className="leader-meta">
+                      <h2 className="leader-card-name">ERIC BENÉT</h2>
+                      <div className="leader-card-role">President</div>
+                    </div>
+                  </article>
+
+                  <article className="leader-card">
+                    <div className="leader-photo">
+                      <img
+                        src={`${import.meta.env.BASE_URL}about/alison-ball.jpg`}
+                        alt="Alison Ball"
+                      />
+                    </div>
+                    <div className="leader-meta">
+                      <h2 className="leader-card-name">ALISON BALL</h2>
+                      <div className="leader-card-role">CEO</div>
+                    </div>
+                  </article>
+                </div>
+              </div>
             </div>
 
             <figure className="about-hero-image">
@@ -49,37 +80,6 @@ export default function About() {
                 alt="Eric Benét and Alison Ball, founders of JBR Creative Group"
               />
             </figure>
-          </div>
-
-          <div className="about-leadership">
-            <div className="leadership-eyebrow">LEADERSHIP</div>
-            <div className="leader-grid">
-              <article className="leader-card">
-                <div className="leader-photo">
-                  <img
-                    src={`${import.meta.env.BASE_URL}about/eric-benet.jpg`}
-                    alt="Eric Benét"
-                  />
-                </div>
-                <div className="leader-meta">
-                  <h2 className="leader-card-name">ERIC BENÉT</h2>
-                  <div className="leader-card-role">President</div>
-                </div>
-              </article>
-
-              <article className="leader-card">
-                <div className="leader-photo">
-                  <img
-                    src={`${import.meta.env.BASE_URL}about/alison-ball.jpg`}
-                    alt="Alison Ball"
-                  />
-                </div>
-                <div className="leader-meta">
-                  <h2 className="leader-card-name">ALISON BALL</h2>
-                  <div className="leader-card-role">CEO</div>
-                </div>
-              </article>
-            </div>
           </div>
         </section>
       </main>
