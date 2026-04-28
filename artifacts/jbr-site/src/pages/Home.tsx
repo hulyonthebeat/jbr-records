@@ -583,6 +583,23 @@ export function Footer() {
 /* ─── Home Page ─────────────────────────────────────────────────── */
 
 export default function Home() {
+  useEffect(() => {
+    const hash = window.location.hash.replace(/^#/, "");
+    if (!hash) return;
+    let raf1 = 0, raf2 = 0;
+    const scroll = () => {
+      const el = document.getElementById(hash);
+      if (el) el.scrollIntoView({ behavior: "auto", block: "start" });
+    };
+    raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(scroll);
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, []);
+
   return (
     <>
       <Header />
