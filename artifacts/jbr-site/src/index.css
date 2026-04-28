@@ -423,7 +423,7 @@ img, svg { max-width: 100%; display: block; }
   color: var(--jbr-red); font-family: 'DM Mono', monospace; font-size: 11px;
 }
 .leader-grid {
-  display: grid; grid-template-columns: 290px 290px; gap: 24px;
+  display: grid; grid-template-columns: 340px 340px; gap: 28px;
 }
 .leader-card {
   background: #fff; border: 1px solid var(--ink);
