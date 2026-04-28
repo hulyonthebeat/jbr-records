@@ -116,7 +116,7 @@ export function Header() {
           <a href={h("roster")}>Roster</a>
           <a href={h("releases")}>Releases</a>
           <a href={h("news")}>News</a>
-          <a href={h("contact")}>Contact</a>
+          <Link href="/contact">Contact</Link>
         </nav>
         <div className="top-utility">
           <a href="mailto:info@jbrcreativegroup.com" className="contact-btn">
@@ -140,7 +140,7 @@ export function Header() {
           <a href={h("roster")} onClick={closeMobile}>Roster</a>
           <a href={h("releases")} onClick={closeMobile}>Releases</a>
           <a href={h("news")} onClick={closeMobile}>News</a>
-          <a href={h("contact")} onClick={closeMobile}>Contact</a>
+          <Link href="/contact" onClick={closeMobile}>Contact</Link>
           <a href="mailto:info@jbrcreativegroup.com" onClick={closeMobile}>
             info@jbrcreativegroup.com
           </a>
@@ -402,7 +402,7 @@ function NewsSection() {
 
 /* ─── Contact ───────────────────────────────────────────────────── */
 
-function ContactSection() {
+export function ContactSection() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("General Inquiry");
@@ -641,7 +641,6 @@ export default function Home() {
         <Releases />
         <RosterSection />
         <NewsSection />
-        <ContactSection />
         <Newsletter />
       </main>
       <Footer />
