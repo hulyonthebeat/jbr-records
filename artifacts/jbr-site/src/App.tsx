@@ -21,15 +21,6 @@ function Router() {
   );
 }
 
-function RouteFade({ children }: { children: React.ReactNode }) {
-  const [location] = useLocation();
-  return (
-    <div key={location} className="route-fade">
-      {children}
-    </div>
-  );
-}
-
 function useImageFadeIn() {
   useEffect(() => {
     const markLoaded = (img: HTMLImageElement) => {
@@ -69,6 +60,67 @@ function useImageFadeIn() {
   }, []);
 }
 
+const REVEAL_SELECTORS = [
+  ".hero-text > *",
+  ".hero-stage",
+  ".release-poster",
+  ".roster-card",
+  ".news-card",
+  ".leader-card",
+  ".about-hero-image",
+  ".about-eyebrow",
+  ".about-page-title",
+  ".about-copy > p",
+  ".about-leadership > *",
+  ".leadership-eyebrow",
+  ".section-eyebrow",
+  ".section-title",
+  ".newsletter-inner > *",
+  ".contact-section-inner > *",
+  ".contact-form > *",
+  ".artist-hero",
+  ".artist-bio",
+  ".artist-section",
+];
+
+function useScrollReveal() {
+  const [location] = useLocation();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).dataset.revealed = "true";
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.05 },
+    );
+
+    const tagAndObserve = () => {
+      for (const selector of REVEAL_SELECTORS) {
+        document.querySelectorAll<HTMLElement>(selector).forEach((el) => {
+          if (el.dataset.reveal) return;
+          el.dataset.reveal = "true";
+          observer.observe(el);
+        });
+      }
+    };
+
+    tagAndObserve();
+
+    const mutationObserver = new MutationObserver(() => tagAndObserve());
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
+  }, [location]);
+}
+
 function usePrefetchHeavyRoutes() {
   useEffect(() => {
     const base = import.meta.env.BASE_URL;
@@ -93,12 +145,11 @@ function usePrefetchHeavyRoutes() {
 
 function App() {
   useImageFadeIn();
+  useScrollReveal();
   usePrefetchHeavyRoutes();
   return (
     <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-      <RouteFade>
-        <Router />
-      </RouteFade>
+      <Router />
       <CookieBanner />
     </WouterRouter>
   );

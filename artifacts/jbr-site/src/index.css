@@ -45,28 +45,27 @@ body::before {
   body::before { animation: none; display: none; }
 }
 
-/* ROUTE FADE-IN + ZOOM (on every navigation) */
-.route-fade {
-  animation: jbr-route-fade .9s cubic-bezier(.22, .61, .36, 1) both;
-  transform-origin: center 35%;
+/* SCROLL REVEAL — Squarespace-style scale + fade as elements enter viewport */
+[data-reveal] {
+  opacity: 0;
+  transform: scale(.92);
+  transition: opacity .8s cubic-bezier(.4, 0, .2, 1),
+              transform .8s cubic-bezier(.4, 0, .2, 1);
   will-change: opacity, transform;
 }
-@keyframes jbr-route-fade {
-  from { opacity: 0; transform: scale(.965) translateY(8px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); }
+[data-reveal][data-revealed] {
+  opacity: 1;
+  transform: scale(1);
 }
 
-/* IMAGE FADE-IN + ZOOM (smooth load instead of pop) */
+/* IMAGE FADE-IN (smooth load instead of pop) */
 img[data-fadein] {
   opacity: 0;
-  transform: scale(1.035);
-  transition: opacity .65s cubic-bezier(.22, .61, .36, 1),
-              transform .8s cubic-bezier(.22, .61, .36, 1);
-  will-change: opacity, transform;
+  transition: opacity .55s cubic-bezier(.4, 0, .2, 1);
+  will-change: opacity;
 }
 img[data-fadein][data-loaded] {
   opacity: 1;
-  transform: scale(1);
 }
 
 /* SOFT SHIMMER while images load — gives empty image frames a subtle "alive" feel */
@@ -96,7 +95,7 @@ img[data-fadein][data-loaded] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .route-fade { animation: none; }
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
   img[data-fadein] { opacity: 1; transition: none; }
 }
 
