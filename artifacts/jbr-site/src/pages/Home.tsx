@@ -444,13 +444,6 @@ function ContactSection() {
         <div className="contact-intro">
           <div className="section-eyebrow">GET IN TOUCH</div>
           <h2 className="section-title">CONTACT<span className="accent"> /</span> US</h2>
-          <p className="contact-blurb">
-            For demos, press, partnerships, or general inquiries, reach out using
-            the form or email us directly at{" "}
-            <a href="mailto:info@jbrcreativegroup.com" className="contact-inline-link">
-              info@jbrcreativegroup.com
-            </a>.
-          </p>
           <div className="contact-meta">
             <div>
               <div className="contact-meta-label">EMAIL</div>
