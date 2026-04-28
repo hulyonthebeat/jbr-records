@@ -3,6 +3,7 @@ import Home from "@/pages/Home";
 import Artist from "@/pages/Artist";
 import Contact from "@/pages/Contact";
 import About from "@/pages/About";
+import Roster from "@/pages/Roster";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -11,6 +12,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/artists/:slug" component={Artist} />
       <Route path="/about" component={About} />
+      <Route path="/roster" component={Roster} />
       <Route path="/contact" component={Contact} />
       <Route component={NotFound} />
     </Switch>

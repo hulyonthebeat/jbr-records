@@ -114,7 +114,7 @@ export function Header() {
         <nav className="topnav">
           <Link href="/">Home</Link>
           <Link href="/about">About</Link>
-          <a href={h("roster")}>Roster</a>
+          <Link href="/roster">Roster</Link>
           <a href={h("releases")}>Releases</a>
           <a href={h("news")}>News</a>
           <Link href="/contact">Contact</Link>
@@ -139,7 +139,7 @@ export function Header() {
         <div className="mobile-nav">
           <Link href="/" onClick={closeMobile}>Home</Link>
           <Link href="/about" onClick={closeMobile}>About</Link>
-          <a href={h("roster")} onClick={closeMobile}>Roster</a>
+          <Link href="/roster" onClick={closeMobile}>Roster</Link>
           <a href={h("releases")} onClick={closeMobile}>Releases</a>
           <a href={h("news")} onClick={closeMobile}>News</a>
           <Link href="/contact" onClick={closeMobile}>Contact</Link>
@@ -275,7 +275,7 @@ const ARTISTS = [
   },
 ];
 
-function RosterSection() {
+export function RosterSection() {
   return (
     <section className="section" id="roster">
       <div className="section-inner">
@@ -552,7 +552,7 @@ export function Footer() {
           <h4>EXPLORE</h4>
           <ul>
             <li><Link href="/about">About</Link></li>
-            <li><a href={h("roster")}>Roster</a></li>
+            <li><Link href="/roster">Roster</Link></li>
             <li><a href={h("releases")}>Releases</a></li>
             <li><a href={h("news")}>News</a></li>
           </ul>
@@ -596,7 +596,6 @@ export default function Home() {
       <main>
         <Hero />
         <Releases />
-        <RosterSection />
         <NewsSection />
         <Newsletter />
       </main>
