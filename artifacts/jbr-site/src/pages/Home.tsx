@@ -403,14 +403,129 @@ function NewsSection() {
 /* ─── Contact ───────────────────────────────────────────────────── */
 
 function ContactSection() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("General Inquiry");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [sent, setSent] = useState(false);
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    setError(null);
+
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      setError("Please fill in your name, email, and a message.");
+      return;
+    }
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+    if (!emailOk) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    const body =
+      `Name: ${name}\n` +
+      `Email: ${email}\n` +
+      `Subject: ${subject}\n\n` +
+      `${message}\n`;
+    const href =
+      "mailto:info@jbrcreativegroup.com" +
+      `?subject=${encodeURIComponent(`[${subject}] from ${name}`)}` +
+      `&body=${encodeURIComponent(body)}`;
+
+    window.location.href = href;
+    setSent(true);
+  }
+
   return (
-    <section className="contact-simple" id="contact">
-      <div className="contact-simple-inner">
-        <h2 className="contact-simple-headline">CONTACT US</h2>
-        <div className="contact-simple-email">
-          <span className="contact-simple-label">EMAIL:</span>{" "}
-          <a href="mailto:info@jbrcreativegroup.com">info@jbrcreativegroup.com</a>
+    <section className="contact" id="contact">
+      <div className="contact-inner">
+        <div className="contact-intro">
+          <div className="section-eyebrow">GET IN TOUCH</div>
+          <h2 className="section-title">CONTACT<span className="accent"> /</span> US</h2>
+          <p className="contact-blurb">
+            For demos, press, partnerships, or general inquiries, reach out using
+            the form or email us directly at{" "}
+            <a href="mailto:info@jbrcreativegroup.com" className="contact-inline-link">
+              info@jbrcreativegroup.com
+            </a>.
+          </p>
+          <div className="contact-meta">
+            <div>
+              <div className="contact-meta-label">EMAIL</div>
+              <a href="mailto:info@jbrcreativegroup.com">info@jbrcreativegroup.com</a>
+            </div>
+            <div>
+              <div className="contact-meta-label">LOCATION</div>
+              <div>Los Angeles, CA</div>
+            </div>
+          </div>
         </div>
+
+        <form className="contact-form" onSubmit={handleSubmit} noValidate>
+          <div className="contact-row">
+            <label className="contact-field">
+              <span>NAME</span>
+              <input
+                type="text"
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                autoComplete="name"
+                required
+              />
+            </label>
+            <label className="contact-field">
+              <span>EMAIL</span>
+              <input
+                type="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="email"
+                required
+              />
+            </label>
+          </div>
+          <label className="contact-field">
+            <span>SUBJECT</span>
+            <select
+              name="subject"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+            >
+              <option>General Inquiry</option>
+              <option>Demo Submission</option>
+              <option>Press / Media</option>
+              <option>Booking</option>
+              <option>Partnership</option>
+            </select>
+          </label>
+          <label className="contact-field">
+            <span>MESSAGE</span>
+            <textarea
+              name="message"
+              rows={6}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              required
+            />
+          </label>
+
+          {error && <div className="contact-error" role="alert">{error}</div>}
+          {sent && !error && (
+            <div className="contact-success" role="status">
+              Your email client should have opened with your message ready to send.
+              If it didn&rsquo;t, please email us directly at{" "}
+              <a href="mailto:info@jbrcreativegroup.com">info@jbrcreativegroup.com</a>.
+            </div>
+          )}
+
+          <button type="submit" className="btn btn-primary contact-submit">
+            SEND MESSAGE
+          </button>
+        </form>
       </div>
     </section>
   );
