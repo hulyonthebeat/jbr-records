@@ -115,7 +115,6 @@ export function Header() {
           <Link href="/">Home</Link>
           <Link href="/about">About</Link>
           <Link href="/roster">Roster</Link>
-          <a href={h("releases")}>Releases</a>
           <a href={h("news")}>News</a>
           <Link href="/contact">Contact</Link>
         </nav>
@@ -140,7 +139,6 @@ export function Header() {
           <Link href="/" onClick={closeMobile}>Home</Link>
           <Link href="/about" onClick={closeMobile}>About</Link>
           <Link href="/roster" onClick={closeMobile}>Roster</Link>
-          <a href={h("releases")} onClick={closeMobile}>Releases</a>
           <a href={h("news")} onClick={closeMobile}>News</a>
           <Link href="/contact" onClick={closeMobile}>Contact</Link>
           <a href="mailto:info@jbrcreativegroup.com" onClick={closeMobile}>
@@ -553,7 +551,6 @@ export function Footer() {
           <ul>
             <li><Link href="/about">About</Link></li>
             <li><Link href="/roster">Roster</Link></li>
-            <li><a href={h("releases")}>Releases</a></li>
             <li><a href={h("news")}>News</a></li>
           </ul>
         </div>
