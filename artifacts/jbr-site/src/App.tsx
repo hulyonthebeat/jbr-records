@@ -67,26 +67,41 @@ function useImageFadeIn() {
 }
 
 const REVEAL_SELECTORS = [
+  // Home — hero & marquee
   ".hero-text > *",
   ".hero-stage",
   ".release-poster",
+
+  // Section headers (Home Roster/News, Artist page sections)
+  ".section-head > *",
+
+  // Cards (Home, Roster, Artist "other artists")
   ".roster-card",
   ".news-card",
-  ".leader-card",
-  ".about-hero-image",
+
+  // About page
   ".about-eyebrow",
   ".about-page-title",
   ".about-copy > p",
   ".about-leadership > *",
   ".leadership-eyebrow",
-  ".section-eyebrow",
-  ".section-title",
-  ".newsletter-inner > *",
-  ".contact-section-inner > *",
+  ".leader-card",
+  ".about-hero-image",
+
+  // Contact page
+  ".contact-intro > *",
   ".contact-form > *",
-  ".artist-hero",
-  ".artist-bio",
-  ".artist-section",
+
+  // Newsletter (Home footer area)
+  ".newsletter-inner > *",
+
+  // Artist detail page
+  ".artist-hero-text > *",
+  ".artist-hero-photo",
+  ".artist-bio-photo",
+  ".artist-bio-copy",
+  ".disc-card",
+  ".social-chip",
 ];
 
 function useScrollReveal() {
