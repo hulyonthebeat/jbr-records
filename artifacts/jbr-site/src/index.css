@@ -58,11 +58,37 @@ body::before {
 /* IMAGE FADE-IN (smooth load instead of pop) */
 img[data-fadein] {
   opacity: 0;
-  transition: opacity .9s cubic-bezier(.22, .61, .36, 1);
+  transition: opacity .55s cubic-bezier(.22, .61, .36, 1);
   will-change: opacity;
 }
 img[data-fadein][data-loaded] {
   opacity: 1;
+}
+
+/* SOFT SHIMMER while images load — gives empty image frames a subtle "alive" feel */
+.roster-cover,
+.leader-photo,
+.about-hero-image,
+.news-card-image {
+  background:
+    linear-gradient(120deg,
+      rgba(255,255,255,0) 30%,
+      rgba(255,255,255,.45) 50%,
+      rgba(255,255,255,0) 70%
+    ) 0/220% 100% no-repeat,
+    #e6e1d5;
+  animation: jbr-shimmer 1.6s linear infinite;
+}
+.roster-cover:has(img[data-loaded]),
+.leader-photo:has(img[data-loaded]),
+.about-hero-image:has(img[data-loaded]),
+.news-card-image:has(img[data-loaded]) {
+  animation: none;
+  background: #e6e1d5;
+}
+@keyframes jbr-shimmer {
+  0%   { background-position: 100% 0, 0 0; }
+  100% { background-position: -100% 0, 0 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

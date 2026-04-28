@@ -68,8 +68,31 @@ function useImageFadeIn() {
   }, []);
 }
 
+function usePrefetchHeavyRoutes() {
+  useEffect(() => {
+    const base = import.meta.env.BASE_URL;
+    const urls = [
+      `${base}about/eric-benet.jpg`,
+      `${base}about/alison-ball.jpg`,
+      `${base}about/jbr-banner.png`,
+      `${base}photos/eric-benet-hero.jpg`,
+      `${base}photos/autumn-paige-jbr.jpg`,
+      `${base}photos/joe-leone-jbr.jpg`,
+    ];
+    const t = window.setTimeout(() => {
+      for (const url of urls) {
+        const img = new Image();
+        img.decoding = "async";
+        img.src = url;
+      }
+    }, 800);
+    return () => window.clearTimeout(t);
+  }, []);
+}
+
 function App() {
   useImageFadeIn();
+  usePrefetchHeavyRoutes();
   return (
     <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
       <RouteFade>
