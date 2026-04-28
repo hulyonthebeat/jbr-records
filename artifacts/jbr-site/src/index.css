@@ -58,12 +58,12 @@ body::before {
   transform: scale(1);
 }
 
-/* IMAGE FADE-IN + ZOOM (smooth load with smaller→bigger scale) */
+/* IMAGE FADE-IN + SETTLE (Ken Burns-style subtle zoom that always fills frame) */
 img[data-fadein] {
   opacity: 0;
-  transform: scale(.84);
+  transform: scale(1.12);
   transition: opacity 1.2s cubic-bezier(.4, 0, .2, 1),
-              transform 1.2s cubic-bezier(.4, 0, .2, 1);
+              transform 1.4s cubic-bezier(.4, 0, .2, 1);
   will-change: opacity, transform;
 }
 img[data-fadein][data-loaded] {
