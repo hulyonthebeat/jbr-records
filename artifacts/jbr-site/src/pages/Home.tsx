@@ -16,17 +16,27 @@ function useHashHref() {
  *   the Home component picks it up on mount and scrolls there.
  */
 const PENDING_SCROLL_KEY = "jbr-pending-scroll";
+
+/** Scroll so the target element's top sits flush under the sticky header.
+ *  Measures the actual header height at runtime so it works on iOS Safari
+ *  where the real header height differs from the CSS scroll-margin guess. */
+function jumpToSection(section: string) {
+  const el = document.getElementById(section);
+  if (!el) return;
+  const header = document.querySelector<HTMLElement>(".topbar");
+  const headerH = header ? header.getBoundingClientRect().height : 0;
+  const y = el.getBoundingClientRect().top + window.scrollY - headerH;
+  window.scrollTo({ top: y, left: 0, behavior: "auto" });
+}
+
 function useGoToSection() {
   const [location, setLocation] = useLocation();
   return (section: string) => {
     const onHome = location === "/" || location === "";
     if (onHome) {
-      const el = document.getElementById(section);
-      if (el) {
-        el.scrollIntoView({ behavior: "auto", block: "start" });
-        if (window.location.hash !== `#${section}`) {
-          window.history.replaceState(null, "", `#${section}`);
-        }
+      jumpToSection(section);
+      if (window.location.hash !== `#${section}`) {
+        window.history.replaceState(null, "", `#${section}`);
       }
     } else {
       sessionStorage.setItem(PENDING_SCROLL_KEY, section);
@@ -679,11 +689,7 @@ export default function Home() {
     const target = pending || window.location.hash.replace(/^#/, "");
     if (!target) return;
 
-    const jump = () => {
-      const el = document.getElementById(target);
-      if (!el) return;
-      el.scrollIntoView({ behavior: "auto", block: "start" });
-    };
+    const jump = () => jumpToSection(target);
 
     // Disable any global smooth-scroll for the duration of the jump so a
     // browser-level setting can't override behavior:"auto".
