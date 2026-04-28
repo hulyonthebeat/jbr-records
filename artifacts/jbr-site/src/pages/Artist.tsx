@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Link, useParams } from "wouter";
 import { Header, Footer } from "./Home";
 import { ARTISTS, ARTIST_ORDER } from "../data/artists";
-import EricBenetLanding from "./EricBenetLanding";
 
 export default function Artist() {
   const params = useParams<{ slug: string }>();
@@ -10,17 +9,15 @@ export default function Artist() {
   const artist = slug ? ARTISTS[slug] : undefined;
 
   useEffect(() => {
+    if (slug === "eric-benet") {
+      window.location.replace("https://ericbenet.lnk.to/music");
+      return;
+    }
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [slug]);
 
   if (slug === "eric-benet") {
-    return (
-      <>
-        <Header />
-        <EricBenetLanding />
-        <Footer />
-      </>
-    );
+    return null;
   }
 
   if (!artist) {
@@ -195,14 +192,32 @@ export default function Artist() {
             <div className="grid-3">
               {otherSlugs.map((s) => {
                 const a = ARTISTS[s];
-                return (
-                  <Link key={s} href={`/artists/${s}`} className="roster-card">
+                const inner = (
+                  <>
                     <div className="roster-cover">
                       <img src={a.heroPhoto} alt={a.name} />
                     </div>
                     <div className="roster-name">{a.name}</div>
                     <div className="roster-role">{a.role}</div>
                     <div className="roster-cta">VIEW ARTIST &rarr;</div>
+                  </>
+                );
+                if (s === "eric-benet") {
+                  return (
+                    <a
+                      key={s}
+                      href="https://ericbenet.lnk.to/music"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="roster-card"
+                    >
+                      {inner}
+                    </a>
+                  );
+                }
+                return (
+                  <Link key={s} href={`/artists/${s}`} className="roster-card">
+                    {inner}
                   </Link>
                 );
               })}

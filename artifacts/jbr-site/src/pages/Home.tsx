@@ -251,7 +251,8 @@ const ARTISTS = [
     name: "ERIC BENÉT",
     role: "President · Recording Artist",
     photo: "/photos/eric-benet-hero.jpg",
-    href: "/artists/eric-benet",
+    href: "https://ericbenet.lnk.to/music",
+    external: true,
   },
   {
     name: "AUTUMN PAIGE",
@@ -278,16 +279,33 @@ export function RosterSection() {
           </div>
         </div>
         <div className="grid-3">
-          {ARTISTS.map((a) => (
-            <Link key={a.name} href={a.href} className="roster-card">
-              <div className="roster-cover">
-                <img src={a.photo} alt={a.name} />
-              </div>
-              <div className="roster-name">{a.name}</div>
-              <div className="roster-role">{a.role}</div>
-              <div className="roster-cta">VIEW ARTIST &rarr;</div>
-            </Link>
-          ))}
+          {ARTISTS.map((a) => {
+            const inner = (
+              <>
+                <div className="roster-cover">
+                  <img src={a.photo} alt={a.name} />
+                </div>
+                <div className="roster-name">{a.name}</div>
+                <div className="roster-role">{a.role}</div>
+                <div className="roster-cta">VIEW ARTIST &rarr;</div>
+              </>
+            );
+            return a.external ? (
+              <a
+                key={a.name}
+                href={a.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="roster-card"
+              >
+                {inner}
+              </a>
+            ) : (
+              <Link key={a.name} href={a.href} className="roster-card">
+                {inner}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -547,7 +565,7 @@ export function Footer() {
         <div>
           <h4>ARTISTS</h4>
           <ul>
-            <li><Link href="/artists/eric-benet">Eric Benét</Link></li>
+            <li><a href="https://ericbenet.lnk.to/music" target="_blank" rel="noopener noreferrer">Eric Benét</a></li>
             <li><Link href="/artists/joe-leone">Joe Leone</Link></li>
             <li><Link href="/artists/autumn-paige">Autumn Paige</Link></li>
           </ul>
