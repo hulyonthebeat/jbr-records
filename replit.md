@@ -33,10 +33,14 @@ See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and pa
 - **Port**: 8081 → externalPort 80
 - **Preview path**: `/`
 - **Stack**: React, TypeScript, Vite, Google Fonts (Bebas Neue, Inter, DM Mono)
-- **Description**: JBR Creative Group music label website. Sections: hero feature stack (3 posters), new releases grid, featured release, deep cuts catalog, merch, artists roster, news dispatch, tour dates, newsletter signup, footer.
-- **Artists**: Joe Leone, Eric Benét, Chanté Moore, Autumn Paige
-- **Images**: `/public/covers/`, `/public/photos/`, `/public/logos/`, `/public/news/` (extracted from original zip)
-- **No API, no database** — all data is static/hardcoded in `src/pages/Home.tsx`
+- **Description**: JBR Creative Group music label website. Faithful rebuild of jbrcreativegroup.com — no merch/store/tours.
+- **Routes** (wouter): `/` (Home), `/artists/:slug` (Artist subpage), `*` (404).
+- **Home sections**: header (logo + nav), hero (headline + auto-advancing carousel), about, releases, roster (3 artist cards linking to subpages), news, contact (mailto only), newsletter, footer.
+- **Artist subpages** (`src/pages/Artist.tsx`, data in `src/data/artists.ts`): hero with photo + LISTEN NOW + back-to-roster, biography, discography grid (`disc-card`), press articles (omitted when empty), social chips, "Other Artists" cross-promo cards.
+- **Artists**: Eric Benét (`/artists/eric-benet`), Joe Leone (`/artists/joe-leone`), Autumn Paige (`/artists/autumn-paige`).
+- **Header/Footer**: exported from `src/pages/Home.tsx` and reused on Artist pages. Use `useHashHref()` helper so in-page nav (`#about`, `#roster`, etc.) resolves to `/#section` when on a non-home route.
+- **Images**: `/public/covers/`, `/public/photos/`, `/public/logos/`, `/public/news/`, `/public/carousel/`, `/public/brand/jbr-logo.png`.
+- **No API, no database** — all content is static.
 
 ### API Server — `artifacts/api-server`
 - **Kind**: Express 5 API

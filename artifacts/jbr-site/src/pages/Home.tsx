@@ -1,4 +1,12 @@
 import { useEffect, useState, type FormEvent } from "react";
+import { Link, useLocation } from "wouter";
+
+/** Returns "#section" on the home route, or "/#section" elsewhere, so in-page nav works from any route. */
+function useHashHref() {
+  const [location] = useLocation();
+  const onHome = location === "/" || location === "";
+  return (anchor: string) => (onHome ? `#${anchor}` : `/#${anchor}`);
+}
 
 /* ─── Carousel ──────────────────────────────────────────────────── */
 
@@ -93,21 +101,22 @@ function Carousel({ slides, interval = 5000 }: { slides: CarouselSlide[]; interv
 
 /* ─── Header ────────────────────────────────────────────────────── */
 
-function Header() {
+export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeMobile = () => setMobileOpen(false);
+  const h = useHashHref();
   return (
     <header className="topbar">
       <div className="topbar-inner">
-        <a href="#top" className="brand" onClick={closeMobile} aria-label="JBR Creative Group home">
+        <Link href="/" className="brand" onClick={closeMobile} aria-label="JBR Creative Group home">
           <img className="brand-logo" src="/brand/jbr-logo.png" alt="JBR Creative Group" />
-        </a>
+        </Link>
         <nav className="topnav">
-          <a href="#about">About</a>
-          <a href="#roster">Roster</a>
-          <a href="#releases">Releases</a>
-          <a href="#news">News</a>
-          <a href="#contact">Contact</a>
+          <a href={h("about")}>About</a>
+          <a href={h("roster")}>Roster</a>
+          <a href={h("releases")}>Releases</a>
+          <a href={h("news")}>News</a>
+          <a href={h("contact")}>Contact</a>
         </nav>
         <div className="top-utility">
           <a href="mailto:info@jbrcreativegroup.com" className="contact-btn">
@@ -127,11 +136,11 @@ function Header() {
       </div>
       {mobileOpen && (
         <div className="mobile-nav">
-          <a href="#about" onClick={closeMobile}>About</a>
-          <a href="#roster" onClick={closeMobile}>Roster</a>
-          <a href="#releases" onClick={closeMobile}>Releases</a>
-          <a href="#news" onClick={closeMobile}>News</a>
-          <a href="#contact" onClick={closeMobile}>Contact</a>
+          <a href={h("about")} onClick={closeMobile}>About</a>
+          <a href={h("roster")} onClick={closeMobile}>Roster</a>
+          <a href={h("releases")} onClick={closeMobile}>Releases</a>
+          <a href={h("news")} onClick={closeMobile}>News</a>
+          <a href={h("contact")} onClick={closeMobile}>Contact</a>
           <a href="mailto:info@jbrcreativegroup.com" onClick={closeMobile}>
             info@jbrcreativegroup.com
           </a>
@@ -292,19 +301,19 @@ const ARTISTS = [
     name: "ERIC BENÉT",
     role: "President · Recording Artist",
     photo: "/photos/eric-benet-hero.jpg",
-    href: "https://ericbenet.lnk.to/music",
+    href: "/artists/eric-benet",
   },
   {
     name: "AUTUMN PAIGE",
     role: "Recording Artist",
     photo: "/photos/autumn-paige-jbr.jpg",
-    href: "https://www.aspiremusicgroup.com/autumnpaige",
+    href: "/artists/autumn-paige",
   },
   {
     name: "JOE LEONE",
     role: "Recording Artist",
     photo: "/photos/joe-leone-jbr.jpg",
-    href: "https://joeleone.lnk.to/music",
+    href: "/artists/joe-leone",
   },
 ];
 
@@ -319,24 +328,16 @@ function RosterSection() {
           </div>
         </div>
         <div className="grid-3">
-          {ARTISTS.map((a) => {
-            const isExternal = a.href.startsWith("http");
-            return (
-              <a
-                key={a.name}
-                className="roster-card"
-                href={a.href}
-                target={isExternal ? "_blank" : undefined}
-                rel={isExternal ? "noopener noreferrer" : undefined}
-              >
-                <div className="roster-cover">
-                  <img src={a.photo} alt={a.name} />
-                </div>
-                <div className="roster-name">{a.name}</div>
-                <div className="roster-role">{a.role}</div>
-              </a>
-            );
-          })}
+          {ARTISTS.map((a) => (
+            <Link key={a.name} href={a.href} className="roster-card">
+              <div className="roster-cover">
+                <img src={a.photo} alt={a.name} />
+              </div>
+              <div className="roster-name">{a.name}</div>
+              <div className="roster-role">{a.role}</div>
+              <div className="roster-cta">VIEW ARTIST &rarr;</div>
+            </Link>
+          ))}
         </div>
       </div>
     </section>
@@ -468,7 +469,8 @@ function Newsletter() {
 
 /* ─── Footer ────────────────────────────────────────────────────── */
 
-function Footer() {
+export function Footer() {
+  const h = useHashHref();
   return (
     <footer className="footer">
       <div className="footer-inner footer-inner--simple">
@@ -484,26 +486,18 @@ function Footer() {
         <div>
           <h4>EXPLORE</h4>
           <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#roster">Roster</a></li>
-            <li><a href="#releases">Releases</a></li>
-            <li><a href="#news">News</a></li>
+            <li><a href={h("about")}>About</a></li>
+            <li><a href={h("roster")}>Roster</a></li>
+            <li><a href={h("releases")}>Releases</a></li>
+            <li><a href={h("news")}>News</a></li>
           </ul>
         </div>
         <div>
           <h4>ARTISTS</h4>
           <ul>
-            <li>
-              <a href="https://ericbenet.lnk.to/music" target="_blank" rel="noopener noreferrer">
-                Eric Benét
-              </a>
-            </li>
-            <li>
-              <a href="https://joeleone.lnk.to/music" target="_blank" rel="noopener noreferrer">
-                Joe Leone
-              </a>
-            </li>
-            <li><a href="#roster">Autumn Paige</a></li>
+            <li><Link href="/artists/eric-benet">Eric Benét</Link></li>
+            <li><Link href="/artists/joe-leone">Joe Leone</Link></li>
+            <li><Link href="/artists/autumn-paige">Autumn Paige</Link></li>
           </ul>
         </div>
         <div>
