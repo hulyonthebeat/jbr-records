@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent, type MouseEvent } from "react";
 import { Link, useLocation } from "wouter";
 
 /** Returns "#section" on the home route, or "/#section" elsewhere, so in-page nav works from any route. */
@@ -6,6 +6,33 @@ function useHashHref() {
   const [location] = useLocation();
   const onHome = location === "/" || location === "";
   return (anchor: string) => (onHome ? `#${anchor}` : `/#${anchor}`);
+}
+
+/**
+ * Smart in-app navigator for hash sections (News / Roster / etc.).
+ * - Already on home: programmatically scroll to the section every click
+ *   (avoids the "URL hash already matches → browser does nothing" bug).
+ * - On another route: SPA-navigate to home, stash the target section, and
+ *   the Home component picks it up on mount and scrolls there.
+ */
+const PENDING_SCROLL_KEY = "jbr-pending-scroll";
+function useGoToSection() {
+  const [location, setLocation] = useLocation();
+  return (section: string) => {
+    const onHome = location === "/" || location === "";
+    if (onHome) {
+      const el = document.getElementById(section);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (window.location.hash !== `#${section}`) {
+          window.history.replaceState(null, "", `#${section}`);
+        }
+      }
+    } else {
+      sessionStorage.setItem(PENDING_SCROLL_KEY, section);
+      setLocation("/");
+    }
+  };
 }
 
 /* ─── Carousel ──────────────────────────────────────────────────── */
@@ -130,6 +157,12 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeMobile = () => setMobileOpen(false);
   const h = useHashHref();
+  const goToSection = useGoToSection();
+  const handleNewsClick = (e: MouseEvent) => {
+    e.preventDefault();
+    closeMobile();
+    goToSection("news");
+  };
   return (
     <header className="topbar">
       <div className="topbar-inner">
@@ -140,7 +173,7 @@ export function Header() {
           <Link href="/" onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "auto" })}>Home</Link>
           <Link href="/about">About</Link>
           <Link href="/roster">Roster</Link>
-          <a href={h("news")}>News</a>
+          <a href={h("news")} onClick={handleNewsClick}>News</a>
           <Link href="/contact">Contact</Link>
         </nav>
         <div className="top-utility">
@@ -162,7 +195,7 @@ export function Header() {
           <Link href="/" onClick={() => { closeMobile(); window.scrollTo({ top: 0, left: 0, behavior: "auto" }); }}>Home</Link>
           <Link href="/about" onClick={closeMobile}>About</Link>
           <Link href="/roster" onClick={closeMobile}>Roster</Link>
-          <a href={h("news")} onClick={closeMobile}>News</a>
+          <a href={h("news")} onClick={handleNewsClick}>News</a>
           <Link href="/contact" onClick={closeMobile}>Contact</Link>
           <div className="mobile-socials" onClick={closeMobile}>
             <NavSocials />
@@ -636,19 +669,33 @@ export function Footer() {
 
 export default function Home() {
   useEffect(() => {
-    const hash = window.location.hash.replace(/^#/, "");
-    if (!hash) return;
-    let raf1 = 0, raf2 = 0;
+    // Either a stashed target from a cross-page nav (e.g. About → News),
+    // or the URL hash on a direct/refresh load.
+    const pending = sessionStorage.getItem(PENDING_SCROLL_KEY);
+    sessionStorage.removeItem(PENDING_SCROLL_KEY);
+    const target = pending || window.location.hash.replace(/^#/, "");
+    if (!target) return;
+
+    let raf1 = 0, raf2 = 0, timer = 0;
     const scroll = () => {
-      const el = document.getElementById(hash);
-      if (el) el.scrollIntoView({ behavior: "auto", block: "start" });
+      const el = document.getElementById(target);
+      if (!el) return;
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (pending && window.location.hash !== `#${target}`) {
+        window.history.replaceState(null, "", `#${target}`);
+      }
     };
+    // Two frames + a small delay so the news/roster sections have actually
+    // rendered (and images have laid out) before we measure the scroll target.
     raf1 = requestAnimationFrame(() => {
-      raf2 = requestAnimationFrame(scroll);
+      raf2 = requestAnimationFrame(() => {
+        timer = window.setTimeout(scroll, 60);
+      });
     });
     return () => {
       cancelAnimationFrame(raf1);
       cancelAnimationFrame(raf2);
+      window.clearTimeout(timer);
     };
   }, []);
 
