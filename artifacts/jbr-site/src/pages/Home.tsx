@@ -157,7 +157,7 @@ function Hero() {
     <section className="hero" id="top">
       <div className="hero-inner">
         <div className="hero-text">
-          <div className="hero-eyebrow">JBR CREATIVE GROUP <span className="dot">●</span> LOS ANGELES</div>
+          <div className="hero-eyebrow">JBR CREATIVE GROUP</div>
           <h1 className="hero-title">
             PRODUCING<br />THE FUTURE<br />OF ENTERTAINMENT.
           </h1>
