@@ -34,15 +34,24 @@ function jumpToSection(section: string) {
  *  the section. Used when the user navigates into a section that has already
  *  been revealed once — without this, the cards just sit there. */
 function replayReveal(root: HTMLElement) {
-  const items = root.querySelectorAll<HTMLElement>("[data-reveal]");
+  const items = Array.from(root.querySelectorAll<HTMLElement>("[data-reveal]"));
   if (items.length === 0) return;
-  // Strip the revealed flag and force layout so the browser registers the
-  // initial (small + faded) state before we re-add it on the next frame.
+
+  // Disable transitions so the snap-back to the small+faded state is
+  // instantaneous (otherwise the card animates DOWN over 1.2s, cancelling
+  // out the ramp-up).
   for (const el of items) {
+    el.style.transition = "none";
     delete el.dataset.revealed;
   }
-  // Reading offsetWidth forces a synchronous reflow.
+  // Force a synchronous reflow so the browser registers the initial state
+  // before we re-enable transitions and re-reveal.
   void root.offsetWidth;
+  for (const el of items) {
+    el.style.transition = "";
+  }
+  // Two frames so the browser paints the initial state before we flip to
+  // revealed — needed to make the transition actually run.
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       for (const el of items) {
