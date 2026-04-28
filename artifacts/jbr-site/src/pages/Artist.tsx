@@ -142,42 +142,6 @@ export default function Artist() {
           </div>
         </section>
 
-        {/* PRESS */}
-        {artist.press.length > 0 && (
-          <section className="section">
-            <div className="section-inner">
-              <div className="section-head">
-                <div>
-                  <div className="section-eyebrow">PRESS</div>
-                  <h2 className="section-title">
-                    IN THE<span className="accent"> /</span> NEWS
-                  </h2>
-                </div>
-              </div>
-              <div className="grid-3">
-                {artist.press.map((n) => (
-                  <a
-                    key={n.headline}
-                    className="news-card"
-                    href={n.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {n.image && (
-                      <div className="news-card-image">
-                        <img src={n.image} alt={n.source} />
-                      </div>
-                    )}
-                    <div className="news-card-source">{n.source}</div>
-                    <div className="news-card-headline">{n.headline}</div>
-                    <span className="news-card-link">READ &rarr;</span>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
         {/* SOCIALS */}
         <section className="section section--alt">
           <div className="section-inner">
