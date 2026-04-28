@@ -404,10 +404,6 @@ export function ContactSection() {
               <div className="contact-meta-label">EMAIL</div>
               <a href="mailto:info@jbrcreativegroup.com">info@jbrcreativegroup.com</a>
             </div>
-            <div>
-              <div className="contact-meta-label">LOCATION</div>
-              <div>Los Angeles, CA</div>
-            </div>
           </div>
         </div>
 
