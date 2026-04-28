@@ -160,11 +160,6 @@ function Hero() {
           <h1 className="hero-title">
             PRODUCING<br />THE FUTURE<br />OF ENTERTAINMENT.
           </h1>
-          <p className="hero-blurb">
-            A multidisciplinary powerhouse pioneering change in music, film/TV,
-            and tech, and championing an equal playing field for the artists
-            who make the work.
-          </p>
           <div className="hero-ctas">
             <a className="btn btn-primary" href="#releases">LATEST RELEASES</a>
             <a className="btn" href="#roster">MEET THE ROSTER</a>
