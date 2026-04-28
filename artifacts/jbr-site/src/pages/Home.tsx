@@ -612,7 +612,6 @@ function Newsletter() {
 /* ─── Footer ────────────────────────────────────────────────────── */
 
 export function Footer() {
-  const h = useHashHref();
   return (
     <footer className="footer">
       <div className="footer-inner footer-inner--simple">
@@ -624,35 +623,6 @@ export function Footer() {
               info@jbrcreativegroup.com
             </a>
           </div>
-        </div>
-        <div>
-          <h4>EXPLORE</h4>
-          <ul>
-            <li><Link href="/about">About</Link></li>
-            <li><Link href="/roster">Roster</Link></li>
-            <li><a href={h("news")}>News</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>ARTISTS</h4>
-          <ul>
-            <li><a href="https://ericbenet.lnk.to/music" target="_blank" rel="noopener noreferrer">Eric Benét</a></li>
-            <li><a href="https://joeleone.lnk.to/music" target="_blank" rel="noopener noreferrer">Joe Leone</a></li>
-            <li><a href="https://www.autumnpaige.com/" target="_blank" rel="noopener noreferrer">Autumn Paige</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>FOLLOW</h4>
-          <ul>
-            <li>
-              <a href="https://www.facebook.com/jbrcreativegroup1/" target="_blank" rel="noopener noreferrer">
-                Facebook
-              </a>
-            </li>
-            <li>
-              <a href="mailto:info@jbrcreativegroup.com">Email</a>
-            </li>
-          </ul>
         </div>
       </div>
       <div className="footer-bottom">
