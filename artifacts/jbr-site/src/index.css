@@ -242,8 +242,8 @@ img, svg { max-width: 100%; display: block; }
 /* NEWS CARDS */
 .news-grid { gap: 32px 22px; }
 .news-card { display: block; cursor: pointer; }
-.news-card-image { aspect-ratio: 3/4; background: var(--paper); border: 1px solid var(--ink); transition: transform var(--t), box-shadow var(--t); margin-bottom: 18px; overflow: hidden; }
-.news-card-image img { object-fit: contain; object-position: top; background: #fff; width: 100%; height: 100%; transition: transform var(--t); }
+.news-card-image { background: #fff; border: 1px solid var(--ink); transition: transform var(--t), box-shadow var(--t); margin-bottom: 18px; overflow: hidden; line-height: 0; }
+.news-card-image img { display: block; width: 100%; height: auto; transition: transform var(--t); }
 .news-card:hover .news-card-image { transform: translate(-4px, -4px); box-shadow: 8px 8px 0 var(--ink); }
 .news-card:hover .news-card-image img { transform: scale(1.03); }
 .news-card-source { letter-spacing: .22em; text-transform: uppercase; color: var(--jbr-red); margin-bottom: 8px; font-family: 'DM Mono', monospace; font-size: 11px; }
