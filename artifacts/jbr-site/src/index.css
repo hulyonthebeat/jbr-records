@@ -45,6 +45,29 @@ body::before {
   body::before { animation: none; display: none; }
 }
 
+/* ROUTE FADE-IN (on every navigation) */
+.route-fade {
+  animation: jbr-route-fade .45s cubic-bezier(.4, 0, .2, 1) both;
+}
+@keyframes jbr-route-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* IMAGE FADE-IN (smooth load instead of pop) */
+img[data-fadein] {
+  opacity: 0;
+  transition: opacity .45s ease-out;
+}
+img[data-fadein][data-loaded] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-fade { animation: none; }
+  img[data-fadein] { opacity: 1; transition: none; }
+}
+
 /* TOPBAR */
 .topbar { z-index: 80; background: var(--bg); border-bottom: 1px solid var(--ink); position: sticky; top: 0; }
 .topbar-inner { grid-template-columns: auto 1fr auto; align-items: center; gap: 32px; max-width: 1400px; margin: 0 auto; padding: 14px 28px; display: grid; }
