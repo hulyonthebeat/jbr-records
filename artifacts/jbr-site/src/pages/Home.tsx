@@ -617,12 +617,6 @@ export function Footer() {
       <div className="footer-inner footer-inner--simple">
         <div className="footer-mark">
           <img className="footer-logo" src="/brand/jbr-logo.png" alt="JBR Creative Group" />
-          <div className="footer-addr">
-            Los Angeles, CA<br />
-            <a href="mailto:info@jbrcreativegroup.com">
-              info@jbrcreativegroup.com
-            </a>
-          </div>
         </div>
       </div>
       <div className="footer-bottom">
