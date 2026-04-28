@@ -389,7 +389,7 @@ img, svg { max-width: 100%; display: block; }
 }
 .about-hero-text {
   padding: 40px clamp(24px, 3.5vw, 56px) 40px clamp(28px, 5vw, 80px);
-  display: flex; flex-direction: column; justify-content: center;
+  display: flex; flex-direction: column; justify-content: flex-start;
   max-width: 760px;
 }
 .about-eyebrow {
@@ -417,36 +417,36 @@ img, svg { max-width: 100%; display: block; }
   display: block; width: 100%; height: 100%; object-fit: cover;
 }
 
-.about-leadership { margin-top: 28px; }
+.about-leadership { margin-top: 36px; }
 .leadership-eyebrow {
-  margin: 0 0 12px; letter-spacing: .25em; text-transform: uppercase;
+  margin: 0 0 16px; letter-spacing: .25em; text-transform: uppercase;
   color: var(--jbr-red); font-family: 'DM Mono', monospace; font-size: 11px;
 }
 .leader-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
 }
 .leader-card {
   background: #fff; border: 1px solid var(--ink);
-  box-shadow: 6px 6px 0 var(--ink); overflow: hidden;
+  box-shadow: 8px 8px 0 var(--ink); overflow: hidden;
   display: flex; align-items: stretch;
 }
 .leader-photo {
-  flex: 0 0 84px; background: #000; overflow: hidden;
+  flex: 0 0 140px; background: #000; overflow: hidden;
 }
 .leader-photo img {
   width: 100%; height: 100%; object-fit: cover; display: block;
 }
 .leader-meta {
-  padding: 12px 16px; border-left: 1px solid var(--ink);
+  padding: 18px 22px; border-left: 1px solid var(--ink);
   display: flex; flex-direction: column; justify-content: center;
   flex: 1;
 }
 .leader-card-name {
-  font-family: 'Bebas Neue', sans-serif; font-size: 22px;
-  letter-spacing: .04em; margin: 0 0 4px; line-height: 1;
+  font-family: 'Bebas Neue', sans-serif; font-size: 30px;
+  letter-spacing: .04em; margin: 0 0 6px; line-height: 1;
 }
 .leader-card-role {
-  font-family: 'DM Mono', monospace; font-size: 11px;
+  font-family: 'DM Mono', monospace; font-size: 12px;
   letter-spacing: .15em; text-transform: uppercase; color: var(--jbr-red);
 }
 
