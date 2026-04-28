@@ -108,11 +108,11 @@ export function Header() {
   return (
     <header className="topbar">
       <div className="topbar-inner">
-        <Link href="/" className="brand" onClick={closeMobile} aria-label="JBR Creative Group home">
+        <Link href="/" className="brand" onClick={() => { closeMobile(); window.scrollTo({ top: 0, left: 0, behavior: "auto" }); }} aria-label="JBR Creative Group home">
           <img className="brand-logo" src="/brand/jbr-logo.png" alt="JBR Creative Group" />
         </Link>
         <nav className="topnav">
-          <Link href="/">Home</Link>
+          <Link href="/" onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "auto" })}>Home</Link>
           <Link href="/about">About</Link>
           <Link href="/roster">Roster</Link>
           <a href={h("news")}>News</a>
@@ -136,7 +136,7 @@ export function Header() {
       </div>
       {mobileOpen && (
         <div className="mobile-nav">
-          <Link href="/" onClick={closeMobile}>Home</Link>
+          <Link href="/" onClick={() => { closeMobile(); window.scrollTo({ top: 0, left: 0, behavior: "auto" }); }}>Home</Link>
           <Link href="/about" onClick={closeMobile}>About</Link>
           <Link href="/roster" onClick={closeMobile}>Roster</Link>
           <a href={h("news")} onClick={closeMobile}>News</a>
