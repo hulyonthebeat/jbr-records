@@ -27,6 +27,29 @@ function jumpToSection(section: string) {
   const headerH = header ? header.getBoundingClientRect().height : 0;
   const y = el.getBoundingClientRect().top + window.scrollY - headerH;
   window.scrollTo({ top: y, left: 0, behavior: "auto" });
+  replayReveal(el);
+}
+
+/** Re-trigger the scale+fade reveal animation on every [data-reveal] inside
+ *  the section. Used when the user navigates into a section that has already
+ *  been revealed once — without this, the cards just sit there. */
+function replayReveal(root: HTMLElement) {
+  const items = root.querySelectorAll<HTMLElement>("[data-reveal]");
+  if (items.length === 0) return;
+  // Strip the revealed flag and force layout so the browser registers the
+  // initial (small + faded) state before we re-add it on the next frame.
+  for (const el of items) {
+    delete el.dataset.revealed;
+  }
+  // Reading offsetWidth forces a synchronous reflow.
+  void root.offsetWidth;
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      for (const el of items) {
+        el.dataset.revealed = "true";
+      }
+    });
+  });
 }
 
 function useGoToSection() {
