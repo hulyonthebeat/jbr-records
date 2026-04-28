@@ -431,22 +431,23 @@ img, svg { max-width: 100%; display: block; }
   display: flex; align-items: stretch;
 }
 .leader-photo {
-  flex: 0 0 140px; background: #000; overflow: hidden;
+  flex: 0 0 150px; aspect-ratio: 4 / 5;
+  background: #000; overflow: hidden;
 }
 .leader-photo img {
   width: 100%; height: 100%; object-fit: cover; display: block;
 }
 .leader-meta {
-  padding: 18px 22px; border-left: 1px solid var(--ink);
+  padding: 14px 16px; border-left: 1px solid var(--ink);
   display: flex; flex-direction: column; justify-content: center;
-  flex: 1;
+  flex: 1; min-width: 0;
 }
 .leader-card-name {
-  font-family: 'Bebas Neue', sans-serif; font-size: 30px;
-  letter-spacing: .04em; margin: 0 0 6px; line-height: 1;
+  font-family: 'Bebas Neue', sans-serif; font-size: 24px;
+  letter-spacing: .03em; margin: 0 0 6px; line-height: 1.05;
 }
 .leader-card-role {
-  font-family: 'DM Mono', monospace; font-size: 12px;
+  font-family: 'DM Mono', monospace; font-size: 11px;
   letter-spacing: .15em; text-transform: uppercase; color: var(--jbr-red);
 }
 
