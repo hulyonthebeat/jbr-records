@@ -1,8 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "pnpm install --frozen-lockfile=false",
-  "buildCommand": "pnpm --filter @workspace/jbr-site run build",
-  "outputDirectory": "artifacts/jbr-site/dist/public",
+  "buildCommand": "pnpm --filter @workspace/jbr-site run build && rm -rf public && cp -r artifacts/jbr-site/dist/public public",
+  "outputDirectory": "public",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
