@@ -24,7 +24,13 @@ function Router() {
 function useImageFadeIn() {
   useEffect(() => {
     const markLoaded = (img: HTMLImageElement) => {
-      img.setAttribute("data-loaded", "true");
+      // Defer one frame so the browser paints the initial (zoomed + faded)
+      // state before transitioning — otherwise cached images skip the animation.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          img.setAttribute("data-loaded", "true");
+        });
+      });
     };
     const prepare = (img: HTMLImageElement) => {
       if (img.dataset.fadein) return;
@@ -87,11 +93,16 @@ function useScrollReveal() {
   const [location] = useLocation();
 
   useEffect(() => {
+    const observed = new WeakSet<Element>();
+
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            (entry.target as HTMLElement).dataset.revealed = "true";
+            const el = entry.target as HTMLElement;
+            requestAnimationFrame(() => {
+              el.dataset.revealed = "true";
+            });
             observer.unobserve(entry.target);
           }
         }
@@ -100,13 +111,24 @@ function useScrollReveal() {
     );
 
     const tagAndObserve = () => {
+      const fresh: HTMLElement[] = [];
       for (const selector of REVEAL_SELECTORS) {
         document.querySelectorAll<HTMLElement>(selector).forEach((el) => {
-          if (el.dataset.reveal) return;
+          if (observed.has(el)) return;
+          observed.add(el);
           el.dataset.reveal = "true";
-          observer.observe(el);
+          fresh.push(el);
         });
       }
+      if (fresh.length === 0) return;
+      // Wait two frames so the browser paints the initial (small + faded)
+      // state before we start observing — otherwise elements already in the
+      // viewport will skip their transition and just snap to final state.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          for (const el of fresh) observer.observe(el);
+        });
+      });
     };
 
     tagAndObserve();
