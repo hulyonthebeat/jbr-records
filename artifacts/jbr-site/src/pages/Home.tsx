@@ -442,7 +442,7 @@ function ContactSection() {
     <section className="contact" id="contact">
       <div className="contact-inner">
         <div className="contact-intro">
-          <h2 className="section-title">CONTACT<span className="accent"> /</span> US</h2>
+          <h2 className="section-title">CONTACT US</h2>
           <div className="contact-meta">
             <div>
               <div className="contact-meta-label">EMAIL</div>
