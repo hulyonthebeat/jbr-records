@@ -47,17 +47,19 @@ body::before {
 
 /* ROUTE FADE-IN (on every navigation) */
 .route-fade {
-  animation: jbr-route-fade .45s cubic-bezier(.4, 0, .2, 1) both;
+  animation: jbr-route-fade .85s cubic-bezier(.22, .61, .36, 1) both;
+  will-change: opacity, transform;
 }
 @keyframes jbr-route-fade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* IMAGE FADE-IN (smooth load instead of pop) */
 img[data-fadein] {
   opacity: 0;
-  transition: opacity .45s ease-out;
+  transition: opacity .9s cubic-bezier(.22, .61, .36, 1);
+  will-change: opacity;
 }
 img[data-fadein][data-loaded] {
   opacity: 1;
