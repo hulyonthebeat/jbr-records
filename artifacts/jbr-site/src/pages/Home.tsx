@@ -20,7 +20,7 @@ interface CarouselSlide {
 const HERO_SLIDES: CarouselSlide[] = [
   { src: "/carousel/01-eric-benet.jpeg", alt: "Eric Benét", caption: "ERIC BENÉT", position: "center top" },
   { src: "/carousel/02-chante-moore.jpg", alt: "Chanté Moore", caption: "CHANTÉ MOORE", position: "center top" },
-  { src: "/carousel/03-autumn-paige.jpg", alt: "Autumn Paige", caption: "AUTUMN PAIGE", position: "center 30%" },
+  { src: "/carousel/03-autumn-paige.jpg", alt: "Autumn Paige", caption: "AUTUMN PAIGE", position: "center top" },
   { src: "/carousel/04-joe-leone.jpg", alt: "Joe Leone on stage with guitar", caption: "JOE LEONE", position: "center top" },
   { src: "/carousel/05-jbr-team.jpg", alt: "JBR team in the studio", caption: "JBR CREATIVE GROUP" },
 ];
