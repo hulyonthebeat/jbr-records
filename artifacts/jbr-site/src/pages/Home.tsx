@@ -264,7 +264,8 @@ const ARTISTS = [
     name: "JOE LEONE",
     role: "Recording Artist",
     photo: "/photos/joe-leone-jbr.jpg",
-    href: "/artists/joe-leone",
+    href: "https://joeleone.lnk.to/music",
+    external: true,
   },
 ];
 
@@ -566,7 +567,7 @@ export function Footer() {
           <h4>ARTISTS</h4>
           <ul>
             <li><a href="https://ericbenet.lnk.to/music" target="_blank" rel="noopener noreferrer">Eric Benét</a></li>
-            <li><Link href="/artists/joe-leone">Joe Leone</Link></li>
+            <li><a href="https://joeleone.lnk.to/music" target="_blank" rel="noopener noreferrer">Joe Leone</a></li>
             <li><Link href="/artists/autumn-paige">Autumn Paige</Link></li>
           </ul>
         </div>

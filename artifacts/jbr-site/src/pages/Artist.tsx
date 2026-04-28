@@ -13,10 +13,14 @@ export default function Artist() {
       window.location.replace("https://ericbenet.lnk.to/music");
       return;
     }
+    if (slug === "joe-leone") {
+      window.location.replace("https://joeleone.lnk.to/music");
+      return;
+    }
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [slug]);
 
-  if (slug === "eric-benet") {
+  if (slug === "eric-benet" || slug === "joe-leone") {
     return null;
   }
 
@@ -202,11 +206,15 @@ export default function Artist() {
                     <div className="roster-cta">VIEW ARTIST &rarr;</div>
                   </>
                 );
-                if (s === "eric-benet") {
+                const externalLinks: Record<string, string> = {
+                  "eric-benet": "https://ericbenet.lnk.to/music",
+                  "joe-leone": "https://joeleone.lnk.to/music",
+                };
+                if (externalLinks[s]) {
                   return (
                     <a
                       key={s}
-                      href="https://ericbenet.lnk.to/music"
+                      href={externalLinks[s]}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="roster-card"
