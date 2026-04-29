@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Play, ArrowRight, Instagram, Twitter, Youtube, Music, Disc3, Mic2, Radio } from "lucide-react";
+import { Play, ArrowRight, Instagram, Twitter, Youtube, Disc3, Mic2, Radio, PlayCircle } from "lucide-react";
 
 // --- Data ---
 const ROSTER = [
@@ -38,17 +38,17 @@ const ROSTER = [
 
 const NEWS = [
   {
-    date: "OCT 12, 2024",
+    date: "10.12.24",
     title: "Eric Benét & Chanté Moore Announce 'Duets' Collaborative Album",
     source: "Billboard",
   },
   {
-    date: "SEP 28, 2024",
+    date: "09.28.24",
     title: "Joe Leone's 'Discipline' Debuts at #1 on Traditional Jazz Charts",
     source: "Jazz Times",
   },
   {
-    date: "AUG 15, 2024",
+    date: "08.15.24",
     title: "JBR Creative Group Launches as a New Sanctuary for Analog Soul",
     source: "Variety",
   }
@@ -58,9 +58,9 @@ const NEWS = [
 
 const FilmGrain = () => (
   <div 
-    className="pointer-events-none fixed inset-0 z-50 opacity-[0.04] mix-blend-overlay"
+    className="pointer-events-none fixed inset-0 z-50 opacity-[0.02] mix-blend-overlay"
     style={{
-      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
     }}
   />
 );
@@ -71,402 +71,381 @@ const CinematicImage = ({ src, alt, className = "", imgClassName = "" }: { src: 
     <img 
       src={src} 
       alt={alt} 
-      className={`absolute inset-0 w-full h-full object-cover grayscale brightness-75 contrast-[1.1] mix-blend-luminosity ${imgClassName}`}
+      className={`absolute inset-0 w-full h-full object-cover grayscale-[0.2] contrast-[1.2] brightness-90 saturate-[1.1] ${imgClassName}`}
     />
-    {/* Amber/Gold color tint overlay */}
-    <div className="absolute inset-0 bg-[#3a1a00] mix-blend-color opacity-[0.85]" />
-    <div className="absolute inset-0 bg-[#1a0a00] mix-blend-multiply opacity-40" />
+    {/* Modern cinema grade: Cool shadows, clean highlights */}
+    <div className="absolute inset-0 bg-[#0a1118] mix-blend-multiply opacity-50" />
+    <div className="absolute inset-0 bg-[#1c2b36] mix-blend-color opacity-30" />
+    {/* Very subtle teal/orange pop */}
+    <div className="absolute inset-0 bg-gradient-to-tr from-[#02111d]/40 to-[#cc6633]/10 mix-blend-overlay opacity-60" />
     {/* Vignette */}
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(5,2,0,0.8)_100%)]" />
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,rgba(0,0,0,0.7)_100%)] pointer-events-none" />
   </div>
 );
 
-export function Home() {
-  const { scrollYProgress } = useScroll();
-  const heroY = useTransform(scrollYProgress, [0, 0.2], ["0%", "30%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 1.1]);
+const SceneMarker = ({ scene, title }: { scene: string, title: string }) => (
+  <div className="flex items-center gap-4 mb-8 font-mono text-[10px] tracking-[0.2em] text-stone-500 uppercase">
+    <span>SC. {scene}</span>
+    <div className="w-8 h-[1px] bg-stone-700" />
+    <span className="text-stone-300">{title}</span>
+  </div>
+);
+
+const Timecode = () => {
+  const [time, setTime] = useState("00:00:00:00");
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      const ms = String(Math.floor(now.getMilliseconds() / 33)).padStart(2, '0'); // ~30fps
+      setTime(`${h}:${m}:${s}:${ms}`);
+    }, 33);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-[#050302] text-stone-300 font-sans selection:bg-[#b58900] selection:text-[#050302] overflow-x-hidden">
+    <div className="font-mono text-[10px] tracking-widest text-stone-500 tabular-nums">
+      {time}
+    </div>
+  );
+}
+
+export function Home() {
+  const { scrollYProgress } = useScroll();
+  const heroY = useTransform(scrollYProgress, [0, 0.5], ["0%", "20%"]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 1.05]);
+
+  return (
+    <div className="min-h-screen bg-[#020202] text-stone-300 font-sans selection:bg-stone-200 selection:text-black overflow-x-hidden">
       <FilmGrain />
 
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-40 px-8 py-8 flex justify-between items-center mix-blend-difference text-stone-200">
-        <div className="w-32 md:w-40 transition-transform hover:scale-105 duration-700 cursor-pointer origin-left">
-          <img src="/__mockup/images/jbr/jbr-logo.png" alt="JBR Creative Group" className="w-full h-auto opacity-90" />
+      {/* Fixed UI Overlays */}
+      <div className="fixed top-0 left-0 right-0 z-40 p-6 md:p-8 flex justify-between items-start mix-blend-difference pointer-events-none">
+        <div className="w-24 md:w-32 pointer-events-auto cursor-pointer">
+          <img src="/__mockup/images/jbr/jbr-logo.png" alt="JBR Creative Group" className="w-full h-auto opacity-100 filter invert" />
         </div>
-        <div className="hidden md:flex gap-10 text-[10px] md:text-xs tracking-[0.25em] uppercase font-light">
-          <a href="#ethos" className="hover:text-[#b58900] transition-colors duration-500">Ethos</a>
-          <a href="#roster" className="hover:text-[#b58900] transition-colors duration-500">Roster</a>
-          <a href="#news" className="hover:text-[#b58900] transition-colors duration-500">News</a>
-          <a href="#contact" className="hover:text-[#b58900] transition-colors duration-500">Contact</a>
+        <div className="hidden md:flex flex-col items-end gap-2 pointer-events-auto">
+          <div className="flex gap-8 font-mono text-[10px] tracking-[0.25em] uppercase text-stone-300">
+            <a href="#ethos" className="hover:text-white transition-colors duration-300">Ethos</a>
+            <a href="#roster" className="hover:text-white transition-colors duration-300">Roster</a>
+            <a href="#news" className="hover:text-white transition-colors duration-300">News</a>
+          </div>
+          <Timecode />
         </div>
-      </nav>
+      </div>
+
+      <div className="fixed bottom-0 left-0 right-0 z-40 p-6 md:p-8 flex justify-between items-end mix-blend-difference pointer-events-none hidden md:flex">
+        <div className="font-mono text-[10px] tracking-[0.2em] text-stone-500 uppercase">
+          REC <span className="inline-block w-2 h-2 rounded-full bg-red-600 animate-pulse ml-2" />
+        </div>
+        <div className="font-mono text-[10px] tracking-[0.2em] text-stone-500 uppercase">
+          2.39:1 / 24FPS
+        </div>
+      </div>
 
       {/* Hero Section */}
-      <section className="relative h-[100dvh] flex items-center justify-center overflow-hidden bg-black">
+      <section className="relative h-[100dvh] w-full flex items-center justify-center overflow-hidden bg-black py-16 px-4 md:px-12">
         <motion.div 
-          style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}
-          className="absolute inset-0 z-0 origin-bottom"
+          style={{ y: heroY, scale: heroScale }}
+          className="relative w-full h-full max-h-[85vh] overflow-hidden"
         >
+          {/* Letterbox Frame */}
+          <div className="absolute inset-0 z-20 pointer-events-none border-y-[10vh] border-black" />
+          
           <motion.div
             initial={{ scale: 1.1, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 3, ease: "easeOut" }}
-            className="w-full h-full"
+            transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0"
           >
             <CinematicImage 
               src="/__mockup/images/jbr/eric-benet-hero.jpg" 
-              alt="Eric Benet" 
-              className="w-full h-full opacity-90"
-              imgClassName="object-[50%_30%]"
+              alt="Studio" 
+              className="w-full h-full"
+              imgClassName="object-cover object-[50%_40%]"
             />
           </motion.div>
         </motion.div>
 
-        {/* Cinematic Letterboxing Borders */}
-        <div className="absolute top-0 inset-x-0 h-[10vh] bg-gradient-to-b from-black to-transparent z-10 pointer-events-none" />
-        <div className="absolute bottom-0 inset-x-0 h-[20vh] bg-gradient-to-t from-[#050302] to-transparent z-10 pointer-events-none" />
-
-        {/* Hero Content */}
-        <div className="relative z-20 text-center px-4 max-w-5xl mx-auto flex flex-col items-center mt-24">
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 1.5, ease: "easeOut" }}
-            className="text-[#b58900] tracking-[0.4em] uppercase text-[10px] sm:text-xs mb-8 font-medium"
-          >
-            Independent Music Label
-          </motion.p>
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.3, duration: 1.5, ease: "easeOut" }}
-            className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-stone-100 leading-[0.9] tracking-tight drop-shadow-2xl"
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
-            Real Voices.<br />
-            <span className="italic text-stone-400 font-light drop-shadow-2xl">Real Records.</span>
-          </motion.h1>
-          
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 96 }}
-            transition={{ delay: 2.5, duration: 1.5, ease: "easeInOut" }}
-            className="mt-20 w-[1px] bg-gradient-to-b from-[#b58900] to-transparent overflow-hidden"
-          >
-            <motion.div 
-              animate={{ y: [0, 96, 0] }}
-              transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-              className="w-full h-1/3 bg-white"
-            />
-          </motion.div>
+        {/* Hero Copy overlaying the image */}
+        <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
+          <div className="text-center px-4">
+            <motion.div
+              initial={{ opacity: 0, clipPath: "inset(0 100% 0 0)" }}
+              animate={{ opacity: 1, clipPath: "inset(0 0% 0 0)" }}
+              transition={{ delay: 1, duration: 1.5, ease: [0.7, 0, 0.3, 1] }}
+            >
+              <h1 
+                className="text-4xl md:text-6xl lg:text-[7rem] text-white font-bold tracking-tighter uppercase leading-[0.85] mix-blend-overlay drop-shadow-2xl"
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              >
+                SOUND, MADE
+                <br />
+                DELIBERATELY.
+              </h1>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Ethos Section */}
-      <section id="ethos" className="relative py-32 md:py-48 px-8 max-w-7xl mx-auto overflow-hidden">
-        <div className="grid md:grid-cols-12 gap-16 md:gap-8 items-center relative z-10">
+      <section id="ethos" className="relative py-32 md:py-48 px-6 md:px-12 max-w-[100rem] mx-auto overflow-hidden">
+        <SceneMarker scene="01" title="ETHOS" />
+        
+        <div className="grid md:grid-cols-12 gap-12 md:gap-8 items-start relative z-10">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-            className="md:col-span-5 space-y-12"
+            transition={{ duration: 0.8 }}
+            className="md:col-span-5 md:col-start-2 space-y-10"
           >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-[1px] bg-[#b58900]" />
-              <span className="text-[#b58900] text-xs tracking-[0.3em] uppercase">The Foundation</span>
-            </div>
-            <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl text-stone-100 leading-[1.1] tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Craftsmanship <br/>
-              <span className="text-stone-500 italic font-light">Over Content.</span>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl text-white font-bold tracking-tight uppercase leading-[1.1]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              The studio<br/>is the story.
             </h2>
-            <div className="space-y-8 text-stone-400 text-lg leading-relaxed font-light">
+            <div className="space-y-8 text-stone-400 text-base md:text-lg leading-relaxed font-light max-w-lg">
               <p>
-                Founded by industry veteran Joey Battaglia, JBR Creative Group was built on a singular premise: great music requires time, space, and analog soul.
+                Founded by Joey Battaglia, JBR Creative Group operates on a single truth: great records take time. We reject the playlist-factory model in favor of deliberate craftsmanship.
               </p>
               <p>
-                We are not a playlist factory. We are a sanctuary for artists who still believe in the album format, the studio band, and the raw power of an unedited vocal take. From R&B legends to rising contemporary stars, our roster is united by a commitment to timeless musicality.
+                We are an independent home for working contemporary artists. From established R&B voices to rising adult contemporary talent, our roster is united by vocal excellence and a commitment to the album format.
               </p>
             </div>
-            <button className="group flex items-center gap-4 text-xs tracking-[0.2em] uppercase text-stone-200 mt-12 pb-3 border-b border-stone-800 hover:border-[#b58900] transition-colors duration-500">
-              <span>Read Our Story</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-3 transition-transform duration-500 text-[#b58900]" />
-            </button>
           </motion.div>
           
           <motion.div 
-            initial={{ opacity: 0, scale: 0.95, filter: "blur(4px)" }}
-            whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 2, ease: "easeOut" }}
-            className="md:col-span-6 md:col-start-7 relative aspect-[3/4] w-full max-w-lg mx-auto"
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="md:col-span-4 md:col-start-8 relative aspect-[4/5] w-full"
           >
             <CinematicImage 
               src="/__mockup/images/jbr/joe-leone-jbr.jpg" 
               alt="In the studio" 
               className="w-full h-full object-cover"
             />
-            {/* Decorative film frame corners */}
-            <div className="absolute top-4 left-4 w-8 h-8 border-t border-l border-[#b58900]/50" />
-            <div className="absolute bottom-4 right-4 w-8 h-8 border-b border-r border-[#b58900]/50" />
-            
-            <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-[#050302] border border-stone-800 flex items-center justify-center rounded-full p-6 z-10 hidden md:flex">
-              <motion.img 
-                animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-                src="/__mockup/images/jbr/jbr-logo.png" 
-                alt="JBR Mark" 
-                className="w-full opacity-30" 
-              />
-            </div>
+            {/* Minimal framing corners */}
+            <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-white/30" />
+            <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-white/30" />
+            <div className="absolute -bottom-4 right-0 font-mono text-[8px] tracking-widest text-stone-600">ROLL 01 / TAKE 04</div>
           </motion.div>
         </div>
       </section>
 
-      {/* The Process / Analog */}
-      <section className="py-24 bg-[#0a0705] border-y border-stone-900 relative">
-        <div className="max-w-7xl mx-auto px-8 grid md:grid-cols-3 gap-12 text-center md:text-left">
-          {[
-            { icon: Disc3, title: "The Record", desc: "We believe in albums as complete thoughts, meant to be experienced from start to finish." },
-            { icon: Mic2, title: "The Take", desc: "No auto-tune grids. We capture the raw, emotional performance exactly as it happened in the room." },
-            { icon: Radio, title: "The Sound", desc: "Warm tubes, real instruments, and analog mixing for a sonic depth that streaming algorithms can't replicate." },
-          ].map((item, i) => (
-            <motion.div 
-              key={item.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.2, duration: 1 }}
-              className="space-y-6"
-            >
-              <item.icon className="w-8 h-8 text-[#b58900] mx-auto md:mx-0 opacity-80" strokeWidth={1.5} />
-              <h3 className="font-serif text-2xl text-stone-200" style={{ fontFamily: "'Playfair Display', serif" }}>{item.title}</h3>
-              <p className="text-stone-500 font-light leading-relaxed">{item.desc}</p>
-            </motion.div>
-          ))}
+      {/* The Process */}
+      <section className="py-24 border-y border-stone-900/50 bg-[#040404] relative">
+        <div className="max-w-[100rem] mx-auto px-6 md:px-12">
+          <SceneMarker scene="02" title="METHOD" />
+          
+          <div className="grid md:grid-cols-3 gap-16 md:gap-12 mt-16">
+            {[
+              { num: "01", title: "THE RECORD", desc: "Albums as complete narratives. No filler, no algorithms. Just the story." },
+              { num: "02", title: "THE CAPTURE", desc: "Real musicians in the room. Capturing the performance, not constructing it." },
+              { num: "03", title: "THE GRADE", desc: "Analog warmth mixed with modern precision. A sound that is both current and timeless." },
+            ].map((item, i) => (
+              <motion.div 
+                key={item.title}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.8 }}
+                className="space-y-6"
+              >
+                <div className="font-mono text-xs text-stone-600">{item.num}</div>
+                <h3 className="text-xl text-white font-bold tracking-tight uppercase" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.title}</h3>
+                <p className="text-stone-500 font-light leading-relaxed text-sm">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Roster Spotlight */}
       <section id="roster" className="py-32 md:py-48 relative z-10">
-        <div className="px-8 max-w-7xl mx-auto mb-24 md:mb-32 flex flex-col md:flex-row md:items-end justify-between gap-8">
-          <div>
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-[1px] bg-[#b58900]" />
-              <span className="text-[#b58900] text-xs tracking-[0.3em] uppercase">Artists</span>
-            </div>
-            <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl text-stone-100 tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
-              The <span className="italic text-[#b58900] font-light">Roster</span>
-            </h2>
-          </div>
-          <div className="hidden md:block flex-1 max-w-md h-[1px] bg-stone-800 mb-6" />
+        <div className="px-6 md:px-12 max-w-[100rem] mx-auto mb-24">
+          <SceneMarker scene="03" title="THE ROSTER" />
+          <h2 className="text-5xl md:text-7xl lg:text-8xl text-white font-bold tracking-tighter uppercase" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            ARTISTS
+          </h2>
         </div>
 
-        {/* Horizontal scroll on mobile, staggered grid on desktop */}
-        <div className="flex md:grid md:grid-cols-12 overflow-x-auto md:overflow-visible snap-x snap-mandatory hide-scrollbar pb-20 px-8 max-w-[100rem] mx-auto gap-8 md:gap-x-12 md:gap-y-32">
-          {ROSTER.map((artist, i) => {
-            // Determine desktop grid placement for staggered look
-            const colSpan = i % 3 === 0 ? 'col-span-6' : (i % 3 === 1 ? 'col-span-5 col-start-8' : 'col-span-7 col-start-3');
-            const mt = i === 1 ? 'md:mt-32' : (i === 2 ? 'md:-mt-24' : '');
-            
-            return (
+        {/* Scrollable cinematic roster */}
+        <div className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-20 px-6 md:px-12 gap-6 md:gap-12 w-full">
+          {ROSTER.map((artist, i) => (
             <motion.div 
               key={artist.name}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: 0.1, duration: 1.2, ease: "easeOut" }}
-              className={`min-w-[85vw] snap-center group cursor-pointer ${colSpan} ${mt}`}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="min-w-[85vw] md:min-w-[40vw] lg:min-w-[30vw] snap-center group cursor-pointer flex-shrink-0"
             >
-              <div className={`relative ${i % 2 === 0 ? 'aspect-[4/5]' : 'aspect-square'} mb-8 overflow-hidden bg-[#0a0705]`}>
+              <div className="relative aspect-[3/4] mb-6 overflow-hidden bg-[#040404]">
                 <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 2, ease: "easeOut" }}
                   className="w-full h-full"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <CinematicImage 
                     src={artist.image} 
                     alt={artist.name} 
-                    className="w-full h-full opacity-60 group-hover:opacity-100 transition-opacity duration-1000"
+                    className="w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-700"
                   />
                 </motion.div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050302] via-transparent to-transparent opacity-80" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
                 
                 {/* Overlay Text */}
-                <div className="absolute bottom-8 left-8 right-8 flex justify-between items-end">
-                  <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-700 ease-out">
-                    <p className="text-[#b58900] text-[10px] tracking-[0.3em] uppercase mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100">{artist.role}</p>
-                    <h3 className="font-serif text-3xl md:text-5xl text-stone-100 tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>{artist.name}</h3>
+                <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                  <div className="translate-y-2 group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                    <p className="font-mono text-[10px] tracking-widest text-stone-400 uppercase mb-2">{artist.role}</p>
+                    <h3 className="text-3xl text-white font-bold tracking-tight uppercase" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{artist.name}</h3>
                   </div>
-                  <div className="w-12 h-12 rounded-full border border-stone-600 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:border-[#b58900] transition-all duration-500 shrink-0 bg-[#050302]/50 backdrop-blur-sm">
-                    <ArrowRight className="w-5 h-5 text-[#b58900]" strokeWidth={1.5} />
+                  <div className="w-10 h-10 border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 bg-black/30 backdrop-blur-md">
+                    <ArrowRight className="w-4 h-4 text-white" />
                   </div>
                 </div>
               </div>
             </motion.div>
-          )})}
+          ))}
         </div>
       </section>
 
-      {/* Featured Release / Parallax Banner */}
-      <section className="relative py-48 md:py-64 border-y border-stone-900 bg-[#050302] overflow-hidden flex items-center justify-center min-h-[80vh]">
-        {/* Parallax Background */}
+      {/* Featured Release / Cinematic Trailer style */}
+      <section className="relative py-48 border-y border-stone-900/50 bg-[#040404] overflow-hidden flex items-center justify-center min-h-[90vh]">
         <div className="absolute inset-0 z-0">
           <CinematicImage 
             src="/__mockup/images/jbr/autumn-paige.jpg" 
             alt="Studio Session" 
-            className="w-full h-full opacity-20"
-            imgClassName="object-center"
+            className="w-full h-full opacity-30"
+            imgClassName="object-center scale-105"
           />
         </div>
+        <div className="absolute inset-0 bg-black/40 z-0" />
         
-        <div className="max-w-4xl mx-auto px-8 text-center relative z-10">
+        <div className="w-full max-w-[100rem] mx-auto px-6 md:px-12 text-center md:text-left relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, filter: "blur(0px)" }}
             viewport={{ once: true }}
-            transition={{ duration: 1.5 }}
-            className="space-y-10"
+            transition={{ duration: 1.2 }}
+            className="space-y-6 md:max-w-2xl"
           >
-            <p className="text-[#b58900] text-xs tracking-[0.4em] uppercase font-medium">New Release</p>
-            <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl text-stone-100 leading-[1.1] tracking-tight drop-shadow-xl" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Eric Benét & Chanté Moore<br/>
-              <span className="italic text-stone-400 font-light mt-4 block">"Duets"</span>
+            <div className="font-mono text-[10px] tracking-widest text-stone-400 uppercase mb-8">
+              IN PRODUCTION / FALL 2024
+            </div>
+            <h2 className="text-5xl md:text-7xl lg:text-8xl text-white font-bold tracking-tighter uppercase leading-[0.9]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              ERIC BENÉT &<br />
+              CHANTÉ MOORE
             </h2>
-            <p className="text-stone-300 font-light text-lg md:text-xl max-w-2xl mx-auto drop-shadow-md">
-              Two of the most defining voices in R&B history come together for an unforgettable collaborative album recorded live in Los Angeles.
-            </p>
-            <div className="pt-8">
-              <button className="bg-stone-100 text-[#050302] px-10 py-5 text-xs tracking-[0.25em] uppercase hover:bg-[#b58900] hover:text-white transition-all duration-500">
-                Listen Now
+            <div className="pt-4 flex items-center gap-6 justify-center md:justify-start">
+              <button className="flex items-center gap-3 bg-white text-black px-6 py-4 font-mono text-xs tracking-widest uppercase hover:bg-stone-200 transition-colors">
+                <PlayCircle className="w-4 h-4" /> PLAY TEASER
               </button>
             </div>
           </motion.div>
+          
+          <div className="hidden md:block w-[30vw] aspect-video border border-white/10 relative p-2 bg-black/20 backdrop-blur-sm">
+            <CinematicImage src="/__mockup/images/jbr/eric-benet.jpg" alt="Preview" className="w-full h-full" />
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <Play className="w-12 h-12 text-white/50" />
+            </div>
+          </div>
         </div>
       </section>
 
       {/* News & Press */}
-      <section id="news" className="py-32 md:py-48 px-8 max-w-5xl mx-auto">
-        <div className="flex items-center gap-4 mb-16 md:mb-24">
-          <div className="w-12 h-[1px] bg-[#b58900]" />
-          <span className="text-[#b58900] text-xs tracking-[0.3em] uppercase">Press & News</span>
-        </div>
+      <section id="news" className="py-32 md:py-48 px-6 md:px-12 max-w-[100rem] mx-auto">
+        <SceneMarker scene="04" title="PRESS" />
         
-        <div className="space-y-0">
+        <div className="space-y-0 mt-16 md:w-3/4 mx-auto">
           {NEWS.map((item, i) => (
             <motion.a
               href="#"
               key={i}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.2, duration: 1 }}
-              className="block group py-10 md:py-16 border-b border-stone-800 hover:border-[#b58900] transition-colors duration-500 relative"
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+              className="block group py-8 border-b border-stone-800 hover:border-stone-500 transition-colors duration-300 relative"
             >
-              <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-6 md:gap-12 relative z-10">
-                <div className="text-stone-500 text-xs tracking-[0.2em] uppercase shrink-0 w-32">
+              <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 md:gap-12 relative z-10">
+                <div className="font-mono text-stone-500 text-[10px] tracking-widest uppercase shrink-0 pt-2">
                   {item.date}
                 </div>
-                <h3 className="font-serif text-2xl md:text-4xl text-stone-200 group-hover:text-white transition-colors duration-500 flex-1" style={{ fontFamily: "'Playfair Display', serif" }}>
+                <h3 className="text-xl md:text-3xl text-stone-300 group-hover:text-white transition-colors duration-300 flex-1 font-bold tracking-tight uppercase" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                   {item.title}
                 </h3>
-                <div className="flex items-center justify-between md:justify-end gap-6 shrink-0 w-32 text-stone-500">
-                  <span className="text-xs uppercase tracking-wider">{item.source}</span>
-                  <ArrowRight className="w-5 h-5 -rotate-45 group-hover:text-[#b58900] group-hover:rotate-0 transition-all duration-500" strokeWidth={1.5} />
+                <div className="flex items-center justify-between md:justify-end gap-6 shrink-0 font-mono text-[10px] text-stone-500 pt-2 uppercase">
+                  <span>{item.source}</span>
                 </div>
               </div>
             </motion.a>
           ))}
         </div>
-        <div className="mt-16 text-center">
-          <button className="text-xs tracking-[0.2em] uppercase text-stone-400 hover:text-[#b58900] transition-colors pb-1 border-b border-transparent hover:border-[#b58900]">
-            View All Journal Entries
-          </button>
-        </div>
-      </section>
-
-      {/* Newsletter */}
-      <section className="py-32 bg-[#0a0705] border-y border-stone-900">
-        <div className="max-w-3xl mx-auto px-8 text-center space-y-10">
-          <h2 className="font-serif text-4xl md:text-5xl text-stone-100" style={{ fontFamily: "'Playfair Display', serif" }}>Join the Inner Circle</h2>
-          <p className="text-stone-500 font-light">Exclusive pressings, early access to tickets, and notes from the studio.</p>
-          <form className="flex flex-col md:flex-row gap-4 max-w-xl mx-auto pt-6">
-            <input 
-              type="email" 
-              placeholder="YOUR EMAIL ADDRESS" 
-              className="flex-1 bg-transparent border-b border-stone-700 px-4 py-4 text-sm tracking-widest text-center md:text-left focus:outline-none focus:border-[#b58900] transition-colors text-stone-200 placeholder:text-stone-600"
-            />
-            <button type="submit" className="px-8 py-4 bg-stone-900 text-stone-300 text-xs tracking-[0.2em] uppercase hover:bg-[#b58900] hover:text-[#050302] transition-colors border border-stone-800 hover:border-[#b58900]">
-              Subscribe
-            </button>
-          </form>
-        </div>
       </section>
 
       {/* Footer */}
-      <footer id="contact" className="bg-[#050302] pt-32 pb-16 px-8 relative overflow-hidden">
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-stone-800 to-transparent" />
-        
-        <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-16 md:gap-8">
-          <div className="md:col-span-4 space-y-10">
-            <img src="/__mockup/images/jbr/jbr-logo.png" alt="JBR Creative Group" className="w-40 opacity-80" />
-            <p className="text-stone-500 font-light text-sm max-w-xs leading-relaxed">
-              An independent music label dedicated to real voices, real bands, and real records. Established in Los Angeles, California.
+      <footer className="bg-black pt-32 pb-16 px-6 md:px-12 relative border-t border-stone-900/50">
+        <div className="max-w-[100rem] mx-auto grid md:grid-cols-12 gap-16 md:gap-8">
+          <div className="md:col-span-5 space-y-12">
+            <h2 className="text-3xl text-white font-bold tracking-tighter uppercase" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              JBR CREATIVE GROUP
+            </h2>
+            <p className="text-stone-500 font-light text-sm max-w-sm leading-relaxed">
+              An independent label dedicated to modern artists making timeless records. Based in Los Angeles, CA.
             </p>
+            <form className="flex flex-col gap-4 max-w-xs pt-4">
+              <input 
+                type="email" 
+                placeholder="EMAIL ADDRESS" 
+                className="bg-transparent border-b border-stone-800 px-0 py-3 font-mono text-xs tracking-widest focus:outline-none focus:border-white transition-colors text-white placeholder:text-stone-700 uppercase"
+              />
+              <button type="submit" className="self-start text-white font-mono text-[10px] tracking-widest uppercase py-2 hover:text-stone-400 transition-colors border-b border-transparent hover:border-stone-400">
+                SUBSCRIBE TO UPDATES
+              </button>
+            </form>
           </div>
           
-          <div className="md:col-span-2 md:col-start-7 space-y-8">
-            <h4 className="text-stone-300 text-xs tracking-[0.3em] uppercase">Label</h4>
-            <ul className="space-y-4 text-stone-500 text-sm font-light">
-              <li><a href="#" className="hover:text-[#b58900] transition-colors">Artists</a></li>
-              <li><a href="#" className="hover:text-[#b58900] transition-colors">Releases</a></li>
-              <li><a href="#" className="hover:text-[#b58900] transition-colors">Our Story</a></li>
-              <li><a href="#" className="hover:text-[#b58900] transition-colors">Journal</a></li>
+          <div className="md:col-span-3 md:col-start-7 space-y-8">
+            <h4 className="font-mono text-stone-600 text-[10px] tracking-widest uppercase">Directory</h4>
+            <ul className="space-y-4 font-mono text-stone-400 text-xs tracking-wider uppercase">
+              <li><a href="#" className="hover:text-white transition-colors">Artists</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Releases</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Method</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Press</a></li>
             </ul>
           </div>
 
-          <div className="md:col-span-4 space-y-8">
-            <h4 className="text-stone-300 text-xs tracking-[0.3em] uppercase">Contact</h4>
-            <ul className="space-y-6 text-stone-500 text-sm font-light">
+          <div className="md:col-span-3 space-y-8">
+            <h4 className="font-mono text-stone-600 text-[10px] tracking-widest uppercase">Contact</h4>
+            <ul className="space-y-6 font-mono text-stone-400 text-xs tracking-wider uppercase">
               <li>
-                <span className="block text-xs tracking-widest uppercase mb-1">General Inquiries</span>
-                <a href="mailto:info@jbrcreativegroup.com" className="text-stone-300 hover:text-[#b58900] transition-colors">info@jbrcreativegroup.com</a>
+                <a href="mailto:info@jbrcreativegroup.com" className="hover:text-white transition-colors block">info@jbrcreativegroup.com</a>
               </li>
               <li>
-                <span className="block text-xs tracking-widest uppercase mb-1">Management & Booking</span>
-                <a href="mailto:mgmt@jbrcreativegroup.com" className="text-stone-300 hover:text-[#b58900] transition-colors">mgmt@jbrcreativegroup.com</a>
+                <a href="mailto:mgmt@jbrcreativegroup.com" className="hover:text-white transition-colors block">mgmt@jbrcreativegroup.com</a>
               </li>
             </ul>
-            <div className="flex gap-6 pt-6">
-              <a href="#" className="text-stone-500 hover:text-[#b58900] transition-colors"><Instagram className="w-5 h-5" strokeWidth={1.5} /></a>
-              <a href="#" className="text-stone-500 hover:text-[#b58900] transition-colors"><Twitter className="w-5 h-5" strokeWidth={1.5} /></a>
-              <a href="#" className="text-stone-500 hover:text-[#b58900] transition-colors"><Youtube className="w-5 h-5" strokeWidth={1.5} /></a>
+            <div className="flex gap-6 pt-4">
+              <a href="#" className="text-stone-500 hover:text-white transition-colors"><Instagram className="w-4 h-4" /></a>
+              <a href="#" className="text-stone-500 hover:text-white transition-colors"><Twitter className="w-4 h-4" /></a>
+              <a href="#" className="text-stone-500 hover:text-white transition-colors"><Youtube className="w-4 h-4" /></a>
             </div>
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto mt-32 pt-8 border-t border-stone-900 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] tracking-widest uppercase text-stone-600 font-light">
+        <div className="max-w-[100rem] mx-auto mt-32 pt-8 border-t border-stone-900/50 flex flex-col md:flex-row justify-between items-center gap-6 font-mono text-[10px] tracking-widest uppercase text-stone-600">
           <p>&copy; {new Date().getFullYear()} JBR Creative Group. All rights reserved.</p>
           <div className="flex gap-8">
-            <a href="#" className="hover:text-stone-400 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-stone-400 transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-stone-400 transition-colors">Privacy</a>
+            <a href="#" className="hover:text-stone-400 transition-colors">Terms</a>
           </div>
         </div>
       </footer>
-
-      {/* Global CSS for hide-scrollbar */}
-      <style dangerouslySetInnerHTML={{__html: `
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}} />
     </div>
   );
 }
