@@ -43,6 +43,18 @@ export default function Nav({ showPromo = true }: Props) {
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const goHome = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setMobileMenuOpen(false);
+    if (onHome) {
+      e.preventDefault();
+      try {
+        window.history.replaceState(null, "", BASE);
+      } catch {}
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    // Off-home: let Wouter Link handle navigation; ScrollToTop in App will reset scroll.
+  };
+
   const goSection =
     (id: string) =>
     (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -108,6 +120,7 @@ export default function Nav({ showPromo = true }: Props) {
           <div className="hidden md:flex flex-1 items-center gap-8 text-sm font-semibold tracking-tight">
             <Link
               href="/"
+              onClick={goHome}
               className={`hover:text-stone-400 transition-colors ${
                 onHome ? "text-[#C7332E]" : ""
               }`}
@@ -141,6 +154,7 @@ export default function Nav({ showPromo = true }: Props) {
 
           <Link
             href="/"
+            onClick={goHome}
             className="flex-shrink-0 cursor-pointer text-center md:flex-1 md:flex md:justify-center"
             aria-label="jbr creative group — home"
           >
@@ -194,6 +208,7 @@ export default function Nav({ showPromo = true }: Props) {
           <div className="absolute top-full left-0 right-0 bg-black border-b border-white/10 p-6 flex flex-col gap-6 md:hidden shadow-2xl shadow-black">
             <Link
               href="/"
+              onClick={goHome}
               className="text-lg font-bold hover:text-stone-400 transition-colors"
             >
               home
