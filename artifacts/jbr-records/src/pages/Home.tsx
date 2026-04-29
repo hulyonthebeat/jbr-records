@@ -32,8 +32,6 @@ const FEATURED = [
     title: "duets",
     artist: "eric benét with chanté moore",
     cover: asset("images/jbr/releases/duets-cover.jpg"),
-    bg: asset("images/jbr/eric-benet-hero.jpg"),
-    bgPosition: "50% 30%",
     listen: "https://ericbenet.lnk.to/duets",
     cta: "listen to duets",
   },
@@ -42,8 +40,6 @@ const FEATURED = [
     title: "invited",
     artist: "joe leone",
     cover: asset("images/jbr/releases/invited-cover.jpg"),
-    bg: asset("images/jbr/joe-leone-jbr.jpg"),
-    bgPosition: "50% 35%",
     listen: "https://joeleone.lnk.to/invited",
     cta: "stream invited",
   },
@@ -52,8 +48,6 @@ const FEATURED = [
     title: "money money money",
     artist: "autumn paige",
     cover: asset("images/jbr/releases/money-cover.jpg"),
-    bg: asset("images/jbr/autumn-paige-portrait.jpg"),
-    bgPosition: "50% 25%",
     listen: "https://autumnpaige.lnk.to/money",
     cta: "pre-save now",
   },
@@ -892,23 +886,25 @@ function HeroCarousel() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* Background image (cross-fade) */}
+      {/* Background — blown-up, softly blurred copy of the cover art */}
       <AnimatePresence mode="sync">
         <motion.img
-          key={slide.bg}
-          src={slide.bg}
+          key={slide.cover}
+          src={slide.cover}
           alt=""
-          initial={{ opacity: 0, scale: 1.04 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, scale: 1.25 }}
+          animate={{ opacity: 1, scale: 1.2 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ objectPosition: slide.bgPosition }}
+          className="absolute inset-0 w-full h-full object-cover blur-xl"
+          style={{ filter: "blur(40px) saturate(1.1)" }}
           aria-hidden
         />
       </AnimatePresence>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/40 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-black/30 pointer-events-none md:via-black/10" />
+      {/* Subtle darken so white text stays legible */}
+      <div className="absolute inset-0 bg-black/30 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col justify-end">
