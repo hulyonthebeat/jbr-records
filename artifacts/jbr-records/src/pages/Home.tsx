@@ -886,99 +886,69 @@ function HeroCarousel() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* Background — blown-up, softly blurred copy of the cover art */}
+      {/* Background — full-bleed cover artwork */}
       <AnimatePresence mode="sync">
         <motion.img
           key={slide.cover}
           src={slide.cover}
-          alt=""
-          initial={{ opacity: 0, scale: 1.25 }}
-          animate={{ opacity: 1, scale: 1.2 }}
+          alt={`${slide.title} — ${slide.artist}`}
+          initial={{ opacity: 0, scale: 1.06 }}
+          animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          className="absolute inset-0 w-full h-full object-cover blur-xl"
-          style={{ filter: "blur(40px) saturate(1.1)" }}
-          aria-hidden
+          className="absolute inset-0 w-full h-full object-cover"
         />
       </AnimatePresence>
-      {/* Subtle darken so white text stays legible */}
-      <div className="absolute inset-0 bg-black/30 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent pointer-events-none" />
+      {/* Gradient overlays — keep text legible without hiding the artwork */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/20 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30 pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col justify-end">
         <div className="px-6 md:px-16 pb-20 md:pb-28">
-          <div className="grid md:grid-cols-12 gap-8 md:gap-12 items-end max-w-[120rem] mx-auto w-full">
-            {/* Cover art */}
-            <div className="md:col-span-4 lg:col-span-3 order-2 md:order-1">
-              <AnimatePresence mode="wait">
-                <motion.a
-                  key={slide.cover}
-                  href={slide.listen}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="block aspect-square w-40 md:w-full max-w-xs bg-stone-800 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.95)] ring-1 ring-white/10 hover:ring-white/40 transition"
-                  aria-label={`${slide.title} — ${slide.artist} cover art`}
-                >
-                  <img
-                    src={slide.cover}
-                    alt={`${slide.title} cover`}
-                    className="w-full h-full object-cover"
-                    loading={index === 0 ? "eager" : "lazy"}
-                  />
-                </motion.a>
-              </AnimatePresence>
-            </div>
-
-            {/* Text + CTA */}
-            <div className="md:col-span-8 lg:col-span-9 order-1 md:order-2 max-w-3xl">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={slide.title}
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                >
-                  <p className="text-xs md:text-sm font-bold tracking-[0.2em] text-[#F8B830] mb-4 uppercase">
-                    {slide.eyebrow}
-                  </p>
-                  <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] mb-3 drop-shadow-lg">
-                    {slide.title}
-                  </h1>
-                  <p className="text-base md:text-2xl font-semibold tracking-tight mb-8 text-white/90 drop-shadow">
-                    {slide.artist}
-                  </p>
-                  <div className="flex flex-wrap gap-4">
-                    <a
-                      href={slide.listen}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block bg-white text-black px-8 py-4 text-sm font-bold tracking-tight hover:bg-stone-200 transition-colors rounded-none"
-                    >
-                      {slide.cta}
-                    </a>
-                    <a
-                      href="#music"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        const el = document.getElementById("music");
-                        if (el)
-                          el.scrollIntoView({ behavior: "smooth", block: "start" });
-                      }}
-                      className="inline-block border-2 border-white text-white bg-transparent px-8 py-4 text-sm font-bold tracking-tight hover:bg-white hover:text-black transition-colors rounded-none"
-                    >
-                      all releases
-                    </a>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
+          <div className="max-w-[120rem] mx-auto w-full">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={slide.title}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="max-w-3xl"
+              >
+                <p className="text-xs md:text-sm font-bold tracking-[0.2em] text-[#F8B830] mb-4 uppercase">
+                  {slide.eyebrow}
+                </p>
+                <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] mb-3 drop-shadow-lg">
+                  {slide.title}
+                </h1>
+                <p className="text-base md:text-2xl font-semibold tracking-tight mb-8 text-white/90 drop-shadow">
+                  {slide.artist}
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <a
+                    href={slide.listen}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-white text-black px-8 py-4 text-sm font-bold tracking-tight hover:bg-stone-200 transition-colors rounded-none"
+                  >
+                    {slide.cta}
+                  </a>
+                  <a
+                    href="#music"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const el = document.getElementById("music");
+                      if (el)
+                        el.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }}
+                    className="inline-block border-2 border-white text-white bg-transparent px-8 py-4 text-sm font-bold tracking-tight hover:bg-white hover:text-black transition-colors rounded-none"
+                  >
+                    all releases
+                  </a>
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
 
