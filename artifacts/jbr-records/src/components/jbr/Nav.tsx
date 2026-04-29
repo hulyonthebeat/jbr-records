@@ -33,7 +33,7 @@ export default function Nav({ showPromo = true }: Props) {
   return (
     <>
       {showPromo && (
-        <div className="bg-[#F8B830] text-black py-2 px-4 text-center text-xs md:text-sm font-medium tracking-wide">
+        <div className="bg-[#1F4E7C] text-white py-2 px-4 text-center text-xs md:text-sm font-medium tracking-wide">
           new — duets, the eric benét + chanté moore collaborative album, out
           now.{" "}
           <a
@@ -64,7 +64,7 @@ export default function Nav({ showPromo = true }: Props) {
             <Link
               href="/about"
               className={`hover:text-stone-400 transition-colors ${
-                location === "/about" ? "text-[#F8B830]" : ""
+                location === "/about" ? "text-[#C7332E]" : ""
               }`}
             >
               about

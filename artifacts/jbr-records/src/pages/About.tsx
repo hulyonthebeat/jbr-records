@@ -90,7 +90,7 @@ export default function About() {
       {/* Leadership */}
       <section className="px-6 md:px-12 lg:px-16 py-20 md:py-28 bg-stone-950 border-b border-white/10">
         <div className="max-w-[120rem] mx-auto">
-          <p className="text-xs font-bold tracking-[0.2em] text-[#F8B830] mb-10 md:mb-14 uppercase">
+          <p className="text-xs font-bold tracking-[0.2em] text-[#C7332E] mb-10 md:mb-14 uppercase">
             leadership
           </p>
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-5xl">
@@ -137,7 +137,7 @@ export default function About() {
       <section className="px-6 md:px-12 lg:px-16 py-20 md:py-28">
         <div className="max-w-[120rem] mx-auto flex flex-col md:flex-row md:items-end md:justify-between gap-8">
           <div>
-            <p className="text-xs font-bold tracking-[0.2em] text-[#F8B830] mb-4 uppercase">
+            <p className="text-xs font-bold tracking-[0.2em] text-[#C7332E] mb-4 uppercase">
               the roster
             </p>
             <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95]">

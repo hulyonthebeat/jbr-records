@@ -218,7 +218,7 @@ export default function Home() {
               {/* Header bar — like reference: tag + title left, "shop all" right */}
               <div className="border border-white/15 px-6 md:px-10 py-6 md:py-8 flex items-center justify-between gap-6 flex-wrap">
                 <div>
-                  <p className="text-xs font-bold tracking-[0.2em] text-[#F8B830] mb-2 uppercase">
+                  <p className="text-xs font-bold tracking-[0.2em] text-[#C7332E] mb-2 uppercase">
                     new in
                   </p>
                   <h2 className="text-3xl md:text-5xl font-black tracking-tighter leading-none">
@@ -402,7 +402,7 @@ export default function Home() {
       >
         <div className="flex items-end justify-between mb-12 gap-6 flex-wrap">
           <div>
-            <p className="text-xs font-bold tracking-[0.2em] text-[#F8B830] mb-4 uppercase">
+            <p className="text-xs font-bold tracking-[0.2em] text-[#C7332E] mb-4 uppercase">
               releases
             </p>
             <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95]">
@@ -436,7 +436,7 @@ export default function Home() {
                   alt={`${release.title} by ${release.artist}`}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute top-4 left-4 bg-[#F8B830] text-black text-[10px] font-bold tracking-[0.15em] uppercase px-2 py-1">
+                <div className="absolute top-4 left-4 bg-[#C7332E] text-black text-[10px] font-bold tracking-[0.15em] uppercase px-2 py-1">
                   {release.tag}
                 </div>
               </div>
@@ -466,7 +466,7 @@ export default function Home() {
       >
         <div className="flex items-end justify-between mb-12 gap-6 flex-wrap">
           <div>
-            <p className="text-xs font-bold tracking-[0.2em] text-[#F8B830] mb-4 uppercase">
+            <p className="text-xs font-bold tracking-[0.2em] text-[#C7332E] mb-4 uppercase">
               latest
             </p>
             <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95]">
@@ -555,7 +555,7 @@ export default function Home() {
       <section id="contact" className="py-24 md:py-32 px-4 md:px-8 max-w-[120rem] mx-auto">
         <div className="grid md:grid-cols-12 gap-12 md:gap-16">
           <div className="md:col-span-5">
-            <p className="text-xs font-bold tracking-[0.2em] text-[#F8B830] mb-6 uppercase">
+            <p className="text-xs font-bold tracking-[0.2em] text-[#C7332E] mb-6 uppercase">
               say hello
             </p>
             <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95] mb-8">
@@ -732,7 +732,7 @@ function HeroCarousel() {
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 className="max-w-3xl"
               >
-                <p className="text-xs md:text-sm font-bold tracking-[0.2em] text-[#F8B830] mb-4 uppercase">
+                <p className="text-xs md:text-sm font-bold tracking-[0.2em] text-[#C7332E] mb-4 uppercase">
                   {slide.eyebrow}
                 </p>
                 <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] mb-3 drop-shadow-lg">
