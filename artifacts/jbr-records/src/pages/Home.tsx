@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, ChevronLeft, ArrowRight, ArrowUp, ChevronDown } from "lucide-react";
+import { ChevronRight, ChevronLeft, ArrowUp, ChevronDown } from "lucide-react";
 import Nav from "@/components/jbr/Nav";
 import Footer from "@/components/jbr/Footer";
 import VideoHero from "@/components/jbr/VideoHero";

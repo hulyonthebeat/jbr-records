@@ -7,17 +7,15 @@ export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    let stored: string | null = null;
     try {
-      const stored = window.localStorage.getItem(STORAGE_KEY);
-      if (stored !== "accepted" && stored !== "declined") {
-        const t = window.setTimeout(() => setVisible(true), 1200);
-        return () => window.clearTimeout(t);
-      }
+      stored = window.localStorage.getItem(STORAGE_KEY);
     } catch {
       // localStorage unavailable (private browsing, etc.) — show banner anyway
-      const t = window.setTimeout(() => setVisible(true), 1200);
-      return () => window.clearTimeout(t);
     }
+    if (stored === "accepted" || stored === "declined") return;
+    const t = window.setTimeout(() => setVisible(true), 1200);
+    return () => window.clearTimeout(t);
   }, []);
 
   function setConsent(value: Consent) {
