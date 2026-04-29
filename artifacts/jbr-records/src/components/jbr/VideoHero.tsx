@@ -33,7 +33,22 @@ function watchUrl(id: string) {
 }
 
 function embedUrl(id: string) {
-  return `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+  // Use regular youtube.com (the -nocookie variant is more aggressively bot-walled
+  // in preview environments). Pass `origin` + `enablejsapi=1` + `widget_referrer`
+  // so YouTube recognises this as an embed from a real site rather than an
+  // anonymous/automated request.
+  const origin =
+    typeof window !== "undefined" ? window.location.origin : "https://jbrcreativegroup.com";
+  const params = new URLSearchParams({
+    autoplay: "1",
+    rel: "0",
+    modestbranding: "1",
+    playsinline: "1",
+    enablejsapi: "1",
+    origin,
+    widget_referrer: origin,
+  });
+  return `https://www.youtube.com/embed/${id}?${params.toString()}`;
 }
 
 export default function VideoHero() {
@@ -229,6 +244,7 @@ export default function VideoHero() {
               title="jbr creative group video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
+              referrerPolicy="strict-origin-when-cross-origin"
               className="absolute inset-0 w-full h-full"
               style={{ border: 0 }}
             />
