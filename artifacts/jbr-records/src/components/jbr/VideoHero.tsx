@@ -1,31 +1,32 @@
 import { useEffect, useState } from "react";
 import { Play } from "lucide-react";
 
+const BASE = import.meta.env.BASE_URL;
+const asset = (p: string) => `${BASE}${p.replace(/^\//, "")}`;
+
 const VIDEOS = [
   {
     id: "dSfkJLblCYI",
     artist: "eric benét & keri hilson",
     title: `"can't wait"`,
+    poster: asset("images/jbr/hero/erics-cant-wait.jpg"),
   },
   {
     id: "Lwj2cGj1xGU",
     artist: "joe leone",
     title: `"invited"`,
+    poster: asset("images/jbr/hero/joe-invited.jpg"),
   },
   {
     id: "mZF--_OTZLo",
     artist: "autumn paige",
     title: `"let ya" — featuring flyana boss`,
+    poster: asset("images/jbr/hero/autumn-let-ya.jpg"),
   },
 ];
 
 const SLIDE_MS = 6500;
 const FADE_MS = 900;
-
-function poster(id: string) {
-  // Highest-quality YouTube thumbnail (falls back gracefully if maxres unavailable)
-  return `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
-}
 
 function watchUrl(id: string) {
   return `https://www.youtube.com/watch?v=${id}`;
@@ -51,7 +52,7 @@ export default function VideoHero() {
           {VIDEOS.map((v, i) => (
             <img
               key={`poster-${v.id}`}
-              src={poster(v.id)}
+              src={v.poster}
               alt={`${v.artist} — ${v.title}`}
               className="absolute inset-0 w-full h-full object-cover"
               style={{
@@ -65,14 +66,6 @@ export default function VideoHero() {
               }}
               draggable={false}
               loading={i === 0 ? "eager" : "lazy"}
-              onError={(e) => {
-                // Fallback to hqdefault if maxresdefault unavailable
-                const img = e.currentTarget;
-                if (!img.dataset.fallback) {
-                  img.dataset.fallback = "1";
-                  img.src = `https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`;
-                }
-              }}
             />
           ))}
 
