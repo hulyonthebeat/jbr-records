@@ -1,20 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Search,
-  ShoppingCart,
-  User,
-  ChevronRight,
-  ChevronLeft,
-  Instagram,
-  Twitter,
-  Youtube,
-  Menu,
-  X,
-  Mail,
-  MapPin,
-  ArrowRight,
-} from "lucide-react";
+import { ChevronRight, ChevronLeft, ArrowRight, Mail, MapPin } from "lucide-react";
+import Nav from "@/components/jbr/Nav";
+import Footer from "@/components/jbr/Footer";
 
 const BASE = import.meta.env.BASE_URL;
 const asset = (p: string) => `${BASE}${p.replace(/^\//, "")}`;
@@ -122,7 +110,6 @@ const NEWS = [
 ];
 
 export default function Home() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterSent, setNewsletterSent] = useState(false);
   const [contactName, setContactName] = useState("");
@@ -130,7 +117,7 @@ export default function Home() {
   const [contactMessage, setContactMessage] = useState("");
   const [contactSent, setContactSent] = useState(false);
 
-  // Honor #section URLs on first load
+  // Honor #section URLs on first load (e.g. /#contact from another page)
   useEffect(() => {
     if (typeof window === "undefined") return;
     const hash = window.location.hash.replace(/^#/, "");
@@ -145,7 +132,6 @@ export default function Home() {
     (id: string): React.MouseEventHandler<HTMLAnchorElement> =>
     (e) => {
       e.preventDefault();
-      setMobileMenuOpen(false);
       const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     };
@@ -169,208 +155,11 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-black text-white font-sans selection:bg-white selection:text-black overflow-x-hidden lowercase">
-      {/* Top Promo Strip */}
-      <div className="bg-[#F8B830] text-black py-2 px-4 text-center text-xs md:text-sm font-medium tracking-wide">
-        new — duets, the eric benét + chanté moore collaborative album, out now.{" "}
-        <a
-          href="#new"
-          onClick={handleNavClick("new")}
-          className="underline font-bold hover:no-underline"
-        >
-          listen now.
-        </a>
-      </div>
-
-      {/* Sticky Navigation */}
-      <nav className="sticky top-0 z-50 bg-black border-b border-white/10 px-6 py-4 md:py-6">
-        <div className="max-w-[120rem] mx-auto flex items-center justify-between">
-          {/* Mobile Menu Toggle */}
-          <button
-            className="md:hidden text-white"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="menu"
-          >
-            {mobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
-
-          <div className="hidden md:flex flex-1 items-center gap-8 text-sm font-semibold tracking-tight">
-            <a
-              href="#about"
-              onClick={handleNavClick("about")}
-              className="hover:text-stone-400 transition-colors"
-            >
-              about
-            </a>
-            <a
-              href="#new"
-              onClick={handleNavClick("new")}
-              className="hover:text-stone-400 transition-colors"
-            >
-              new
-            </a>
-            <a
-              href="#artists"
-              onClick={handleNavClick("artists")}
-              className="hover:text-stone-400 transition-colors"
-            >
-              artists
-            </a>
-            <a
-              href="#music"
-              onClick={handleNavClick("music")}
-              className="hover:text-stone-400 transition-colors"
-            >
-              music
-            </a>
-          </div>
-
-          <a
-            href="#new"
-            onClick={handleNavClick("new")}
-            className="flex-shrink-0 cursor-pointer text-center md:flex-1 md:flex md:justify-center"
-            aria-label="jbr creative group — home"
-          >
-            <img
-              src={asset("images/jbr/jbr-logo-color.png")}
-              alt="jbr creative group"
-              className="h-11 md:h-14 w-auto"
-            />
-          </a>
-
-          <div className="flex flex-1 items-center justify-end gap-6 text-sm font-semibold tracking-tight">
-            <div className="hidden md:flex gap-8 mr-8">
-              <a
-                href="#news"
-                onClick={handleNavClick("news")}
-                className="hover:text-stone-400 transition-colors"
-              >
-                news
-              </a>
-              <a
-                href="#contact"
-                onClick={handleNavClick("contact")}
-                className="hover:text-stone-400 transition-colors"
-              >
-                contact
-              </a>
-            </div>
-            <button
-              className="hover:text-stone-400 transition-colors"
-              aria-label="search"
-            >
-              <Search className="w-5 h-5" />
-            </button>
-            <button
-              className="hover:text-stone-400 transition-colors hidden md:block"
-              aria-label="account"
-            >
-              <User className="w-5 h-5" />
-            </button>
-            <button
-              className="hover:text-stone-400 transition-colors"
-              aria-label="cart"
-            >
-              <ShoppingCart className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Menu Overlay */}
-        {mobileMenuOpen && (
-          <div className="absolute top-full left-0 right-0 bg-black border-b border-white/10 p-6 flex flex-col gap-6 md:hidden shadow-2xl shadow-black">
-            <a
-              href="#about"
-              onClick={handleNavClick("about")}
-              className="text-lg font-bold hover:text-stone-400 transition-colors"
-            >
-              about
-            </a>
-            <a
-              href="#new"
-              onClick={handleNavClick("new")}
-              className="text-lg font-bold hover:text-stone-400 transition-colors"
-            >
-              new
-            </a>
-            <a
-              href="#artists"
-              onClick={handleNavClick("artists")}
-              className="text-lg font-bold hover:text-stone-400 transition-colors"
-            >
-              artists
-            </a>
-            <a
-              href="#music"
-              onClick={handleNavClick("music")}
-              className="text-lg font-bold hover:text-stone-400 transition-colors"
-            >
-              music
-            </a>
-            <a
-              href="#news"
-              onClick={handleNavClick("news")}
-              className="text-lg font-bold hover:text-stone-400 transition-colors"
-            >
-              news
-            </a>
-            <a
-              href="#contact"
-              onClick={handleNavClick("contact")}
-              className="text-lg font-bold hover:text-stone-400 transition-colors"
-            >
-              contact
-            </a>
-          </div>
-        )}
-      </nav>
+      <Nav />
 
       {/* Hero — auto-advancing release carousel */}
       <HeroCarousel />
 
-
-      {/* About Section */}
-      <section
-        id="about"
-        className="py-24 md:py-32 px-4 md:px-8 max-w-[120rem] mx-auto"
-      >
-        <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-start">
-          <div className="md:col-span-4">
-            <p className="text-xs font-bold tracking-[0.2em] text-[#F8B830] mb-6 uppercase">
-              the label
-            </p>
-            <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95]">
-              records,<br />made with<br />intention.
-            </h2>
-          </div>
-          <div className="md:col-span-7 md:col-start-6 space-y-6 text-base md:text-lg leading-relaxed text-stone-300 font-medium max-w-2xl">
-            <p>
-              jbr creative group is an independent music label based in los
-              angeles. we sign artists we believe in and put real resources
-              behind real records — songs that hold up on a turntable, in a
-              car, in a small room with the lights down.
-            </p>
-            <p>
-              our roster spans r&amp;b, soul, jazz, and singer-songwriter, and
-              every release is built artist-first: long-form sessions, full
-              creative control, and a release strategy that respects the work.
-            </p>
-            <p>
-              we are not chasing trends. we are building a catalog.
-            </p>
-            <a
-              href="#contact"
-              onClick={handleNavClick("contact")}
-              className="inline-flex items-center gap-2 mt-4 text-sm font-bold tracking-tight text-white border-b border-white/30 hover:border-white pb-1 transition-colors"
-            >
-              get in touch <ArrowRight className="w-4 h-4" />
-            </a>
-          </div>
-        </div>
-      </section>
 
       {/* Artists Carousel — Republic-style row */}
       <section
@@ -719,147 +508,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="pt-24 pb-12 px-4 md:px-8 max-w-[120rem] mx-auto border-t border-white/10 mt-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-16 md:gap-8 mb-24">
-          <div className="md:col-span-1">
-            <img
-              src={asset("images/jbr/jbr-logo-color.png")}
-              alt="jbr creative group"
-              className="h-16 w-auto mb-6"
-            />
-            <p className="text-stone-500 font-medium text-sm leading-relaxed mb-8">
-              an independent label dedicated to modern artists making timeless
-              records. based in los angeles, ca.
-            </p>
-            <div className="flex gap-6">
-              <a
-                href="#"
-                aria-label="instagram"
-                className="text-white hover:text-stone-400 transition-colors"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                aria-label="twitter"
-                className="text-white hover:text-stone-400 transition-colors"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                aria-label="youtube"
-                className="text-white hover:text-stone-400 transition-colors"
-              >
-                <Youtube className="w-5 h-5" />
-              </a>
-            </div>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-stone-500 mb-6">artists</h4>
-            <ul className="space-y-4 font-bold text-sm">
-              {ROSTER.map((a) => (
-                <li key={a.name}>
-                  <a
-                    href={a.listen}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-stone-400 transition-colors"
-                  >
-                    {a.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-stone-500 mb-6">store</h4>
-            <ul className="space-y-4 font-bold text-sm">
-              <li>
-                <a
-                  href="#music"
-                  onClick={handleNavClick("music")}
-                  className="hover:text-stone-400 transition-colors"
-                >
-                  music
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-stone-400 transition-colors">
-                  merch
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#new"
-                  onClick={handleNavClick("new")}
-                  className="hover:text-stone-400 transition-colors"
-                >
-                  new arrivals
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-stone-400 transition-colors">
-                  best sellers
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-stone-500 mb-6">support</h4>
-            <ul className="space-y-4 font-bold text-sm">
-              <li>
-                <a
-                  href="#contact"
-                  onClick={handleNavClick("contact")}
-                  className="hover:text-stone-400 transition-colors"
-                >
-                  contact us
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-stone-400 transition-colors">
-                  faq
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-stone-400 transition-colors">
-                  shipping &amp; returns
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-stone-400 transition-colors">
-                  privacy policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-stone-400 transition-colors">
-                  terms of service
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold text-stone-600 pt-8 border-t border-white/10">
-          <p>
-            &copy; {new Date().getFullYear()} jbr creative group. all rights
-            reserved.
-          </p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">
-              do not sell my personal info
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
-              accessibility
-            </a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
