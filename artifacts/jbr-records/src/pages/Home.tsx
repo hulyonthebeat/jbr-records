@@ -61,37 +61,6 @@ const ROSTER = [
   },
 ];
 
-const RELEASES = [
-  {
-    title: "duets",
-    artist: "eric benét with chanté moore",
-    image: asset("images/jbr/eric-benet.jpg"),
-    tag: "new",
-    listen: LISTEN.ericBenet,
-  },
-  {
-    title: "discipline",
-    artist: "joe leone",
-    image: asset("images/jbr/joe-leone.jpg"),
-    tag: "out now",
-    listen: LISTEN.joeLeone,
-  },
-  {
-    title: "the studio sessions",
-    artist: "autumn paige",
-    image: asset("images/jbr/autumn-paige.jpg"),
-    tag: "out now",
-    listen: LISTEN.autumnPaige,
-  },
-  {
-    title: "lost & found",
-    artist: "eric benét",
-    image: asset("images/jbr/eric-benet-hero.jpg"),
-    tag: "catalog",
-    listen: LISTEN.ericBenet,
-  },
-];
-
 const NEWS = [
   {
     date: "10.12.24",
@@ -118,6 +87,7 @@ export default function Home() {
   const [contactMessage, setContactMessage] = useState("");
   const [contactSent, setContactSent] = useState(false);
   const [shopIndex, setShopIndex] = useState(0);
+  const [musicIndex, setMusicIndex] = useState(0);
 
   // Honor #section URLs on first load (e.g. /#contact from another page)
   useEffect(() => {
@@ -399,69 +369,184 @@ export default function Home() {
       {/* Video Hero — auto-rotating YouTube clips */}
       <VideoHero />
 
-      {/* Music — Releases Grid */}
-      <section
-        id="music"
-        className="py-24 md:py-32 px-4 md:px-8 max-w-[120rem] mx-auto"
-      >
-        <div className="flex items-end justify-between mb-12 gap-6 flex-wrap">
-          <div>
-            <p className="text-xs font-bold tracking-[0.2em] text-[#C7332E] mb-4 uppercase">
-              releases
-            </p>
-            <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95]">
-              music
-            </h2>
-          </div>
-          <a
-            href="#contact"
-            onClick={handleNavClick("contact")}
-            className="text-sm font-bold tracking-tight text-stone-400 hover:text-white border-b border-stone-600 hover:border-white pb-1 transition-colors"
+      {/* Music — releases carousel (mirrors shop carousel pattern) */}
+      {(() => {
+        const musicItems = [
+          {
+            title: "duets",
+            artist: "eric benét with chanté moore",
+            image: asset("images/jbr/releases/duets-cover.jpg"),
+            tag: "new",
+            listen: LISTEN.ericBenet,
+          },
+          {
+            title: `"can't wait"`,
+            artist: "eric benét & keri hilson",
+            image: asset("images/jbr/eric-benet-portrait.jpg"),
+            tag: "single",
+            listen: LISTEN.ericBenet,
+          },
+          {
+            title: "invited",
+            artist: "joe leone",
+            image: asset("images/jbr/releases/invited-cover.jpg"),
+            tag: "out now",
+            listen: LISTEN.joeLeone,
+          },
+          {
+            title: "discipline",
+            artist: "joe leone",
+            image: asset("images/jbr/joe-leone-jbr.jpg"),
+            tag: "catalog",
+            listen: LISTEN.joeLeone,
+          },
+          {
+            title: "money money money",
+            artist: "autumn paige",
+            image: asset("images/jbr/releases/money-cover.jpg"),
+            tag: "pre-save",
+            listen: LISTEN.autumnPaige,
+          },
+          {
+            title: `"let ya" — ft. flyana boss`,
+            artist: "autumn paige",
+            image: asset("images/jbr/autumn-paige-portrait.jpg"),
+            tag: "single",
+            listen: LISTEN.autumnPaige,
+          },
+        ];
+        const VISIBLE = 3;
+        const maxIndex = Math.max(0, musicItems.length - VISIBLE);
+        const clamped = Math.min(Math.max(musicIndex, 0), maxIndex);
+        const goPrev = () => setMusicIndex((i) => Math.max(0, i - 1));
+        const goNext = () => setMusicIndex((i) => Math.min(maxIndex, i + 1));
+
+        return (
+          <section
+            id="music"
+            className="py-16 md:py-24 px-4 md:px-8 bg-black border-b border-white/15"
           >
-            full discography
-          </a>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {RELEASES.map((release, i) => (
-            <motion.a
-              href={release.listen}
-              target="_blank"
-              rel="noopener noreferrer"
-              key={release.title + release.artist}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.5 }}
-              className="group block"
-            >
-              <div className="relative aspect-square overflow-hidden bg-stone-900 mb-4">
-                <img
-                  src={release.image}
-                  alt={`${release.title} by ${release.artist}`}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute top-4 left-4 bg-[#C7332E] text-black text-[10px] font-bold tracking-[0.15em] uppercase px-2 py-1">
-                  {release.tag}
+            <div className="max-w-[120rem] mx-auto">
+              {/* Header bar — matches shop carousel */}
+              <div className="border border-white/15 px-6 md:px-10 py-6 md:py-8 flex items-center justify-between gap-6 flex-wrap">
+                <div>
+                  <p className="text-xs font-bold tracking-[0.2em] text-[#C7332E] mb-2 uppercase">
+                    releases
+                  </p>
+                  <h2 className="text-3xl md:text-5xl font-black tracking-tighter leading-none">
+                    music
+                  </h2>
                 </div>
+                <a
+                  href={LISTEN.ericBenet}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-sm font-bold tracking-tight bg-white text-black px-6 py-3 hover:bg-stone-200 transition-colors"
+                >
+                  listen all
+                </a>
               </div>
-              <h3 className="text-lg md:text-xl font-black tracking-tight leading-tight mb-1 group-hover:text-stone-300 transition-colors">
-                {release.title}
-              </h3>
-              <p className="text-sm font-medium text-stone-500 mb-3">
-                {release.artist}
-              </p>
-              <div className="flex items-center justify-between text-xs font-bold tracking-tight">
-                <span className="text-white border-b border-white/40 group-hover:border-white pb-0.5 transition-colors">
-                  listen everywhere
-                </span>
-                <span className="text-stone-500 group-hover:text-white transition-colors">
-                  open →
-                </span>
+
+              {/* Carousel viewport with edge arrows */}
+              <div className="relative">
+                <div className="overflow-hidden border-x border-b border-white/15">
+                  <div
+                    className="flex transition-transform duration-500 ease-out"
+                    style={{
+                      transform: `translateX(-${
+                        (clamped * 100) / VISIBLE
+                      }%)`,
+                    }}
+                  >
+                    {musicItems.map((item, idx) => (
+                      <a
+                        key={item.title + item.artist}
+                        href={item.listen}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`group block shrink-0 ${
+                          idx !== musicItems.length - 1
+                            ? "border-r border-white/15"
+                            : ""
+                        }`}
+                        style={{ width: `${100 / VISIBLE}%` }}
+                      >
+                        <div className="relative aspect-square bg-stone-900 overflow-hidden">
+                          <img
+                            src={item.image}
+                            alt={`${item.title} by ${item.artist}`}
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                          <div className="absolute top-4 left-4 bg-[#C7332E] text-white text-[10px] font-bold tracking-[0.18em] uppercase px-2.5 py-1.5">
+                            {item.tag}
+                          </div>
+                        </div>
+                        <div className="border-t border-white/15 px-5 md:px-7 py-5 md:py-6">
+                          <p className="text-[0.65rem] md:text-xs font-bold tracking-[0.18em] text-stone-500 uppercase mb-2">
+                            {item.artist}
+                          </p>
+                          <div className="flex items-start justify-between gap-3">
+                            <h3 className="text-sm md:text-base font-bold tracking-tight leading-snug">
+                              {item.title}
+                            </h3>
+                            <span className="text-xs md:text-sm font-bold text-stone-400 group-hover:text-white shrink-0 transition-colors">
+                              listen →
+                            </span>
+                          </div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Edge arrows — match shop carousel */}
+                {clamped > 0 && (
+                  <button
+                    type="button"
+                    onClick={goPrev}
+                    aria-label="previous releases"
+                    className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-stone-900 border border-white/25 items-center justify-center text-white hover:bg-white hover:text-black transition-colors z-10"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                )}
+                {clamped < maxIndex && (
+                  <button
+                    type="button"
+                    onClick={goNext}
+                    aria-label="next releases"
+                    className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-12 h-12 rounded-full bg-stone-900 border border-white/25 items-center justify-center text-white hover:bg-white hover:text-black transition-colors z-10"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                )}
               </div>
-            </motion.a>
-          ))}
-        </div>
-      </section>
+
+              {/* Mobile arrows */}
+              <div className="flex md:hidden justify-end gap-3 mt-4">
+                <button
+                  type="button"
+                  onClick={goPrev}
+                  disabled={clamped === 0}
+                  aria-label="previous releases"
+                  className="w-11 h-11 rounded-full border border-white/25 flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={goNext}
+                  disabled={clamped === maxIndex}
+                  aria-label="next releases"
+                  className="w-11 h-11 rounded-full border border-white/25 flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* News Grid */}
       <section
