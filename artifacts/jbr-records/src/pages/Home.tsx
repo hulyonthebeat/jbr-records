@@ -350,7 +350,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
-                className="group flex flex-col bg-black border border-white/10 hover:border-white/30 transition-colors"
+                className="group flex flex-col bg-black"
               >
                 <div className="flex flex-col justify-center p-8 md:p-10 min-h-[14rem]">
                   <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[0.95] text-white">
