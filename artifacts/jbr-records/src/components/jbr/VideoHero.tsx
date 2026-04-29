@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const VIDEOS = [
   {
@@ -48,26 +48,21 @@ function embedSrc(id: string, start: number) {
 export default function VideoHero() {
   const [index, setIndex] = useState(0);
   // Per-video activation count — bumping this forces the iframe to remount
-  // and start fresh whenever that video becomes active again.
+  // and start fresh whenever that video becomes active again. Initialize
+  // index 0 to 1 so the first video starts fresh on initial paint.
   const [activations, setActivations] = useState<number[]>(() =>
-    VIDEOS.map(() => 0),
+    VIDEOS.map((_, i) => (i === 0 ? 1 : 0)),
   );
-  const initialized = useRef(false);
-
-  // Bump activation count on first render and on every index change
-  useEffect(() => {
-    setActivations((prev) =>
-      prev.map((c, i) => (i === index ? c + 1 : c)),
-    );
-  }, [index]);
 
   useEffect(() => {
-    // Avoid double-init under StrictMode
-    if (initialized.current) return;
-    initialized.current = true;
-
     const t = window.setInterval(() => {
-      setIndex((i) => (i + 1) % VIDEOS.length);
+      setIndex((prev) => {
+        const next = (prev + 1) % VIDEOS.length;
+        setActivations((acts) =>
+          acts.map((c, i) => (i === next ? c + 1 : c)),
+        );
+        return next;
+      });
     }, SLIDE_MS);
     return () => window.clearInterval(t);
   }, []);
