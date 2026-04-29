@@ -98,8 +98,6 @@ const NEWS = [
 ];
 
 export default function Home() {
-  const [newsletterEmail, setNewsletterEmail] = useState("");
-  const [newsletterSent, setNewsletterSent] = useState(false);
   const [shopIndex, setShopIndex] = useState(0);
   const [musicIndex, setMusicIndex] = useState(0);
 
@@ -121,13 +119,6 @@ export default function Home() {
       const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     };
-
-  const handleNewsletter = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newsletterEmail.trim()) return;
-    setNewsletterSent(true);
-    setNewsletterEmail("");
-  };
 
   return (
     <div className="min-h-screen bg-black text-white font-sans selection:bg-white selection:text-black overflow-x-hidden lowercase">
@@ -678,48 +669,6 @@ export default function Home() {
               </h3>
             </motion.a>
           ))}
-        </div>
-      </section>
-
-      {/* Newsletter */}
-      <section className="py-32 px-4 md:px-8 bg-stone-950 border-y border-white/10">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-6">
-            get the latest.
-          </h2>
-          <p className="text-stone-400 font-medium mb-10">
-            sign up for exclusive updates, early access to vinyl drops, and tour
-            pre-sales.
-          </p>
-          {newsletterSent ? (
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-block border border-white/20 px-8 py-6 text-sm font-bold tracking-tight"
-            >
-              thanks. you're on the list.
-            </motion.div>
-          ) : (
-            <form
-              onSubmit={handleNewsletter}
-              className="flex flex-col md:flex-row gap-4 justify-center"
-            >
-              <input
-                type="email"
-                placeholder="email address"
-                value={newsletterEmail}
-                onChange={(e) => setNewsletterEmail(e.target.value)}
-                className="bg-black border border-white/20 px-6 py-4 flex-1 max-w-md text-white placeholder:text-stone-600 focus:outline-none focus:border-white transition-colors rounded-none text-sm font-bold tracking-wide"
-                required
-              />
-              <button
-                type="submit"
-                className="bg-white text-black px-10 py-4 text-sm font-bold tracking-tight hover:bg-stone-200 transition-colors rounded-none whitespace-nowrap"
-              >
-                subscribe
-              </button>
-            </form>
-          )}
         </div>
       </section>
 
