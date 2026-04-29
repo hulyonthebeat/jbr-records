@@ -93,7 +93,7 @@ export default function Footer() {
             <img
               src={asset("images/jbr/jbr-logo-color.png")}
               alt="jbr creative group"
-              className="h-36 md:h-44 w-auto"
+              className="h-36 md:h-44 w-auto -ml-3 md:-ml-5"
             />
           </Link>
 
