@@ -25,8 +25,8 @@ const VIDEOS = [
   },
 ];
 
-const SLIDE_MS = 6500;
-const FADE_MS = 900;
+const SLIDE_MS = 5000;
+const FADE_MS = 1200;
 
 function watchUrl(id: string) {
   return `https://www.youtube.com/watch?v=${id}`;
@@ -51,15 +51,17 @@ export default function VideoHero() {
           {/* Ken Burns animated poster slideshow */}
           {VIDEOS.map((v, i) => (
             <img
-              key={`poster-${v.id}`}
+              key={`poster-${v.id}-${i === index ? "on" : "off"}`}
               src={v.poster}
               alt={`${v.artist} — ${v.title}`}
               className="absolute inset-0 w-full h-full object-cover"
               style={{
                 opacity: i === index ? 1 : 0,
-                transition: `opacity ${FADE_MS}ms ease-in-out`,
+                transition: `opacity ${FADE_MS}ms cubic-bezier(.4, 0, .2, 1)`,
                 animation:
-                  i === index ? `jbrKenBurns ${SLIDE_MS}ms ease-out both` : "none",
+                  i === index
+                    ? `jbrHeroSettle 1400ms cubic-bezier(.4, 0, .2, 1) both`
+                    : "none",
                 transformOrigin: "center",
                 pointerEvents: "none",
                 userSelect: "none",
@@ -131,9 +133,9 @@ export default function VideoHero() {
           from { opacity: 0; transform: translateY(10px); }
           to   { opacity: 1; transform: translateY(0); }
         }
-        @keyframes jbrKenBurns {
-          from { transform: scale(1.0); }
-          to   { transform: scale(1.08); }
+        @keyframes jbrHeroSettle {
+          from { transform: scale(1.12); }
+          to   { transform: scale(1.0); }
         }
       `}</style>
     </section>
