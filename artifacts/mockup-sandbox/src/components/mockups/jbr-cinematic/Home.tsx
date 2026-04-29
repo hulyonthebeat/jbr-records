@@ -121,7 +121,7 @@ export function Home() {
       </section>
 
       {/* Artists Carousel — Republic-style row */}
-      <section id="artists" className="py-16 md:py-20 bg-black relative">
+      <section id="artists" className="py-16 md:py-20 bg-black relative border-y border-white/15">
         <div className="px-4 md:px-8 max-w-[120rem] mx-auto">
           <div className="relative">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
