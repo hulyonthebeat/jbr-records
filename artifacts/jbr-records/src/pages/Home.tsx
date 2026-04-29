@@ -166,32 +166,38 @@ export default function Home() {
       {(() => {
         const shopItems = [
           {
-            name: "real r+b is back tour tee",
+            category: "real r+b is back (tour)",
+            name: "tour t-shirt",
             price: "$35",
             img: "images/jbr/shop/tour-tee.png",
           },
           {
+            category: "real r+b is back (tour)",
             name: "portrait t-shirt",
             price: "$35",
             img: "images/jbr/shop/portrait-tee.png",
           },
           {
-            name: "trucker hat — black/khaki",
+            category: "real r+b is back (tour)",
+            name: "trucker hat — black + khaki",
             price: "$35",
             img: "images/jbr/shop/trucker-khaki.png",
           },
           {
-            name: "trucker hat — khaki/red",
+            category: "real r+b is back (tour)",
+            name: "trucker hat — khaki + red",
             price: "$35",
             img: "images/jbr/shop/trucker-red.png",
           },
           {
+            category: "real r+b is back (tour)",
             name: "tour poster",
             price: "$10",
             img: "images/jbr/shop/tour-poster.png",
           },
           {
-            name: "real r&b is back koozie",
+            category: "real r+b is back (tour)",
+            name: "koozie",
             price: "$6",
             img: "images/jbr/shop/koozie.png",
           },
@@ -206,106 +212,121 @@ export default function Home() {
         return (
           <section
             id="shop"
-            className="py-20 md:py-28 px-4 md:px-8 bg-stone-950 border-b border-white/15"
+            className="py-16 md:py-24 px-4 md:px-8 bg-black border-b border-white/15"
           >
             <div className="max-w-[120rem] mx-auto">
-              <div className="flex items-end justify-between mb-10 md:mb-14 gap-6 flex-wrap">
+              {/* Header bar — like reference: tag + title left, "shop all" right */}
+              <div className="border border-white/15 px-6 md:px-10 py-6 md:py-8 flex items-center justify-between gap-6 flex-wrap">
                 <div>
-                  <p className="text-xs font-bold tracking-[0.2em] text-[#F8B830] mb-3 uppercase">
-                    shop
+                  <p className="text-xs font-bold tracking-[0.2em] text-[#F8B830] mb-2 uppercase">
+                    new in
                   </p>
-                  <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95]">
-                    eric benét: real r&amp;b is back.
+                  <h2 className="text-3xl md:text-5xl font-black tracking-tighter leading-none">
+                    new arrivals
                   </h2>
-                  <p className="mt-4 text-stone-400 font-medium text-base md:text-lg max-w-xl">
-                    official tour merch — tees, hats, posters & more.
-                  </p>
                 </div>
-                <div className="flex items-center gap-3">
+                <a
+                  href="https://ericbenet.merchtable.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-sm font-bold tracking-tight bg-white text-black px-6 py-3 hover:bg-stone-200 transition-colors"
+                >
+                  shop all
+                </a>
+              </div>
+
+              {/* Carousel viewport with edge arrows */}
+              <div className="relative">
+                <div className="overflow-hidden border-x border-b border-white/15">
+                  <div
+                    className="flex transition-transform duration-500 ease-out"
+                    style={{
+                      transform: `translateX(-${
+                        (clamped * 100) / VISIBLE
+                      }%)`,
+                    }}
+                  >
+                    {shopItems.map((item, idx) => (
+                      <a
+                        key={item.name}
+                        href="https://ericbenet.merchtable.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`group block shrink-0 ${
+                          idx !== shopItems.length - 1
+                            ? "border-r border-white/15"
+                            : ""
+                        }`}
+                        style={{ width: `${100 / VISIBLE}%` }}
+                      >
+                        <div className="relative aspect-[4/3] md:aspect-square bg-black overflow-hidden">
+                          <img
+                            src={asset(item.img)}
+                            alt={item.name}
+                            className="w-full h-full object-contain p-6 md:p-10 group-hover:scale-105 transition-transform duration-500"
+                          />
+                        </div>
+                        <div className="border-t border-white/15 px-5 md:px-7 py-5 md:py-6">
+                          <p className="text-[0.65rem] md:text-xs font-bold tracking-[0.18em] text-stone-500 uppercase mb-2">
+                            {item.category}
+                          </p>
+                          <div className="flex items-start justify-between gap-3">
+                            <h3 className="text-sm md:text-base font-bold tracking-tight leading-snug">
+                              {item.name}
+                            </h3>
+                            <span className="text-sm md:text-base font-bold text-stone-300 shrink-0">
+                              {item.price}
+                            </span>
+                          </div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Edge arrows — circular, partially overlapping */}
+                {clamped > 0 && (
                   <button
                     type="button"
                     onClick={goPrev}
-                    disabled={clamped === 0}
                     aria-label="previous products"
-                    className="hidden md:flex w-11 h-11 items-center justify-center border border-white/20 text-white hover:bg-white hover:text-black transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-white"
+                    className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-stone-900 border border-white/25 items-center justify-center text-white hover:bg-white hover:text-black transition-colors z-10"
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </button>
+                )}
+                {clamped < maxIndex && (
                   <button
                     type="button"
                     onClick={goNext}
-                    disabled={clamped === maxIndex}
                     aria-label="next products"
-                    className="hidden md:flex w-11 h-11 items-center justify-center border border-white/20 text-white hover:bg-white hover:text-black transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-white"
+                    className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-12 h-12 rounded-full bg-stone-900 border border-white/25 items-center justify-center text-white hover:bg-white hover:text-black transition-colors z-10"
                   >
                     <ChevronRight className="w-5 h-5" />
                   </button>
-                  <a
-                    href="https://ericbenet.merchtable.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-bold tracking-tight bg-white text-black px-6 py-3 hover:bg-stone-200 transition-colors ml-2"
-                  >
-                    shop all <ArrowRight className="w-4 h-4" />
-                  </a>
-                </div>
+                )}
               </div>
 
-              {/* Carousel viewport */}
-              <div className="overflow-hidden">
-                <div
-                  className="flex transition-transform duration-500 ease-out -mx-2 md:-mx-3"
-                  style={{
-                    transform: `translateX(-${(clamped * 100) / VISIBLE}%)`,
-                  }}
+              {/* Mobile arrows below carousel */}
+              <div className="flex md:hidden justify-end gap-3 mt-4">
+                <button
+                  type="button"
+                  onClick={goPrev}
+                  disabled={clamped === 0}
+                  aria-label="previous products"
+                  className="w-11 h-11 rounded-full border border-white/25 flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed"
                 >
-                  {shopItems.map((item) => (
-                    <a
-                      key={item.name}
-                      href="https://ericbenet.merchtable.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group block shrink-0 px-2 md:px-3"
-                      style={{ width: `${100 / VISIBLE}%` }}
-                    >
-                      <div className="relative aspect-square overflow-hidden bg-black border border-white/10 group-hover:border-white/40 transition-colors">
-                        <img
-                          src={asset(item.img)}
-                          alt={item.name}
-                          className="w-full h-full object-contain p-4 md:p-6 group-hover:scale-105 transition-transform duration-500"
-                        />
-                      </div>
-                      <div className="mt-3 flex items-start justify-between gap-2">
-                        <h3 className="text-sm md:text-base font-bold tracking-tight leading-tight">
-                          {item.name}
-                        </h3>
-                        <span className="text-sm md:text-base font-bold text-stone-300 shrink-0">
-                          {item.price}
-                        </span>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </div>
-
-              {/* Progress bar */}
-              <div className="mt-8 flex items-center gap-4 max-w-md">
-                <span className="text-xs font-bold tracking-[0.2em] text-stone-500">
-                  {String(clamped + 1).padStart(2, "0")}
-                </span>
-                <div className="flex-1 h-px bg-white/10 relative">
-                  <div
-                    className="absolute inset-y-0 left-0 bg-white transition-all duration-500"
-                    style={{
-                      width: `${
-                        ((clamped + VISIBLE) / shopItems.length) * 100
-                      }%`,
-                    }}
-                  />
-                </div>
-                <span className="text-xs font-bold tracking-[0.2em] text-stone-500">
-                  {String(shopItems.length).padStart(2, "0")}
-                </span>
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={goNext}
+                  disabled={clamped === maxIndex}
+                  aria-label="next products"
+                  className="w-11 h-11 rounded-full border border-white/25 flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
               </div>
             </div>
           </section>
