@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronLeft, ArrowRight, Mail, MapPin } from "lucide-react";
 import Nav from "@/components/jbr/Nav";
 import Footer from "@/components/jbr/Footer";
+import VideoHero from "@/components/jbr/VideoHero";
 
 const BASE = import.meta.env.BASE_URL;
 const asset = (p: string) => `${BASE}${p.replace(/^\//, "")}`;
@@ -394,6 +395,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Video Hero — auto-rotating YouTube clips */}
+      <VideoHero />
 
       {/* Music — Releases Grid */}
       <section
