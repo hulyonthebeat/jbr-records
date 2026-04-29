@@ -17,7 +17,7 @@ const VIDEOS = [
     id: "mZF--_OTZLo",
     artist: "autumn paige",
     title: "in the studio",
-    watchUrl: "https://www.youtube.com/watch?v=mZF--_OTZLo",
+    watchUrl: "https://www.youtube.com/watch?v=mZF--_OTZLo&t=15s",
   },
 ];
 
