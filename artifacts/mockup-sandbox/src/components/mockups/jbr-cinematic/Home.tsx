@@ -126,7 +126,7 @@ export function Home() {
           <div className="relative">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
 
-              {/* Lead "explore" card */}
+              {/* Lead card */}
               <motion.a
                 href="#artists"
                 initial={{ opacity: 0, y: 20 }}
@@ -136,13 +136,9 @@ export function Home() {
                 className="group flex flex-col bg-black border border-white/10 hover:border-white/30 transition-colors"
               >
                 <div className="flex-1 flex flex-col justify-center p-8 md:p-10 min-h-[18rem] md:min-h-[22rem]">
-                  <p className="text-xs font-bold tracking-[0.2em] text-[#F8B830] mb-4 uppercase">explore</p>
                   <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[0.95] text-white">
                     our<br />artists
                   </h2>
-                </div>
-                <div className="bg-white text-black px-6 py-5 text-center text-sm font-bold tracking-tight group-hover:bg-stone-200 transition-colors">
-                  explore all
                 </div>
               </motion.a>
 
