@@ -175,9 +175,6 @@ function ReleaseCard({ release }: { release: Release }) {
           loading="lazy"
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <div className="absolute top-3 left-3 bg-[#C7332E] text-white text-[10px] font-bold tracking-[0.18em] uppercase px-2.5 py-1.5">
-          {release.tag}
-        </div>
         {/* Hover overlay with listen CTA */}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
           <span className="bg-white text-black text-xs font-bold tracking-[0.18em] uppercase px-4 py-2.5">
@@ -190,11 +187,6 @@ function ReleaseCard({ release }: { release: Release }) {
           <h3 className="text-sm md:text-base font-bold tracking-tight leading-snug truncate">
             {release.title}
           </h3>
-          {release.year && (
-            <p className="text-[0.65rem] md:text-xs font-bold tracking-[0.18em] text-stone-500 uppercase mt-1.5">
-              {release.year}
-            </p>
-          )}
         </div>
         <span className="text-xs md:text-sm font-bold text-stone-500 group-hover:text-white shrink-0 transition-colors">
           →

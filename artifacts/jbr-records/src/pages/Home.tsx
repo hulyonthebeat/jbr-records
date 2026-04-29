@@ -565,9 +565,6 @@ export default function Home() {
                             alt={`${item.title} by ${item.artist}`}
                             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                           />
-                          <div className="absolute top-4 left-4 bg-[#C7332E] text-white text-[10px] font-bold tracking-[0.18em] uppercase px-2.5 py-1.5">
-                            {item.tag}
-                          </div>
                         </div>
                         <div className="border-t border-white/15 px-5 md:px-7 py-5 md:py-6">
                           <p className="text-[0.65rem] md:text-xs font-bold tracking-[0.18em] text-stone-500 uppercase mb-2">
