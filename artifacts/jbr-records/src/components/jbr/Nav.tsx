@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
 
@@ -16,10 +16,27 @@ export default function Nav({ showPromo = true }: Props) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [location, setLocation] = useLocation();
   const onHome = location === "/" || location === "";
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [navHeight, setNavHeight] = useState(0);
 
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location]);
+
+  useEffect(() => {
+    if (!wrapRef.current) return;
+    const update = () => {
+      if (wrapRef.current) setNavHeight(wrapRef.current.offsetHeight);
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(wrapRef.current);
+    window.addEventListener("resize", update);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, [showPromo, mobileMenuOpen]);
 
   const goSection =
     (id: string) =>
@@ -33,6 +50,8 @@ export default function Nav({ showPromo = true }: Props) {
 
   return (
     <>
+      <div style={{ height: navHeight }} aria-hidden="true" />
+      <div ref={wrapRef} className="fixed top-0 left-0 right-0 z-50">
       {showPromo && (
         <div className="bg-[#1F4E7C] text-white py-2 px-4 text-center text-xs md:text-sm font-medium tracking-wide">
           new — duets, the eric benét + chanté moore collaborative album, out
@@ -47,7 +66,7 @@ export default function Nav({ showPromo = true }: Props) {
         </div>
       )}
 
-      <nav className="sticky top-0 z-50 bg-black border-b border-white/10 px-6 py-4 md:py-6">
+      <nav className="bg-black border-b border-white/10 px-6 py-4 md:py-6">
         <div className="max-w-[120rem] mx-auto flex items-center justify-between">
           <button
             className="md:hidden text-white"
@@ -175,6 +194,7 @@ export default function Nav({ showPromo = true }: Props) {
           </div>
         )}
       </nav>
+      </div>
     </>
   );
 }
