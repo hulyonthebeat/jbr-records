@@ -144,8 +144,8 @@ export default function Home() {
     <div className="min-h-screen bg-black text-white font-sans selection:bg-white selection:text-black overflow-x-hidden lowercase">
       <Nav />
 
-      {/* Hero — auto-advancing release carousel */}
-      <HeroCarousel />
+      {/* Hero — auto-rotating YouTube clips */}
+      <VideoHero />
 
 
       {/* Shop — Eric Benét merch (3-up carousel) */}
@@ -379,8 +379,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Video Hero — auto-rotating YouTube clips */}
-      <VideoHero />
+      {/* Featured releases — auto-advancing carousel */}
+      <HeroCarousel />
 
       {/* Music — releases carousel (mirrors shop carousel pattern) */}
       {(() => {
