@@ -25,20 +25,47 @@ const VIDEOS = [
   },
 ];
 
-const SLIDE_MS = 6500;
+const SLIDE_MS = 18000;
 const FADE_MS = 1500;
 
 function watchUrl(id: string) {
   return `https://www.youtube.com/watch?v=${id}`;
 }
 
+function getOrigin() {
+  return typeof window !== "undefined"
+    ? window.location.origin
+    : "https://jbrcreativegroup.com";
+}
+
+// Background autoplay player — muted, looped, no controls. Lives behind the
+// poster fade. Sends `origin` + `widget_referrer` so YouTube recognises this
+// as a real website embed.
+function bgEmbedUrl(id: string) {
+  const origin = getOrigin();
+  const params = new URLSearchParams({
+    autoplay: "1",
+    mute: "1",
+    loop: "1",
+    playlist: id,
+    controls: "0",
+    modestbranding: "1",
+    rel: "0",
+    playsinline: "1",
+    showinfo: "0",
+    iv_load_policy: "3",
+    disablekb: "1",
+    fs: "0",
+    enablejsapi: "1",
+    origin,
+    widget_referrer: origin,
+  });
+  return `https://www.youtube.com/embed/${id}?${params.toString()}`;
+}
+
+// Fullscreen lightbox player — autoplay with sound, full controls.
 function embedUrl(id: string) {
-  // Use regular youtube.com (the -nocookie variant is more aggressively bot-walled
-  // in preview environments). Pass `origin` + `enablejsapi=1` + `widget_referrer`
-  // so YouTube recognises this as an embed from a real site rather than an
-  // anonymous/automated request.
-  const origin =
-    typeof window !== "undefined" ? window.location.origin : "https://jbrcreativegroup.com";
+  const origin = getOrigin();
   const params = new URLSearchParams({
     autoplay: "1",
     rel: "0",
@@ -95,30 +122,32 @@ export default function VideoHero() {
     <section className="bg-black border-b border-white/15">
       <div className="w-full">
         <div className="relative w-full aspect-video overflow-hidden bg-black select-none">
-          {/* Ken Burns animated poster slideshow */}
-          {VIDEOS.map((v, i) => (
-            <img
-              key={`poster-${v.id}-${i === index ? "on" : "off"}`}
-              src={v.poster}
-              alt={`${v.artist} — ${v.title}`}
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{
-                opacity: i === index ? 1 : 0,
-                transition: `opacity ${FADE_MS}ms cubic-bezier(.22, 0.61, 0.36, 1)`,
-                animation:
-                  i === index
-                    ? `jbrHeroSettle 2400ms cubic-bezier(0.22, 0.61, 0.36, 1) both`
-                    : "none",
-                transformOrigin: "center",
-                pointerEvents: "none",
-                userSelect: "none",
-              }}
-              draggable={false}
-              loading={i === 0 ? "eager" : "lazy"}
-            />
-          ))}
+          {/* Poster fallback — visible briefly while iframe loads */}
+          <img
+            key={`poster-${slide.id}`}
+            src={slide.poster}
+            alt={`${slide.artist} — ${slide.title}`}
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ pointerEvents: "none", userSelect: "none" }}
+            draggable={false}
+          />
 
-          {/* Center play button — click to launch the actual video */}
+          {/* Background autoplay player — muted, looped, no UI. Scaled 130% so
+              YouTube's player chrome is cropped offscreen. */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <iframe
+              key={`bg-${slide.id}`}
+              src={bgEmbedUrl(slide.id)}
+              title={`${slide.artist} — ${slide.title}`}
+              allow="autoplay; encrypted-media; picture-in-picture"
+              referrerPolicy="strict-origin-when-cross-origin"
+              loading="lazy"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%]"
+              style={{ border: 0 }}
+            />
+          </div>
+
+          {/* Center play button — click to launch the actual video with sound */}
           <button
             type="button"
             onClick={() => setPlayingId(slide.id)}
