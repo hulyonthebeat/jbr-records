@@ -46,6 +46,18 @@ See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and pa
 - **Kind**: Express 5 API
 - **Port**: 8080 → externalPort 8080
 
+### JBR Creative Group (Republic-style) — `artifacts/jbr-records`
+- **Kind**: React + Vite web app (frontend only, no backend)
+- **Port**: 26215
+- **Preview path**: `/jbr-records/`
+- **Stack**: React, TypeScript, Vite, Wouter, Inter (Google Fonts), framer-motion, lucide-react
+- **Description**: Second JBR site, modeled on republicrecords.com — flat-black retail-shop aesthetic, all-lowercase, sharp corners (`--radius: 0`), bold Inter, yellow `#F8B830` promo accent. Single-page with anchored sections; nav scrolls smoothly between them.
+- **Sections** (single page, anchored): hero `#new` (NEW RELEASE — duets, eric benét with chanté moore), `#about` (label statement), `#artists` (3-card row bracketed by top/bottom borders), `#music` (4-tile releases grid), `#news` (3-card editorial grid), newsletter, `#contact` (info + form), footer.
+- **Roster** (3): Eric Benét, Joe Leone, Autumn Paige.
+- **Forms**: newsletter and contact both submit locally and show in-place success state (no backend wiring).
+- **Images**: `/public/images/jbr/` — copies from mockup-sandbox.
+- **Asset paths**: built with `${import.meta.env.BASE_URL}images/jbr/...` helper so the proxy base path (`/jbr-records/`) is honored at runtime.
+
 ### Canvas (Mockup Sandbox) — `artifacts/mockup-sandbox`
 - **Kind**: design
 - **Port**: 5173

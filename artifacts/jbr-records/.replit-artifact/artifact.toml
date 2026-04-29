@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/jbr-records/"
+title = "JBR Creative Group"
+version = "1.0.0"
+id = "artifacts/jbr-records"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/jbr-records/" ]
+localPort = 26215
+
+[services.development]
+run = "pnpm --filter @workspace/jbr-records run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/jbr-records", "run", "build" ]
+publicDir = "artifacts/jbr-records/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26215"
+BASE_PATH = "/jbr-records/"
