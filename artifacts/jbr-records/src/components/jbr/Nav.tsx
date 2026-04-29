@@ -38,14 +38,39 @@ export default function Nav({ showPromo = true }: Props) {
     };
   }, [showPromo, mobileMenuOpen]);
 
+  const scrollToId = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const goSection =
     (id: string) =>
     (e: React.MouseEvent<HTMLAnchorElement>) => {
-      if (!onHome) return; // let browser navigate to /#id
       e.preventDefault();
       setMobileMenuOpen(false);
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (onHome) {
+        scrollToId(id);
+        return;
+      }
+      // Off-home: navigate via Wouter (no full page reload), then scroll once
+      // the home page mounts and the section exists.
+      try {
+        window.history.replaceState(
+          null,
+          "",
+          `${BASE.replace(/\/$/, "")}/#${id}`,
+        );
+      } catch {}
+      setLocation("/");
+      const tryScroll = (attempts: number) => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else if (attempts > 0) {
+          requestAnimationFrame(() => tryScroll(attempts - 1));
+        }
+      };
+      requestAnimationFrame(() => tryScroll(20));
     };
 
   return (

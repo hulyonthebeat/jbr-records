@@ -13,16 +13,35 @@ const ROSTER = [
 ];
 
 export default function Footer() {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const onHome = location === "/" || location === "";
 
   const goSection =
     (id: string) =>
     (e: React.MouseEvent<HTMLAnchorElement>) => {
-      if (!onHome) return;
       e.preventDefault();
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (onHome) {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+      try {
+        window.history.replaceState(
+          null,
+          "",
+          `${BASE.replace(/\/$/, "")}/#${id}`,
+        );
+      } catch {}
+      setLocation("/");
+      const tryScroll = (attempts: number) => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else if (attempts > 0) {
+          requestAnimationFrame(() => tryScroll(attempts - 1));
+        }
+      };
+      requestAnimationFrame(() => tryScroll(20));
     };
 
   return (
