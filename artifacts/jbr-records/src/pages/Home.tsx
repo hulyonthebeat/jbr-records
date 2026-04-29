@@ -356,11 +356,11 @@ export default function Home() {
                   transition={{ delay: (i + 1) * 0.08, duration: 0.5 }}
                   className="group flex flex-col bg-black"
                 >
-                  <div className="overflow-hidden">
+                  <div className="relative w-full aspect-square overflow-hidden bg-stone-900">
                     <img
                       src={artist.image}
                       alt={artist.name}
-                      className="block w-full h-auto transition-transform duration-700 group-hover:scale-[1.03]"
+                      className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
                     />
                   </div>
                   <div className="bg-black border-t border-white/10 px-5 py-5 flex items-center justify-between gap-4">
