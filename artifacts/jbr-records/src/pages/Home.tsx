@@ -750,26 +750,14 @@ export default function Home() {
             <div className="space-y-6 text-stone-300 font-medium">
               <div>
                 <p className="text-xs font-bold tracking-[0.15em] text-stone-500 uppercase mb-2">
-                  general inquiries
+                  email
                 </p>
                 <a
-                  href="mailto:hello@jbrcreativegroup.com"
+                  href="mailto:info@jbrcreativegroup.com"
                   className="text-base md:text-lg flex items-center gap-3 hover:text-white transition-colors"
                 >
                   <Mail className="w-4 h-4" />
-                  hello@jbrcreativegroup.com
-                </a>
-              </div>
-              <div>
-                <p className="text-xs font-bold tracking-[0.15em] text-stone-500 uppercase mb-2">
-                  demos &amp; press
-                </p>
-                <a
-                  href="mailto:press@jbrcreativegroup.com"
-                  className="text-base md:text-lg flex items-center gap-3 hover:text-white transition-colors"
-                >
-                  <Mail className="w-4 h-4" />
-                  press@jbrcreativegroup.com
+                  info@jbrcreativegroup.com
                 </a>
               </div>
               <div>

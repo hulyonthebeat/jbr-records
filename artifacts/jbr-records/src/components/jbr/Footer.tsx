@@ -106,7 +106,7 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="mailto:hello@jbrcreative.com"
+                href="mailto:info@jbrcreativegroup.com"
                 className="hover:text-stone-400 transition-colors flex items-center gap-2"
               >
                 <Mail className="w-3 h-3" /> press
