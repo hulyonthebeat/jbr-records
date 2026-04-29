@@ -218,14 +218,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Right-side scroll cue */}
-            <button
-              type="button"
-              aria-label="next"
-              className="hidden lg:flex absolute right-[-1.25rem] top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/0 border border-white/20 items-center justify-center text-white hover:bg-white hover:text-black transition-colors"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
           </div>
         </div>
       </section>
