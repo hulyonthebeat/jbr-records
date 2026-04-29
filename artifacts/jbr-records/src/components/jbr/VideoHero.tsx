@@ -3,38 +3,59 @@ import { useEffect, useState } from "react";
 const VIDEOS = [
   {
     id: "dSfkJLblCYI",
-    artist: "eric benét",
-    title: "duets — official video",
-    watchUrl: "https://www.youtube.com/watch?v=dSfkJLblCYI",
+    artist: "eric benét & keri hilson",
+    title: `"can't wait"`,
+    start: 30,
   },
   {
     id: "Lwj2cGj1xGU",
     artist: "joe leone",
-    title: "official music video",
-    watchUrl: "https://www.youtube.com/watch?v=Lwj2cGj1xGU",
+    title: `"invited"`,
+    start: 30,
   },
   {
     id: "mZF--_OTZLo",
     artist: "autumn paige",
-    title: "in the studio",
-    watchUrl: "https://www.youtube.com/watch?v=mZF--_OTZLo&t=15s",
+    title: `"let ya" — featuring flyana boss`,
+    start: 15,
   },
 ];
 
-const SLIDE_MS = 6000;
+const CLIP_SECONDS = 20;
+const SLIDE_MS = CLIP_SECONDS * 1000;
 const FADE_MS = 800;
+
+function embedSrc(id: string, start: number) {
+  const params = new URLSearchParams({
+    autoplay: "1",
+    mute: "1",
+    controls: "0",
+    modestbranding: "1",
+    rel: "0",
+    playsinline: "1",
+    iv_load_policy: "3",
+    fs: "0",
+    disablekb: "1",
+    showinfo: "0",
+    cc_load_policy: "0",
+    start: String(start),
+    end: String(start + CLIP_SECONDS),
+    loop: "1",
+    playlist: id,
+    enablejsapi: "0",
+  });
+  return `https://www.youtube-nocookie.com/embed/${id}?${params.toString()}`;
+}
 
 export default function VideoHero() {
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    if (paused) return;
     const t = window.setInterval(() => {
       setIndex((i) => (i + 1) % VIDEOS.length);
     }, SLIDE_MS);
     return () => window.clearInterval(t);
-  }, [paused]);
+  }, []);
 
   const slide = VIDEOS[index];
 
@@ -69,63 +90,56 @@ export default function VideoHero() {
         </div>
 
         {/* Stage */}
-        <a
-          href={slide.watchUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          className="group relative block w-full aspect-video overflow-hidden bg-black"
-        >
-          {/* Crossfading thumbnails */}
+        <div className="relative w-full aspect-video overflow-hidden bg-black">
+          {/* Static poster fallback (shows until iframe paints) */}
           {VIDEOS.map((v, i) => (
             <img
               key={`poster-${v.id}`}
               src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`}
-              onError={(e) => {
-                const el = e.currentTarget;
-                if (!el.dataset.fallback) {
-                  el.dataset.fallback = "1";
-                  el.src = `https://i.ytimg.com/vi/${v.id}/sddefault.jpg`;
-                }
-              }}
-              alt={`${v.artist} — ${v.title}`}
+              alt=""
+              aria-hidden="true"
               className="absolute inset-0 w-full h-full object-cover"
               style={{
                 opacity: i === index ? 1 : 0,
-                transition: `opacity ${FADE_MS}ms ease-in-out, transform 8000ms ease-out`,
-                transform:
-                  i === index ? "scale(1.06)" : "scale(1.0)",
+                transition: `opacity ${FADE_MS}ms ease-in-out`,
+                transform: "scale(1.06)",
                 transformOrigin: "center",
               }}
-              loading={i === 0 ? "eager" : "lazy"}
               draggable={false}
             />
           ))}
 
-          {/* Subtle dark vignette to make text readable */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-black/40 pointer-events-none" />
+          {/* Live YouTube iframes — all 3 mounted, only active one visible */}
+          {VIDEOS.map((v, i) => (
+            <iframe
+              key={`yt-${v.id}`}
+              src={embedSrc(v.id, v.start)}
+              title={`${v.artist} — ${v.title}`}
+              className="absolute inset-0 w-full h-full"
+              style={{
+                opacity: i === index ? 1 : 0,
+                transition: `opacity ${FADE_MS}ms ease-in-out`,
+                transform: "scale(1.35)",
+                transformOrigin: "center",
+                border: 0,
+                pointerEvents: "none",
+              }}
+              allow="autoplay; encrypted-media; picture-in-picture"
+              loading="eager"
+              allowFullScreen={false}
+              tabIndex={-1}
+            />
+          ))}
 
-          {/* Center play badge */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div
-              className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/95 text-black transition-all duration-500 group-hover:bg-[#C7332E] group-hover:text-white group-hover:scale-110 shadow-2xl"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                width="28"
-                height="28"
-                fill="currentColor"
-                aria-hidden="true"
-                className="ml-1"
-              >
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </div>
-          </div>
+          {/* Click-blocker: prevents any clicks from reaching the YT player */}
+          <div
+            className="absolute inset-0 z-10"
+            style={{ background: "transparent" }}
+            aria-hidden="true"
+          />
 
           {/* Bottom caption */}
-          <div className="absolute inset-x-0 bottom-0 p-6 md:p-10 pointer-events-none">
+          <div className="absolute inset-x-0 bottom-0 z-20 p-6 md:p-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent pointer-events-none">
             <p
               key={`a-${slide.artist}`}
               className="text-xs md:text-sm font-bold tracking-[0.2em] text-stone-200 mb-2 uppercase"
@@ -143,15 +157,15 @@ export default function VideoHero() {
           </div>
 
           {/* Top tag */}
-          <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-[#C7332E] text-white text-[10px] md:text-xs font-bold tracking-[0.18em] uppercase px-2.5 py-1.5 pointer-events-none">
+          <div className="absolute top-4 left-4 md:top-6 md:left-6 z-20 bg-[#C7332E] text-white text-[10px] md:text-xs font-bold tracking-[0.18em] uppercase px-2.5 py-1.5 pointer-events-none">
             now playing
           </div>
 
           {/* Top-right counter */}
-          <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-black/70 backdrop-blur-sm text-white text-[10px] md:text-xs font-bold tracking-[0.18em] uppercase px-2.5 py-1.5 pointer-events-none">
+          <div className="absolute top-4 right-4 md:top-6 md:right-6 z-20 bg-black/70 backdrop-blur-sm text-white text-[10px] md:text-xs font-bold tracking-[0.18em] uppercase px-2.5 py-1.5 pointer-events-none">
             {String(index + 1).padStart(2, "0")} / {String(VIDEOS.length).padStart(2, "0")}
           </div>
-        </a>
+        </div>
       </div>
 
       <style>{`
