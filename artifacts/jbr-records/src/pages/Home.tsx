@@ -7,6 +7,14 @@ import VideoHero from "@/components/jbr/VideoHero";
 
 const BASE = import.meta.env.BASE_URL;
 const asset = (p: string) => `${BASE}${p.replace(/^\//, "")}`;
+const musicHref = (artistSlug?: string) =>
+  `${BASE.replace(/\/$/, "")}/music${artistSlug ? `#${artistSlug}` : ""}`;
+const artistSlugFor = (name: string) =>
+  ({
+    "eric benét": "eric-benet",
+    "joe leone": "joe-leone",
+    "autumn paige": "autumn-paige",
+  })[name] || "";
 
 const LISTEN = {
   ericBenet: "https://ericbenet.lnk.to/music",
@@ -340,9 +348,7 @@ export default function Home() {
               {/* Artist cards */}
               {ROSTER.map((artist, i) => (
                 <motion.a
-                  href={artist.listen}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={musicHref(artistSlugFor(artist.name))}
                   key={artist.name}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -524,9 +530,7 @@ export default function Home() {
                   </h2>
                 </div>
                 <a
-                  href={LISTEN.ericBenet}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={musicHref()}
                   className="inline-flex items-center text-sm font-bold tracking-tight bg-white text-black px-6 py-3 hover:bg-stone-200 transition-colors"
                 >
                   listen all
@@ -547,9 +551,7 @@ export default function Home() {
                     {musicItems.map((item, idx) => (
                       <a
                         key={item.title + item.artist}
-                        href={item.listen}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href={musicHref(artistSlugFor(item.artist))}
                         className={`group block shrink-0 ${
                           idx !== musicItems.length - 1
                             ? "border-r border-white/15"
@@ -934,13 +936,7 @@ function HeroCarousel() {
                     {slide.cta}
                   </a>
                   <a
-                    href="#music"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const el = document.getElementById("music");
-                      if (el)
-                        el.scrollIntoView({ behavior: "smooth", block: "start" });
-                    }}
+                    href={musicHref()}
                     className="inline-block border-2 border-white text-white bg-transparent px-8 py-4 text-sm font-bold tracking-tight hover:bg-white hover:text-black transition-colors rounded-none"
                   >
                     all releases

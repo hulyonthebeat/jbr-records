@@ -6,6 +6,7 @@ const BASE = import.meta.env.BASE_URL;
 const asset = (p: string) => `${BASE}${p.replace(/^\//, "")}`;
 const home = (hash?: string) =>
   hash ? `${BASE.replace(/\/$/, "")}/#${hash}` : BASE;
+const musicHref = `${BASE.replace(/\/$/, "")}/music`;
 
 type Props = {
   showPromo?: boolean;
@@ -76,13 +77,14 @@ export default function Nav({ showPromo = true }: Props) {
             >
               artists
             </a>
-            <a
-              href={home("music")}
-              onClick={goSection("music")}
-              className="hover:text-stone-400 transition-colors"
+            <Link
+              href="/music"
+              className={`hover:text-stone-400 transition-colors ${
+                location === "/music" ? "text-[#C7332E]" : ""
+              }`}
             >
               music
-            </a>
+            </Link>
           </div>
 
           <Link
@@ -150,13 +152,12 @@ export default function Nav({ showPromo = true }: Props) {
             >
               artists
             </a>
-            <a
-              href={home("music")}
-              onClick={goSection("music")}
+            <Link
+              href="/music"
               className="text-lg font-bold hover:text-stone-400 transition-colors"
             >
               music
-            </a>
+            </Link>
             <a
               href={home("news")}
               onClick={goSection("news")}
