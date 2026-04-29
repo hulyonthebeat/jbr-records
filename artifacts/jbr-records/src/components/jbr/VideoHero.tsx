@@ -25,7 +25,7 @@ const VIDEOS = [
   },
 ];
 
-const SLIDE_MS = 6500;
+const SLIDE_MS = 15000;
 const FADE_MS = 1500;
 
 function watchUrl(id: string) {
@@ -61,28 +61,33 @@ export default function VideoHero() {
     <section className="bg-black border-b border-white/15">
       <div className="w-full">
         <div className="relative w-full aspect-video overflow-hidden bg-black select-none">
-          {/* Ken Burns animated poster slideshow */}
-          {VIDEOS.map((v, i) => (
-            <img
-              key={`poster-${v.id}-${i === index ? "on" : "off"}`}
-              src={v.poster}
-              alt={`${v.artist} — ${v.title}`}
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{
-                opacity: i === index ? 1 : 0,
-                transition: `opacity ${FADE_MS}ms cubic-bezier(.22, 0.61, 0.36, 1)`,
-                animation:
-                  i === index
-                    ? `jbrHeroSettle 2400ms cubic-bezier(0.22, 0.61, 0.36, 1) both`
-                    : "none",
-                transformOrigin: "center",
-                pointerEvents: "none",
-                userSelect: "none",
-              }}
-              draggable={false}
-              loading={i === 0 ? "eager" : "lazy"}
+          {/* Poster fallback (visible while iframe loads) */}
+          <img
+            key={`poster-${slide.id}`}
+            src={slide.poster}
+            alt={`${slide.artist} — ${slide.title}`}
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{
+              transition: `opacity ${FADE_MS}ms cubic-bezier(.22, 0.61, 0.36, 1)`,
+              pointerEvents: "none",
+              userSelect: "none",
+            }}
+            draggable={false}
+          />
+
+          {/* Live YouTube player — muted autoplay, looped, no controls.
+              Scaled 130% so the player chrome (title, watermark) is cropped out. */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <iframe
+              key={`yt-${slide.id}`}
+              src={`https://www.youtube-nocookie.com/embed/${slide.id}?autoplay=1&mute=1&loop=1&playlist=${slide.id}&controls=0&modestbranding=1&rel=0&playsinline=1&showinfo=0&iv_load_policy=3&disablekb=1&fs=0`}
+              title={`${slide.artist} — ${slide.title}`}
+              allow="autoplay; encrypted-media; picture-in-picture"
+              loading="lazy"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%]"
+              style={{ border: 0 }}
             />
-          ))}
+          </div>
 
           {/* Bottom caption + watch link */}
           <div className="absolute inset-x-0 bottom-0 z-20 p-6 md:p-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent">
