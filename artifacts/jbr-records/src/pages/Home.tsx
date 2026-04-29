@@ -760,15 +760,6 @@ export default function Home() {
                   info@jbrcreativegroup.com
                 </a>
               </div>
-              <div>
-                <p className="text-xs font-bold tracking-[0.15em] text-stone-500 uppercase mb-2">
-                  studio
-                </p>
-                <p className="text-base md:text-lg flex items-center gap-3">
-                  <MapPin className="w-4 h-4" />
-                  los angeles, ca
-                </p>
-              </div>
             </div>
           </div>
           <div className="md:col-span-7">
