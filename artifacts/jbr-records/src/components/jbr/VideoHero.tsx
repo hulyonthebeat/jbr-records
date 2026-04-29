@@ -75,7 +75,7 @@ export default function VideoHero() {
   };
 
   return (
-    <section className="bg-black border-b border-white/15 py-16 md:py-24">
+    <section className="bg-black border-b border-white/15">
       <div className="w-full">
         {/* Stage */}
         <div className="relative w-full aspect-video overflow-hidden bg-black select-none">
