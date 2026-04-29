@@ -26,6 +26,7 @@ const VIDEOS = [
 ];
 
 const SLIDE_MS = 18000;
+const FADE_MS = 1400;
 
 function getOrigin() {
   return typeof window !== "undefined"
@@ -86,30 +87,47 @@ export default function VideoHero() {
     <section className="bg-black border-b border-white/15">
       <div className="w-full">
         <div className="relative w-full aspect-video overflow-hidden bg-black select-none">
-          {/* Poster fallback — visible briefly while iframe loads */}
-          <img
-            key={`poster-${slide.id}`}
-            src={slide.poster}
-            alt={`${slide.artist} — ${slide.title}`}
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ pointerEvents: "none", userSelect: "none" }}
-            draggable={false}
-          />
-
-          {/* Background autoplay player — muted, looped, no UI. Scaled 130% so
-              YouTube's player chrome is cropped offscreen. */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <iframe
-              key={`bg-${slide.id}`}
-              src={bgEmbedUrl(slide.id)}
-              title={`${slide.artist} — ${slide.title}`}
-              allow="autoplay; encrypted-media; picture-in-picture"
-              referrerPolicy="strict-origin-when-cross-origin"
-              loading="lazy"
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%]"
-              style={{ border: 0 }}
+          {/* Poster fallback layers — one per video, crossfade based on active index */}
+          {VIDEOS.map((v, i) => (
+            <img
+              key={`poster-${v.id}`}
+              src={v.poster}
+              alt={`${v.artist} — ${v.title}`}
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{
+                opacity: i === index ? 1 : 0,
+                transition: `opacity ${FADE_MS}ms cubic-bezier(0.22, 0.61, 0.36, 1)`,
+                pointerEvents: "none",
+                userSelect: "none",
+              }}
+              draggable={false}
+              loading={i === 0 ? "eager" : "lazy"}
             />
-          </div>
+          ))}
+
+          {/* Background autoplay players — all three loaded once, scaled 130%
+              so YouTube's chrome is cropped offscreen. Crossfade by opacity so
+              the transition between videos is smooth (no iframe remount flash). */}
+          {VIDEOS.map((v, i) => (
+            <div
+              key={`bg-wrap-${v.id}`}
+              className="absolute inset-0 overflow-hidden pointer-events-none"
+              style={{
+                opacity: i === index ? 1 : 0,
+                transition: `opacity ${FADE_MS}ms cubic-bezier(0.22, 0.61, 0.36, 1)`,
+              }}
+            >
+              <iframe
+                src={bgEmbedUrl(v.id)}
+                title={`${v.artist} — ${v.title}`}
+                allow="autoplay; encrypted-media; picture-in-picture"
+                referrerPolicy="strict-origin-when-cross-origin"
+                loading={i === 0 ? "eager" : "lazy"}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%]"
+                style={{ border: 0 }}
+              />
+            </div>
+          ))}
 
           {/* Bottom caption */}
           <div className="absolute inset-x-0 bottom-0 z-20 p-6 md:p-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent pointer-events-none">
