@@ -107,6 +107,14 @@ export default function Nav({ showPromo = true }: Props) {
 
           <div className="hidden md:flex flex-1 items-center gap-8 text-sm font-semibold tracking-tight">
             <Link
+              href="/"
+              className={`hover:text-stone-400 transition-colors ${
+                onHome ? "text-[#C7332E]" : ""
+              }`}
+            >
+              home
+            </Link>
+            <Link
               href="/about"
               className={`hover:text-stone-400 transition-colors ${
                 location === "/about" ? "text-[#C7332E]" : ""
@@ -184,6 +192,12 @@ export default function Nav({ showPromo = true }: Props) {
 
         {mobileMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-black border-b border-white/10 p-6 flex flex-col gap-6 md:hidden shadow-2xl shadow-black">
+            <Link
+              href="/"
+              className="text-lg font-bold hover:text-stone-400 transition-colors"
+            >
+              home
+            </Link>
             <Link
               href="/about"
               className="text-lg font-bold hover:text-stone-400 transition-colors"
