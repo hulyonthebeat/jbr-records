@@ -22,7 +22,7 @@ export type Artist = {
 const ericBenet: Artist = {
   slug: "eric-benet",
   name: "eric benét",
-  portrait: a("images/jbr/eric-benet-portrait.jpg"),
+  portrait: a("images/jbr/eric-benet-portrait.png"),
   hero: a("images/jbr/eric-benet-hero.jpg"),
   smartLink: "https://ericbenet.lnk.to/music",
   bio: "grammy-nominated, four-time grammy nominated soul singer. co-founder of jbr creative group.",

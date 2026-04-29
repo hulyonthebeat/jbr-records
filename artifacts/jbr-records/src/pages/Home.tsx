@@ -54,7 +54,7 @@ const FEATURED = [
 const ROSTER = [
   {
     name: "eric benét",
-    image: asset("images/jbr/eric-benet-portrait.jpg"),
+    image: asset("images/jbr/eric-benet-portrait.png"),
     listen: LISTEN.ericBenet,
   },
   {
