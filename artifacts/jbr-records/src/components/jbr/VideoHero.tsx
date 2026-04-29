@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const VIDEOS = [
   {
@@ -40,8 +40,6 @@ function embedSrc(id: string, start: number) {
     cc_load_policy: "0",
     start: String(start),
     end: String(start + CLIP_SECONDS),
-    loop: "1",
-    playlist: id,
     enablejsapi: "0",
   });
   return `https://www.youtube-nocookie.com/embed/${id}?${params.toString()}`;
@@ -49,8 +47,25 @@ function embedSrc(id: string, start: number) {
 
 export default function VideoHero() {
   const [index, setIndex] = useState(0);
+  // Per-video activation count — bumping this forces the iframe to remount
+  // and start fresh whenever that video becomes active again.
+  const [activations, setActivations] = useState<number[]>(() =>
+    VIDEOS.map(() => 0),
+  );
+  const initialized = useRef(false);
+
+  // Bump activation count on first render and on every index change
+  useEffect(() => {
+    setActivations((prev) =>
+      prev.map((c, i) => (i === index ? c + 1 : c)),
+    );
+  }, [index]);
 
   useEffect(() => {
+    // Avoid double-init under StrictMode
+    if (initialized.current) return;
+    initialized.current = true;
+
     const t = window.setInterval(() => {
       setIndex((i) => (i + 1) % VIDEOS.length);
     }, SLIDE_MS);
@@ -59,12 +74,17 @@ export default function VideoHero() {
 
   const slide = VIDEOS[index];
 
+  const swallow = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   return (
     <section className="bg-black border-b border-white/15 px-4 md:px-8 py-16 md:py-24">
       <div className="max-w-[120rem] mx-auto">
         {/* Stage */}
-        <div className="relative w-full aspect-video overflow-hidden bg-black">
-          {/* Static poster fallback (shows until iframe paints) */}
+        <div className="relative w-full aspect-video overflow-hidden bg-black select-none">
+          {/* Static poster fallback (visible until iframe paints, and during reloads) */}
           {VIDEOS.map((v, i) => (
             <img
               key={`poster-${v.id}`}
@@ -77,37 +97,63 @@ export default function VideoHero() {
                 transition: `opacity ${FADE_MS}ms ease-in-out`,
                 transform: "scale(1.06)",
                 transformOrigin: "center",
+                pointerEvents: "none",
+                userSelect: "none",
               }}
               draggable={false}
             />
           ))}
 
-          {/* Live YouTube iframes — all 3 mounted, only active one visible */}
-          {VIDEOS.map((v, i) => (
-            <iframe
-              key={`yt-${v.id}`}
-              src={embedSrc(v.id, v.start)}
-              title={`${v.artist} — ${v.title}`}
-              className="absolute inset-0 w-full h-full"
-              style={{
-                opacity: i === index ? 1 : 0,
-                transition: `opacity ${FADE_MS}ms ease-in-out`,
-                transform: "scale(1.35)",
-                transformOrigin: "center",
-                border: 0,
-                pointerEvents: "none",
-              }}
-              allow="autoplay; encrypted-media; picture-in-picture"
-              loading="eager"
-              allowFullScreen={false}
-              tabIndex={-1}
-            />
-          ))}
+          {/* Live YouTube iframes — wrapped so we can fully disable interaction */}
+          <div
+            className="absolute inset-0"
+            style={{
+              pointerEvents: "none",
+              touchAction: "none",
+              userSelect: "none",
+            }}
+            aria-hidden="true"
+          >
+            {VIDEOS.map((v, i) => (
+              <iframe
+                key={`yt-${v.id}-${activations[i]}`}
+                src={embedSrc(v.id, v.start)}
+                title={`${v.artist} — ${v.title}`}
+                className="absolute inset-0 w-full h-full"
+                style={{
+                  opacity: i === index ? 1 : 0,
+                  transition: `opacity ${FADE_MS}ms ease-in-out`,
+                  transform: "scale(1.4)",
+                  transformOrigin: "center",
+                  border: 0,
+                  pointerEvents: "none",
+                  touchAction: "none",
+                }}
+                allow="autoplay; encrypted-media"
+                loading="eager"
+                allowFullScreen={false}
+                tabIndex={-1}
+              />
+            ))}
+          </div>
 
-          {/* Click-blocker: prevents any clicks from reaching the YT player */}
+          {/* Bulletproof click/touch blocker — sits above iframes, swallows everything */}
           <div
             className="absolute inset-0 z-10"
-            style={{ background: "transparent" }}
+            style={{
+              background: "transparent",
+              touchAction: "none",
+              userSelect: "none",
+              cursor: "default",
+              WebkitTapHighlightColor: "transparent",
+            }}
+            onClick={swallow}
+            onMouseDown={swallow}
+            onTouchStart={swallow}
+            onTouchEnd={swallow}
+            onTouchMove={swallow}
+            onPointerDown={swallow}
+            onContextMenu={swallow}
             aria-hidden="true"
           />
 
@@ -129,7 +175,7 @@ export default function VideoHero() {
             </h3>
           </div>
 
-          {/* Top tag */}
+          {/* Top-left tag */}
           <div className="absolute top-4 left-4 md:top-6 md:left-6 z-20 bg-[#C7332E] text-white text-[10px] md:text-xs font-bold tracking-[0.18em] uppercase px-2.5 py-1.5 pointer-events-none">
             now playing
           </div>
