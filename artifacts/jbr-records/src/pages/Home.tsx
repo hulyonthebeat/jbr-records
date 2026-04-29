@@ -63,19 +63,26 @@ const ROSTER = [
 
 const NEWS = [
   {
-    date: "10.12.24",
-    title: "eric benét & chanté moore announce 'duets' collaborative album",
-    image: asset("images/jbr/eric-benet.jpg"),
+    source: "rated r&b",
+    date: "09.10.24",
+    title:
+      "eric benét & tamar braxton's \u201csomething we can make love to\u201d hits top 10 on billboard's adult r&b airplay chart",
+    image: asset("images/jbr/news/rated-rnb-billboard-top10.png"),
+    href: "#",
   },
   {
-    date: "09.28.24",
-    title: "joe leone's 'discipline' debuts at #1 on traditional jazz charts",
-    image: asset("images/jbr/joe-leone.jpg"),
+    source: "rated r&b",
+    date: "08.08.23",
+    title: "eric benét taps chanté moore for new duets album",
+    image: asset("images/jbr/news/rated-rnb-benet-moore.png"),
+    href: "#",
   },
   {
-    date: "08.15.24",
-    title: "jbr creative group launches as a new sanctuary for analog soul",
-    image: asset("images/jbr/autumn-paige-jbr.jpg"),
+    source: "billboard",
+    date: "08.08.23",
+    title: "eric benét, alison ball launch jbr creative group",
+    image: asset("images/jbr/news/billboard-jbr-launch.png"),
+    href: "#",
   },
 ];
 
@@ -607,25 +614,33 @@ export default function Home() {
         <div className="grid md:grid-cols-3 gap-8">
           {NEWS.map((item, i) => (
             <motion.a
-              href="#"
+              href={item.href}
               key={item.title}
+              target={item.href !== "#" ? "_blank" : undefined}
+              rel={item.href !== "#" ? "noopener noreferrer" : undefined}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.5 }}
               className="group block"
             >
-              <div className="aspect-[4/3] overflow-hidden bg-stone-900 mb-6">
+              <div className="aspect-square overflow-hidden bg-white mb-6">
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
-              <p className="text-stone-500 font-bold text-sm mb-3">
-                {item.date}
-              </p>
-              <h3 className="text-xl md:text-2xl font-bold tracking-tight leading-tight group-hover:text-stone-300 transition-colors">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-xs font-black tracking-[0.2em] text-[#C7332E] uppercase">
+                  {item.source}
+                </span>
+                <span className="h-px w-6 bg-stone-700" />
+                <span className="text-stone-500 font-bold text-sm">
+                  {item.date}
+                </span>
+              </div>
+              <h3 className="text-lg md:text-xl font-bold tracking-tight leading-tight group-hover:text-stone-300 transition-colors">
                 {item.title}
               </h3>
             </motion.a>
