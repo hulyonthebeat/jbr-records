@@ -202,10 +202,13 @@ export default function Home() {
             href="#new"
             onClick={handleNavClick("new")}
             className="flex-shrink-0 cursor-pointer text-center md:flex-1 md:flex md:justify-center"
+            aria-label="jbr creative group — home"
           >
-            <span className="text-2xl md:text-3xl font-black tracking-tighter">
-              jbr creative group
-            </span>
+            <img
+              src={asset("images/jbr/jbr-logo-color.png")}
+              alt="jbr creative group"
+              className="h-11 md:h-14 w-auto"
+            />
           </a>
 
           <div className="flex flex-1 items-center justify-end gap-6 text-sm font-semibold tracking-tight">
@@ -728,9 +731,11 @@ export default function Home() {
       <footer className="pt-24 pb-12 px-4 md:px-8 max-w-[120rem] mx-auto border-t border-white/10 mt-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-16 md:gap-8 mb-24">
           <div className="md:col-span-1">
-            <h3 className="text-2xl font-black tracking-tighter mb-6">
-              jbr creative group
-            </h3>
+            <img
+              src={asset("images/jbr/jbr-logo-color.png")}
+              alt="jbr creative group"
+              className="h-16 w-auto mb-6"
+            />
             <p className="text-stone-500 font-medium text-sm leading-relaxed mb-8">
               an independent label dedicated to modern artists making timeless
               records. based in los angeles, ca.
