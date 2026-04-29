@@ -75,8 +75,8 @@ export default function VideoHero() {
   };
 
   return (
-    <section className="bg-black border-b border-white/15 px-4 md:px-8 py-16 md:py-24">
-      <div className="max-w-[120rem] mx-auto">
+    <section className="bg-black border-b border-white/15 py-16 md:py-24">
+      <div className="w-full">
         {/* Stage */}
         <div className="relative w-full aspect-video overflow-hidden bg-black select-none">
           {/* Static poster fallback (visible until iframe paints, and during reloads) */}
