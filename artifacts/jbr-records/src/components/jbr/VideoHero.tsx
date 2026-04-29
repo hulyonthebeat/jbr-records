@@ -175,15 +175,6 @@ export default function VideoHero() {
             </h3>
           </div>
 
-          {/* Top-left tag */}
-          <div className="absolute top-4 left-4 md:top-6 md:left-6 z-20 bg-[#C7332E] text-white text-[10px] md:text-xs font-bold tracking-[0.18em] uppercase px-2.5 py-1.5 pointer-events-none">
-            now playing
-          </div>
-
-          {/* Top-right counter */}
-          <div className="absolute top-4 right-4 md:top-6 md:right-6 z-20 bg-black/70 backdrop-blur-sm text-white text-[10px] md:text-xs font-bold tracking-[0.18em] uppercase px-2.5 py-1.5 pointer-events-none">
-            {String(index + 1).padStart(2, "0")} / {String(VIDEOS.length).padStart(2, "0")}
-          </div>
         </div>
       </div>
 
