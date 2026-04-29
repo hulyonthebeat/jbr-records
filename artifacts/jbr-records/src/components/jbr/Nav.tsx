@@ -108,13 +108,14 @@ export default function Nav({ showPromo = true }: Props) {
               >
                 news
               </a>
-              <a
-                href={home("contact")}
-                onClick={goSection("contact")}
-                className="hover:text-stone-400 transition-colors"
+              <Link
+                href="/contact"
+                className={`hover:text-stone-400 transition-colors ${
+                  location === "/contact" ? "text-[#C7332E]" : ""
+                }`}
               >
                 contact
-              </a>
+              </Link>
             </div>
             <button
               className="hover:text-stone-400 transition-colors"
@@ -165,13 +166,12 @@ export default function Nav({ showPromo = true }: Props) {
             >
               news
             </a>
-            <a
-              href={home("contact")}
-              onClick={goSection("contact")}
+            <Link
+              href="/contact"
               className="text-lg font-bold hover:text-stone-400 transition-colors"
             >
               contact
-            </a>
+            </Link>
           </div>
         )}
       </nav>
