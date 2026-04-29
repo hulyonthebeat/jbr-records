@@ -18,10 +18,28 @@ import {
 const BASE = import.meta.env.BASE_URL;
 const asset = (p: string) => `${BASE}${p.replace(/^\//, "")}`;
 
+const LISTEN = {
+  ericBenet: "https://ericbenet.lnk.to/music",
+  joeLeone: "https://joeleone.lnk.to/music",
+  autumnPaige: "https://autumnpaige.lnk.to/music",
+};
+
 const ROSTER = [
-  { name: "eric benét", image: asset("images/jbr/eric-benet-portrait.jpg") },
-  { name: "joe leone", image: asset("images/jbr/joe-leone-jbr.jpg") },
-  { name: "autumn paige", image: asset("images/jbr/autumn-paige-portrait.jpg") },
+  {
+    name: "eric benét",
+    image: asset("images/jbr/eric-benet-portrait.jpg"),
+    listen: LISTEN.ericBenet,
+  },
+  {
+    name: "joe leone",
+    image: asset("images/jbr/joe-leone-jbr.jpg"),
+    listen: LISTEN.joeLeone,
+  },
+  {
+    name: "autumn paige",
+    image: asset("images/jbr/autumn-paige-portrait.jpg"),
+    listen: LISTEN.autumnPaige,
+  },
 ];
 
 const RELEASES = [
@@ -30,24 +48,28 @@ const RELEASES = [
     artist: "eric benét with chanté moore",
     image: asset("images/jbr/eric-benet.jpg"),
     tag: "new",
+    listen: LISTEN.ericBenet,
   },
   {
     title: "discipline",
     artist: "joe leone",
     image: asset("images/jbr/joe-leone.jpg"),
     tag: "out now",
+    listen: LISTEN.joeLeone,
   },
   {
     title: "the studio sessions",
     artist: "autumn paige",
     image: asset("images/jbr/autumn-paige.jpg"),
     tag: "out now",
+    listen: LISTEN.autumnPaige,
   },
   {
     title: "lost & found",
     artist: "eric benét",
     image: asset("images/jbr/eric-benet-hero.jpg"),
     tag: "catalog",
+    listen: LISTEN.ericBenet,
   },
 ];
 
@@ -297,8 +319,9 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap gap-4">
             <a
-              href="#music"
-              onClick={handleNavClick("music")}
+              href={LISTEN.ericBenet}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-block bg-white text-black px-8 py-4 text-sm font-bold tracking-tight hover:bg-stone-200 transition-colors rounded-none"
             >
               listen to duets
@@ -382,8 +405,9 @@ export default function Home() {
               {/* Artist cards */}
               {ROSTER.map((artist, i) => (
                 <motion.a
-                  href="#music"
-                  onClick={handleNavClick("music")}
+                  href={artist.listen}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   key={artist.name}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -403,7 +427,7 @@ export default function Home() {
                       {artist.name}
                     </span>
                     <span className="text-xs md:text-sm font-bold tracking-tight text-stone-400 group-hover:text-white transition-colors whitespace-nowrap underline underline-offset-4 decoration-stone-600 group-hover:decoration-white">
-                      shop now
+                      listen
                     </span>
                   </div>
                 </motion.a>
@@ -447,7 +471,9 @@ export default function Home() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {RELEASES.map((release, i) => (
             <motion.a
-              href="#"
+              href={release.listen}
+              target="_blank"
+              rel="noopener noreferrer"
               key={release.title + release.artist}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -473,10 +499,10 @@ export default function Home() {
               </p>
               <div className="flex items-center justify-between text-xs font-bold tracking-tight">
                 <span className="text-white border-b border-white/40 group-hover:border-white pb-0.5 transition-colors">
-                  listen
+                  listen everywhere
                 </span>
                 <span className="text-stone-500 group-hover:text-white transition-colors">
-                  buy vinyl →
+                  open →
                 </span>
               </div>
             </motion.a>
@@ -740,8 +766,9 @@ export default function Home() {
               {ROSTER.map((a) => (
                 <li key={a.name}>
                   <a
-                    href="#artists"
-                    onClick={handleNavClick("artists")}
+                    href={a.listen}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="hover:text-stone-400 transition-colors"
                   >
                     {a.name}
