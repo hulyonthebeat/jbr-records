@@ -80,11 +80,15 @@ export default function Footer() {
     setEmail("");
   };
 
+  const linkClass = "hover:text-white transition-colors";
+  const listClass =
+    "space-y-4 text-sm font-bold tracking-[0.15em] uppercase text-stone-300";
+
   return (
-    <footer className="bg-black border-t border-white/10 px-6 md:px-10 lg:px-14 pt-16 md:pt-20 pb-10">
-      <div className="max-w-[120rem] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-10">
-        {/* Brand: big logo + socials + copyright */}
-        <div className="md:col-span-3 flex flex-col items-start">
+    <footer className="bg-black border-t border-white/10 px-6 md:px-10 lg:px-14 pt-14 md:pt-20 pb-8 md:pb-10">
+      <div className="max-w-[120rem] mx-auto">
+        {/* MOBILE: centered stack (Republic-style). Hidden on md+. */}
+        <div className="md:hidden flex flex-col items-center text-center">
           <Link
             href="/"
             className="block mb-6"
@@ -93,11 +97,11 @@ export default function Footer() {
             <img
               src={asset("images/jbr/jbr-logo-color.png")}
               alt="jbr creative group"
-              className="h-36 md:h-44 w-auto -ml-3 md:-ml-5"
+              className="h-24 w-auto"
             />
           </Link>
 
-          <div className="flex flex-wrap gap-5 mb-7">
+          <div className="flex flex-wrap justify-center gap-5 mb-10">
             {SOCIALS.map(({ href, label, Icon }) => (
               <a
                 key={label}
@@ -112,136 +116,183 @@ export default function Footer() {
             ))}
           </div>
 
-          <p className="text-[0.7rem] md:text-xs font-bold tracking-[0.18em] uppercase text-stone-500">
+          <nav aria-label="footer site links" className="mb-10">
+            <ul className={listClass}>
+              <li>
+                <Link href="/about" className={linkClass}>about</Link>
+              </li>
+              <li>
+                <a href={home("news")} onClick={goSection("news")} className={linkClass}>news</a>
+              </li>
+              <li>
+                <a href={home("artists")} onClick={goSection("artists")} className={linkClass}>artists</a>
+              </li>
+              <li>
+                <Link href="/music" className={linkClass}>music</Link>
+              </li>
+              <li>
+                <Link href="/contact" className={linkClass}>contact</Link>
+              </li>
+            </ul>
+          </nav>
+
+          <nav aria-label="footer help and legal" className="mb-10">
+            <ul className={listClass}>
+              <li>
+                <a href="mailto:info@jbrcreativegroup.com" className={linkClass}>
+                  help &amp; support
+                </a>
+              </li>
+              <li><a href="#" className={linkClass}>terms</a></li>
+              <li><a href="#" className={linkClass}>privacy</a></li>
+              <li><a href="#" className={linkClass}>do not sell my personal information</a></li>
+              <li><a href="#" className={linkClass}>cookie choices</a></li>
+            </ul>
+          </nav>
+
+          {/* Newsletter (mobile) */}
+          <div className="w-full max-w-sm mb-8">
+            <p className="text-sm text-stone-200 font-medium leading-relaxed mb-5">
+              be the first to know about new music, releases, and exclusive
+              offers you can only get from jbr creative group.
+            </p>
+
+            {signedUp ? (
+              <div className="border border-white/20 px-5 py-4 text-sm text-stone-200 text-left">
+                <p className="font-bold tracking-tight">you&apos;re on the list.</p>
+                <p className="text-stone-400 mt-1">
+                  thanks for subscribing — we&apos;ll be in touch.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSignup} className="space-y-4">
+                <label className="sr-only" htmlFor="footer-email-m">email</label>
+                <input
+                  id="footer-email-m"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="enter your email"
+                  className="w-full bg-black border border-white/30 px-5 py-3.5 text-sm text-white placeholder:text-stone-500 focus:outline-none focus:border-white transition-colors rounded-none text-center"
+                />
+                <button
+                  type="submit"
+                  className="w-full bg-white text-black px-6 py-3.5 text-sm font-bold tracking-tight hover:bg-stone-200 transition-colors rounded-none"
+                >
+                  sign up
+                </button>
+              </form>
+            )}
+          </div>
+
+          <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-stone-500 mt-2">
             &copy; {new Date().getFullYear()} jbr creative group. all rights
             reserved.
           </p>
         </div>
 
-        {/* Site links */}
-        <nav
-          className="md:col-span-2 md:col-start-5"
-          aria-label="footer site links"
-        >
-          <ul className="space-y-4 text-sm font-bold tracking-[0.15em] uppercase text-stone-300">
-            <li>
-              <Link
-                href="/about"
-                className="hover:text-white transition-colors"
-              >
-                about
-              </Link>
-            </li>
-            <li>
-              <a
-                href={home("news")}
-                onClick={goSection("news")}
-                className="hover:text-white transition-colors"
-              >
-                news
-              </a>
-            </li>
-            <li>
-              <a
-                href={home("artists")}
-                onClick={goSection("artists")}
-                className="hover:text-white transition-colors"
-              >
-                artists
-              </a>
-            </li>
-            <li>
-              <Link
-                href="/music"
-                className="hover:text-white transition-colors"
-              >
-                music
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/contact"
-                className="hover:text-white transition-colors"
-              >
-                contact
-              </Link>
-            </li>
-          </ul>
-        </nav>
-
-        {/* Help & legal */}
-        <nav className="md:col-span-2" aria-label="footer help and legal">
-          <ul className="space-y-4 text-sm font-bold tracking-[0.15em] uppercase text-stone-300">
-            <li>
-              <a
-                href="mailto:info@jbrcreativegroup.com"
-                className="hover:text-white transition-colors"
-              >
-                help &amp; support
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-white transition-colors">
-                terms
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-white transition-colors">
-                privacy
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-white transition-colors">
-                do not sell my personal information
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-white transition-colors">
-                cookie choices
-              </a>
-            </li>
-          </ul>
-        </nav>
-
-        {/* Newsletter signup */}
-        <div className="md:col-span-4">
-          <p className="text-sm md:text-base text-stone-200 font-medium leading-relaxed mb-5 max-w-md">
-            be the first to know about new music, releases, and exclusive offers
-            you can only get from jbr creative group.
-          </p>
-
-          {signedUp ? (
-            <div className="border border-white/20 px-5 py-4 text-sm text-stone-200">
-              <p className="font-bold tracking-tight">you&apos;re on the list.</p>
-              <p className="text-stone-400 mt-1">
-                thanks for subscribing — we&apos;ll be in touch.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={handleSignup} className="space-y-4 max-w-md">
-              <label className="sr-only" htmlFor="footer-email">
-                email
-              </label>
-              <input
-                id="footer-email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="enter your email"
-                className="w-full bg-black border border-white/30 px-5 py-3.5 text-sm text-white placeholder:text-stone-500 focus:outline-none focus:border-white transition-colors rounded-none"
+        {/* DESKTOP: multi-column grid. Hidden on mobile. */}
+        <div className="hidden md:grid grid-cols-12 gap-10">
+          <div className="col-span-3 flex flex-col items-start">
+            <Link
+              href="/"
+              className="block mb-6"
+              aria-label="jbr creative group — home"
+            >
+              <img
+                src={asset("images/jbr/jbr-logo-color.png")}
+                alt="jbr creative group"
+                className="h-36 lg:h-44 w-auto -ml-3 lg:-ml-5"
               />
-              <p className="text-xs font-bold tracking-[0.15em] uppercase text-stone-400">
-                get updates &amp; offers from jbr creative group
-              </p>
-              <button
-                type="submit"
-                className="w-full bg-white text-black px-6 py-3.5 text-sm font-bold tracking-tight hover:bg-stone-200 transition-colors rounded-none"
-              >
-                sign up
-              </button>
-            </form>
-          )}
+            </Link>
+
+            <div className="flex flex-wrap gap-5 mb-7">
+              {SOCIALS.map(({ href, label, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-stone-300 hover:text-white transition-colors"
+                  aria-label={label}
+                >
+                  <Icon className="w-5 h-5" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <nav className="col-span-2 col-start-5" aria-label="footer site links">
+            <ul className={listClass}>
+              <li><Link href="/about" className={linkClass}>about</Link></li>
+              <li>
+                <a href={home("news")} onClick={goSection("news")} className={linkClass}>news</a>
+              </li>
+              <li>
+                <a href={home("artists")} onClick={goSection("artists")} className={linkClass}>artists</a>
+              </li>
+              <li><Link href="/music" className={linkClass}>music</Link></li>
+              <li><Link href="/contact" className={linkClass}>contact</Link></li>
+            </ul>
+          </nav>
+
+          <nav className="col-span-2" aria-label="footer help and legal">
+            <ul className={listClass}>
+              <li>
+                <a href="mailto:info@jbrcreativegroup.com" className={linkClass}>
+                  help &amp; support
+                </a>
+              </li>
+              <li><a href="#" className={linkClass}>terms</a></li>
+              <li><a href="#" className={linkClass}>privacy</a></li>
+              <li><a href="#" className={linkClass}>do not sell my personal information</a></li>
+              <li><a href="#" className={linkClass}>cookie choices</a></li>
+            </ul>
+          </nav>
+
+          <div className="col-span-4">
+            <p className="text-sm md:text-base text-stone-200 font-medium leading-relaxed mb-5 max-w-md">
+              be the first to know about new music, releases, and exclusive
+              offers you can only get from jbr creative group.
+            </p>
+
+            {signedUp ? (
+              <div className="border border-white/20 px-5 py-4 text-sm text-stone-200 max-w-md">
+                <p className="font-bold tracking-tight">you&apos;re on the list.</p>
+                <p className="text-stone-400 mt-1">
+                  thanks for subscribing — we&apos;ll be in touch.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSignup} className="space-y-4 max-w-md">
+                <label className="sr-only" htmlFor="footer-email-d">email</label>
+                <input
+                  id="footer-email-d"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="enter your email"
+                  className="w-full bg-black border border-white/30 px-5 py-3.5 text-sm text-white placeholder:text-stone-500 focus:outline-none focus:border-white transition-colors rounded-none"
+                />
+                <p className="text-xs font-bold tracking-[0.15em] uppercase text-stone-400">
+                  get updates &amp; offers from jbr creative group
+                </p>
+                <button
+                  type="submit"
+                  className="w-full bg-white text-black px-6 py-3.5 text-sm font-bold tracking-tight hover:bg-stone-200 transition-colors rounded-none"
+                >
+                  sign up
+                </button>
+              </form>
+            )}
+          </div>
+
+          <p className="col-span-12 mt-10 pt-8 border-t border-white/10 text-xs font-bold tracking-[0.18em] uppercase text-stone-500">
+            &copy; {new Date().getFullYear()} jbr creative group. all rights
+            reserved.
+          </p>
         </div>
       </div>
     </footer>
