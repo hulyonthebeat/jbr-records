@@ -352,7 +352,7 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
                 className="group flex flex-col bg-black border border-white/10 hover:border-white/30 transition-colors"
               >
-                <div className="flex-1 flex flex-col justify-center p-8 md:p-10 min-h-[18rem] md:min-h-[22rem]">
+                <div className="flex-1 flex flex-col justify-center p-8 md:p-10">
                   <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[0.95] text-white">
                     our<br />artists
                   </h2>
@@ -372,11 +372,11 @@ export default function Home() {
                   transition={{ delay: (i + 1) * 0.08, duration: 0.5 }}
                   className="group flex flex-col bg-black"
                 >
-                  <div className="relative flex-1 overflow-hidden bg-stone-900 min-h-[18rem] md:min-h-[22rem]">
+                  <div className="relative aspect-[3/4] w-full overflow-hidden bg-stone-900">
                     <img
                       src={artist.image}
                       alt={artist.name}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="absolute inset-0 w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
                     />
                   </div>
                   <div className="bg-black border-t border-white/10 px-5 py-5 flex items-center justify-between gap-4">
