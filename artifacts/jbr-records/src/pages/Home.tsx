@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, ChevronLeft, ArrowRight, ArrowUp } from "lucide-react";
+import { ChevronRight, ChevronLeft, ArrowRight, ArrowUp, ChevronDown } from "lucide-react";
 import Nav from "@/components/jbr/Nav";
 import Footer from "@/components/jbr/Footer";
 import VideoHero from "@/components/jbr/VideoHero";
@@ -725,7 +725,53 @@ export default function Home() {
 
       <Footer />
       <BackToTop />
+      <ScrollHint />
     </div>
+  );
+}
+
+function ScrollHint() {
+  const [visible, setVisible] = useState(true);
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY < 120);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const handleClick = () => {
+    window.scrollTo({
+      top: window.innerHeight * 0.9,
+      behavior: "smooth",
+    });
+  };
+  return (
+    <button
+      type="button"
+      aria-label="scroll down"
+      onClick={handleClick}
+      className={`fixed z-40 left-1/2 -translate-x-1/2 bottom-5 md:bottom-7 flex flex-col items-center gap-1.5 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] transition-opacity duration-500 ${
+        visible ? "opacity-100" : "opacity-0 pointer-events-none"
+      }`}
+    >
+      <span className="text-[0.6rem] md:text-xs font-bold tracking-[0.3em] uppercase">
+        scroll
+      </span>
+      <span
+        className="flex items-center justify-center"
+        style={{ animation: "jbrScrollBounce 1800ms ease-in-out infinite" }}
+      >
+        <ChevronDown className="w-5 h-5 md:w-6 md:h-6" strokeWidth={2.5} />
+      </span>
+      <style>{`
+        @keyframes jbrScrollBounce {
+          0%, 100% { transform: translateY(0); }
+          50%      { transform: translateY(8px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          [style*="jbrScrollBounce"] { animation: none !important; }
+        }
+      `}</style>
+    </button>
   );
 }
 

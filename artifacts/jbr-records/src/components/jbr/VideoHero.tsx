@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Play } from "lucide-react";
+import { Play, ChevronDown } from "lucide-react";
 
 const BASE = import.meta.env.BASE_URL;
 const asset = (p: string) => `${BASE}${p.replace(/^\//, "")}`;
@@ -34,6 +34,7 @@ function watchUrl(id: string) {
 
 export default function VideoHero() {
   const [index, setIndex] = useState(0);
+  const [showHint, setShowHint] = useState(true);
 
   useEffect(() => {
     const t = window.setInterval(() => {
@@ -41,6 +42,18 @@ export default function VideoHero() {
     }, SLIDE_MS);
     return () => window.clearInterval(t);
   }, []);
+
+  useEffect(() => {
+    const onScroll = () => setShowHint(window.scrollY < 120);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const handleScrollDown = () => {
+    const target = window.innerHeight * 0.9;
+    window.scrollTo({ top: target, behavior: "smooth" });
+  };
 
   const slide = VIDEOS[index];
 
@@ -137,6 +150,10 @@ export default function VideoHero() {
           0%   { transform: scale(1.22); filter: blur(4px); }
           55%  { filter: blur(0); }
           100% { transform: scale(1.0); filter: blur(0); }
+        }
+        @keyframes jbrScrollBounce {
+          0%, 100% { transform: translateY(0); }
+          50%      { transform: translateY(8px); }
         }
         @media (prefers-reduced-motion: reduce) {
           [style*="jbrHeroSettle"] {
