@@ -95,3 +95,43 @@
     scroll-margin-top: 5rem;
   }
 }
+
+/* ─── Global cinematic motion ───────────────────────────────── */
+
+/* Image "settle": starts zoomed-in + slightly faded, eases down to
+   full-bleed natural size while fading in. Used on hero posters and
+   any major editorial portrait so the page feels alive. */
+@keyframes jbrSettle {
+  0%   { transform: scale(1.22); opacity: 0; filter: blur(6px); }
+  60%  { opacity: 1; filter: blur(0); }
+  100% { transform: scale(1.0); opacity: 1; filter: blur(0); }
+}
+.jbr-settle {
+  animation: jbrSettle 2200ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  transform-origin: center;
+  will-change: transform, opacity, filter;
+}
+.jbr-settle-delay-1 { animation-delay: 120ms; }
+.jbr-settle-delay-2 { animation-delay: 240ms; }
+.jbr-settle-delay-3 { animation-delay: 360ms; }
+
+/* Title "rise": dramatic fade-up used for page headlines. */
+@keyframes jbrRise {
+  0%   { transform: translateY(36px); opacity: 0; letter-spacing: 0.02em; }
+  100% { transform: translateY(0);     opacity: 1; letter-spacing: -0.02em; }
+}
+.jbr-rise {
+  animation: jbrRise 1100ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  will-change: transform, opacity;
+}
+.jbr-rise-delay-1 { animation-delay: 150ms; }
+.jbr-rise-delay-2 { animation-delay: 300ms; }
+.jbr-rise-delay-3 { animation-delay: 450ms; }
+
+/* Honor user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .jbr-settle,
+  .jbr-rise {
+    animation: none !important;
+  }
+}

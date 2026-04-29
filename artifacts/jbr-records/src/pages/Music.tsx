@@ -42,13 +42,13 @@ export default function Music() {
       <section className="px-4 md:px-8 pt-12 md:pt-16 pb-8 md:pb-10 max-w-[120rem] mx-auto">
         <div className="flex items-end justify-between gap-6 flex-wrap">
           <div>
-            <p className="text-xs font-bold tracking-[0.2em] text-[#C7332E] mb-4 uppercase">
+            <p className="jbr-rise text-xs font-bold tracking-[0.2em] text-[#C7332E] mb-4 uppercase">
               jbr / catalogue
             </p>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9]">
+            <h1 className="jbr-rise jbr-rise-delay-1 text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9]">
               music
             </h1>
-            <p className="mt-5 text-stone-400 font-medium text-sm md:text-base max-w-2xl">
+            <p className="jbr-rise jbr-rise-delay-2 mt-5 text-stone-400 font-medium text-sm md:text-base max-w-2xl">
               {totalCount} releases across {ARTISTS.length} artists. tap any
               cover to listen.
             </p>
@@ -118,11 +118,13 @@ function ArtistSection({ artist }: { artist: Artist }) {
       {/* Artist header strip */}
       <div className="flex items-end justify-between gap-6 flex-wrap mb-8 md:mb-10">
         <div className="flex items-center gap-5 md:gap-6">
-          <img
-            src={artist.portrait}
-            alt={artist.name}
-            className="w-16 h-16 md:w-20 md:h-20 object-cover grayscale"
-          />
+          <div className="w-16 h-16 md:w-20 md:h-20 overflow-hidden">
+            <img
+              src={artist.portrait}
+              alt={artist.name}
+              className="jbr-settle w-full h-full object-cover grayscale"
+            />
+          </div>
           <div>
             <p className="text-[0.65rem] md:text-xs font-bold tracking-[0.2em] text-[#C7332E] uppercase mb-1.5">
               artist

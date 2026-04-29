@@ -26,10 +26,10 @@ export default function Contact() {
       <section className="py-24 md:py-32 px-4 md:px-8 max-w-[120rem] mx-auto">
         <div className="grid md:grid-cols-12 gap-12 md:gap-16">
           <div className="md:col-span-5">
-            <p className="text-xs font-bold tracking-[0.2em] text-[#C7332E] mb-6 uppercase">
+            <p className="jbr-rise text-xs font-bold tracking-[0.2em] text-[#C7332E] mb-6 uppercase">
               say hello
             </p>
-            <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.95] mb-8">
+            <h1 className="jbr-rise jbr-rise-delay-1 text-5xl md:text-7xl font-black tracking-tighter leading-[0.95] mb-8">
               contact
             </h1>
             <div className="space-y-6 text-stone-300 font-medium">

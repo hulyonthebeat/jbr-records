@@ -25,8 +25,8 @@ const VIDEOS = [
   },
 ];
 
-const SLIDE_MS = 5000;
-const FADE_MS = 1200;
+const SLIDE_MS = 6500;
+const FADE_MS = 1500;
 
 function watchUrl(id: string) {
   return `https://www.youtube.com/watch?v=${id}`;
@@ -57,10 +57,10 @@ export default function VideoHero() {
               className="absolute inset-0 w-full h-full object-cover"
               style={{
                 opacity: i === index ? 1 : 0,
-                transition: `opacity ${FADE_MS}ms cubic-bezier(.4, 0, .2, 1)`,
+                transition: `opacity ${FADE_MS}ms cubic-bezier(.22, 0.61, 0.36, 1)`,
                 animation:
                   i === index
-                    ? `jbrHeroSettle 1400ms cubic-bezier(.4, 0, .2, 1) both`
+                    ? `jbrHeroSettle 2400ms cubic-bezier(0.22, 0.61, 0.36, 1) both`
                     : "none",
                 transformOrigin: "center",
                 pointerEvents: "none",
@@ -134,8 +134,15 @@ export default function VideoHero() {
           to   { opacity: 1; transform: translateY(0); }
         }
         @keyframes jbrHeroSettle {
-          from { transform: scale(1.12); }
-          to   { transform: scale(1.0); }
+          0%   { transform: scale(1.22); filter: blur(4px); }
+          55%  { filter: blur(0); }
+          100% { transform: scale(1.0); filter: blur(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          [style*="jbrHeroSettle"] {
+            animation: none !important;
+            transform: none !important;
+          }
         }
       `}</style>
     </section>

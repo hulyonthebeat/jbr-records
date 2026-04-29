@@ -24,21 +24,11 @@ export default function About() {
         <div className="max-w-[120rem] mx-auto grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Title + body copy */}
           <div className="lg:col-span-7">
-            <motion.h1
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] font-black tracking-tighter leading-[0.85] uppercase"
-            >
+            <h1 className="jbr-rise text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] font-black tracking-tighter leading-[0.85] uppercase">
               jbr<br />creative<br />group
-            </motion.h1>
+            </h1>
 
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-              className="mt-10 md:mt-14 space-y-5 text-base md:text-lg leading-relaxed text-stone-300 font-medium max-w-2xl"
-            >
+            <div className="jbr-rise jbr-rise-delay-2 mt-10 md:mt-14 space-y-5 text-base md:text-lg leading-relaxed text-stone-300 font-medium max-w-2xl">
               <p>
                 jbr creative group is a multidisciplinary powerhouse that's
                 revolutionizing the future of entertainment. combining over
@@ -66,24 +56,19 @@ export default function About() {
                 to create real change, jbr creative group is making a lasting
                 impact on the culture at large.
               </p>
-            </motion.div>
+            </div>
           </div>
 
           {/* Founders duo photo */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:col-span-5"
-          >
+          <div className="lg:col-span-5">
             <div className="relative w-full aspect-[4/5] overflow-hidden bg-stone-900">
               <img
                 src={asset("images/jbr/about/founders-duo.png")}
                 alt="eric benét and alison ball, founders of jbr creative group"
-                className="w-full h-full object-cover object-center"
+                className="jbr-settle w-full h-full object-cover object-center"
               />
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -108,17 +93,17 @@ export default function About() {
             ].map((person, i) => (
               <motion.div
                 key={person.name}
-                initial={{ opacity: 0, y: 18 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.9, delay: i * 0.15, ease: [0.22, 0.61, 0.36, 1] }}
                 className="group"
               >
                 <div className="relative w-full aspect-[4/5] overflow-hidden bg-stone-900 mb-5">
                   <img
                     src={asset(person.img)}
                     alt={person.name}
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                    className={`jbr-settle ${i === 1 ? "jbr-settle-delay-1" : ""} w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700`}
                   />
                 </div>
                 <h3 className="text-2xl md:text-3xl font-black tracking-tight">
