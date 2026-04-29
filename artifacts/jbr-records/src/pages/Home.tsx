@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
   ShoppingCart,
   User,
   ChevronRight,
+  ChevronLeft,
   Instagram,
   Twitter,
   Youtube,
@@ -23,6 +24,40 @@ const LISTEN = {
   joeLeone: "https://joeleone.lnk.to/music",
   autumnPaige: "https://autumnpaige.lnk.to/music",
 };
+
+// Featured releases for the hero carousel — each links to its smart-link
+const FEATURED = [
+  {
+    eyebrow: "new release",
+    title: "duets",
+    artist: "eric benét with chanté moore",
+    cover: asset("images/jbr/releases/duets-cover.jpg"),
+    bg: asset("images/jbr/eric-benet-hero.jpg"),
+    bgPosition: "50% 30%",
+    listen: "https://ericbenet.lnk.to/duets",
+    cta: "listen to duets",
+  },
+  {
+    eyebrow: "out now",
+    title: "invited",
+    artist: "joe leone",
+    cover: asset("images/jbr/releases/invited-cover.jpg"),
+    bg: asset("images/jbr/joe-leone-jbr.jpg"),
+    bgPosition: "50% 35%",
+    listen: "https://joeleone.lnk.to/invited",
+    cta: "stream invited",
+  },
+  {
+    eyebrow: "pre-save — out may 15",
+    title: "money money money",
+    artist: "autumn paige",
+    cover: asset("images/jbr/releases/money-cover.jpg"),
+    bg: asset("images/jbr/autumn-paige-portrait.jpg"),
+    bgPosition: "50% 25%",
+    listen: "https://autumnpaige.lnk.to/money",
+    cta: "pre-save now",
+  },
+];
 
 const ROSTER = [
   {
@@ -298,47 +333,9 @@ export default function Home() {
         )}
       </nav>
 
-      {/* Hero Section */}
-      <section
-        id="new"
-        className="relative h-[85vh] md:h-[90vh] w-full bg-stone-900 group cursor-pointer overflow-hidden"
-      >
-        <img
-          src={asset("images/jbr/eric-benet-hero.jpg")}
-          alt="duets — eric benét with chanté moore"
-          className="absolute inset-0 w-full h-full object-cover object-[50%_30%] transition-transform duration-1000 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+      {/* Hero — auto-advancing release carousel */}
+      <HeroCarousel />
 
-        <div className="absolute bottom-0 left-0 p-6 md:p-16 max-w-4xl z-10">
-          <p className="text-xs md:text-sm font-bold tracking-[0.2em] text-[#F8B830] mb-4 uppercase">
-            new release
-          </p>
-          <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] mb-3 drop-shadow-lg">
-            duets
-          </h1>
-          <p className="text-lg md:text-2xl font-semibold tracking-tight mb-8 text-white/90 drop-shadow">
-            eric benét with chanté moore
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <a
-              href={LISTEN.ericBenet}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-white text-black px-8 py-4 text-sm font-bold tracking-tight hover:bg-stone-200 transition-colors rounded-none"
-            >
-              listen to duets
-            </a>
-            <a
-              href="#music"
-              onClick={handleNavClick("music")}
-              className="inline-block border-2 border-white text-white bg-transparent px-8 py-4 text-sm font-bold tracking-tight hover:bg-white hover:text-black transition-colors rounded-none"
-            >
-              buy vinyl
-            </a>
-          </div>
-        </div>
-      </section>
 
       {/* About Section */}
       <section
@@ -869,5 +866,167 @@ export default function Home() {
         </div>
       </footer>
     </div>
+  );
+}
+
+function HeroCarousel() {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const total = FEATURED.length;
+  const slide = FEATURED[index];
+
+  const go = (next: number) => setIndex(((next % total) + total) % total);
+
+  useEffect(() => {
+    if (paused) return;
+    const id = window.setInterval(() => {
+      setIndex((i) => (i + 1) % total);
+    }, 6000);
+    return () => window.clearInterval(id);
+  }, [paused, total]);
+
+  return (
+    <section
+      id="new"
+      className="relative h-[85vh] md:h-[90vh] w-full bg-stone-900 overflow-hidden select-none"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {/* Background image (cross-fade) */}
+      <AnimatePresence mode="sync">
+        <motion.img
+          key={slide.bg}
+          src={slide.bg}
+          alt=""
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ objectPosition: slide.bgPosition }}
+          aria-hidden
+        />
+      </AnimatePresence>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/40 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-black/30 pointer-events-none md:via-black/10" />
+
+      {/* Content */}
+      <div className="relative z-10 h-full flex flex-col justify-end">
+        <div className="px-6 md:px-16 pb-20 md:pb-28">
+          <div className="grid md:grid-cols-12 gap-8 md:gap-12 items-end max-w-[120rem] mx-auto w-full">
+            {/* Cover art */}
+            <div className="md:col-span-4 lg:col-span-3 order-2 md:order-1">
+              <AnimatePresence mode="wait">
+                <motion.a
+                  key={slide.cover}
+                  href={slide.listen}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  className="block aspect-square w-40 md:w-full max-w-xs bg-stone-800 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.95)] ring-1 ring-white/10 hover:ring-white/40 transition"
+                  aria-label={`${slide.title} — ${slide.artist} cover art`}
+                >
+                  <img
+                    src={slide.cover}
+                    alt={`${slide.title} cover`}
+                    className="w-full h-full object-cover"
+                    loading={index === 0 ? "eager" : "lazy"}
+                  />
+                </motion.a>
+              </AnimatePresence>
+            </div>
+
+            {/* Text + CTA */}
+            <div className="md:col-span-8 lg:col-span-9 order-1 md:order-2 max-w-3xl">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={slide.title}
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                >
+                  <p className="text-xs md:text-sm font-bold tracking-[0.2em] text-[#F8B830] mb-4 uppercase">
+                    {slide.eyebrow}
+                  </p>
+                  <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] mb-3 drop-shadow-lg">
+                    {slide.title}
+                  </h1>
+                  <p className="text-base md:text-2xl font-semibold tracking-tight mb-8 text-white/90 drop-shadow">
+                    {slide.artist}
+                  </p>
+                  <div className="flex flex-wrap gap-4">
+                    <a
+                      href={slide.listen}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block bg-white text-black px-8 py-4 text-sm font-bold tracking-tight hover:bg-stone-200 transition-colors rounded-none"
+                    >
+                      {slide.cta}
+                    </a>
+                    <a
+                      href="#music"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const el = document.getElementById("music");
+                        if (el)
+                          el.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }}
+                      className="inline-block border-2 border-white text-white bg-transparent px-8 py-4 text-sm font-bold tracking-tight hover:bg-white hover:text-black transition-colors rounded-none"
+                    >
+                      all releases
+                    </a>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+
+        {/* Controls row */}
+        <div className="absolute bottom-6 md:bottom-8 left-0 right-0 px-6 md:px-16">
+          <div className="max-w-[120rem] mx-auto flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3 text-xs md:text-sm font-bold tracking-tight text-white/80">
+              <span className="text-white">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className="w-12 md:w-24 h-px bg-white/30 relative overflow-hidden">
+                <motion.span
+                  key={index + (paused ? "-p" : "")}
+                  initial={{ width: "0%" }}
+                  animate={{ width: paused ? "0%" : "100%" }}
+                  transition={{ duration: paused ? 0 : 6, ease: "linear" }}
+                  className="absolute inset-y-0 left-0 bg-white"
+                />
+              </span>
+              <span className="text-white/60">
+                {String(total).padStart(2, "0")}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => go(index - 1)}
+                aria-label="previous release"
+                className="w-10 h-10 md:w-11 md:h-11 border border-white/20 hover:bg-white hover:text-black flex items-center justify-center transition"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => go(index + 1)}
+                aria-label="next release"
+                className="w-10 h-10 md:w-11 md:h-11 border border-white/20 hover:bg-white hover:text-black flex items-center justify-center transition"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
