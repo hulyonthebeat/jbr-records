@@ -479,6 +479,27 @@ export default function Home() {
             tag: "acoustic",
             listen: LISTEN.autumnPaige,
           },
+          {
+            title: "baggage",
+            artist: "autumn paige",
+            image: asset("images/jbr/releases/lnkto/autumn-baggage.jpg"),
+            tag: "single",
+            listen: "https://www.deezer.com/album/703802421",
+          },
+          {
+            title: "topless",
+            artist: "autumn paige",
+            image: asset("images/jbr/releases/lnkto/autumn-topless.jpg"),
+            tag: "single",
+            listen: "https://open.spotify.com/track/3xugpe72CNOypPnJwGaRmG",
+          },
+          {
+            title: "altar",
+            artist: "autumn paige",
+            image: asset("images/jbr/releases/lnkto/autumn-altar.jpg"),
+            tag: "debut",
+            listen: "https://open.spotify.com/album/2s7AHuMbdbEN3GWKyFrIEo",
+          },
         ];
         const VISIBLE = 3;
         const maxIndex = Math.max(0, musicItems.length - VISIBLE);
