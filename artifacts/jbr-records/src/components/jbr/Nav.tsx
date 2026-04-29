@@ -161,7 +161,7 @@ export default function Nav({ showPromo = true }: Props) {
             <img
               src={asset("images/jbr/jbr-logo-color.png")}
               alt="jbr creative group"
-              className="h-11 md:h-14 w-auto"
+              className="h-16 md:h-20 w-auto"
             />
           </Link>
 
