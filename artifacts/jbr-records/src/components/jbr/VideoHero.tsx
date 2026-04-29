@@ -62,33 +62,6 @@ export default function VideoHero() {
   return (
     <section className="bg-black border-b border-white/15 px-4 md:px-8 py-16 md:py-24">
       <div className="max-w-[120rem] mx-auto">
-        {/* Header bar */}
-        <div className="flex items-end justify-between mb-8 md:mb-12 gap-6 flex-wrap">
-          <div>
-            <p className="text-xs font-bold tracking-[0.2em] text-[#C7332E] mb-2 uppercase">
-              in motion
-            </p>
-            <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-none lowercase">
-              watch
-            </h2>
-          </div>
-          <div className="flex items-center gap-3">
-            {VIDEOS.map((v, i) => (
-              <button
-                key={v.id}
-                type="button"
-                onClick={() => setIndex(i)}
-                aria-label={`view ${v.artist}`}
-                className={`h-1 transition-all duration-500 ${
-                  i === index
-                    ? "w-12 bg-white"
-                    : "w-6 bg-white/25 hover:bg-white/50"
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-
         {/* Stage */}
         <div className="relative w-full aspect-video overflow-hidden bg-black">
           {/* Static poster fallback (shows until iframe paints) */}
