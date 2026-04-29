@@ -161,67 +161,6 @@ export default function Home() {
       <HeroCarousel />
 
 
-      {/* Artists Carousel — Republic-style row */}
-      <section
-        id="artists"
-        className="py-16 md:py-20 bg-black relative border-y border-white/15"
-      >
-        <div className="px-4 md:px-8 max-w-[120rem] mx-auto">
-          <div className="relative">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-              {/* Lead card */}
-              <motion.a
-                href="#artists"
-                onClick={handleNavClick("artists")}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="group flex flex-col bg-black border border-white/10 hover:border-white/30 transition-colors"
-              >
-                <div className="flex-1 flex flex-col justify-center p-8 md:p-10 min-h-[18rem] md:min-h-[22rem]">
-                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[0.95] text-white">
-                    our<br />artists
-                  </h2>
-                </div>
-              </motion.a>
-
-              {/* Artist cards */}
-              {ROSTER.map((artist, i) => (
-                <motion.a
-                  href={artist.listen}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  key={artist.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: (i + 1) * 0.08, duration: 0.5 }}
-                  className="group flex flex-col bg-black"
-                >
-                  <div className="relative flex-1 overflow-hidden bg-stone-900 min-h-[18rem] md:min-h-[22rem]">
-                    <img
-                      src={artist.image}
-                      alt={artist.name}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="bg-black border-t border-white/10 px-5 py-5 flex items-center justify-between gap-4">
-                    <span className="text-base md:text-lg font-bold tracking-tight text-white truncate">
-                      {artist.name}
-                    </span>
-                    <span className="text-xs md:text-sm font-bold tracking-tight text-stone-400 group-hover:text-white transition-colors whitespace-nowrap underline underline-offset-4 decoration-stone-600 group-hover:decoration-white">
-                      listen
-                    </span>
-                  </div>
-                </motion.a>
-              ))}
-            </div>
-
-          </div>
-        </div>
-      </section>
-
       {/* Shop — Eric Benét merch */}
       <section
         id="shop"
@@ -307,6 +246,68 @@ export default function Home() {
                 </div>
               </a>
             ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* Artists Carousel — Republic-style row */}
+      <section
+        id="artists"
+        className="py-16 md:py-20 bg-black relative border-y border-white/15"
+      >
+        <div className="px-4 md:px-8 max-w-[120rem] mx-auto">
+          <div className="relative">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+              {/* Lead card */}
+              <motion.a
+                href="#artists"
+                onClick={handleNavClick("artists")}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="group flex flex-col bg-black border border-white/10 hover:border-white/30 transition-colors"
+              >
+                <div className="flex-1 flex flex-col justify-center p-8 md:p-10 min-h-[18rem] md:min-h-[22rem]">
+                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[0.95] text-white">
+                    our<br />artists
+                  </h2>
+                </div>
+              </motion.a>
+
+              {/* Artist cards */}
+              {ROSTER.map((artist, i) => (
+                <motion.a
+                  href={artist.listen}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={artist.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: (i + 1) * 0.08, duration: 0.5 }}
+                  className="group flex flex-col bg-black"
+                >
+                  <div className="relative flex-1 overflow-hidden bg-stone-900 min-h-[18rem] md:min-h-[22rem]">
+                    <img
+                      src={artist.image}
+                      alt={artist.name}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="bg-black border-t border-white/10 px-5 py-5 flex items-center justify-between gap-4">
+                    <span className="text-base md:text-lg font-bold tracking-tight text-white truncate">
+                      {artist.name}
+                    </span>
+                    <span className="text-xs md:text-sm font-bold tracking-tight text-stone-400 group-hover:text-white transition-colors whitespace-nowrap underline underline-offset-4 decoration-stone-600 group-hover:decoration-white">
+                      listen
+                    </span>
+                  </div>
+                </motion.a>
+              ))}
+            </div>
+
           </div>
         </div>
       </section>
