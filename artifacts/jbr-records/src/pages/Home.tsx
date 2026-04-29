@@ -56,16 +56,19 @@ const ROSTER = [
     name: "eric benét",
     image: asset("images/jbr/eric-benet-portrait.png"),
     listen: LISTEN.ericBenet,
+    objectPosition: "50% 0%",
   },
   {
     name: "joe leone",
     image: asset("images/jbr/joe-leone-jbr.jpg"),
     listen: LISTEN.joeLeone,
+    objectPosition: "50% 25%",
   },
   {
     name: "autumn paige",
     image: asset("images/jbr/autumn-paige-portrait.jpg"),
     listen: LISTEN.autumnPaige,
+    objectPosition: "50% 0%",
   },
 ];
 
@@ -360,7 +363,8 @@ export default function Home() {
                     <img
                       src={artist.image}
                       alt={artist.name}
-                      className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+                      style={{ objectPosition: artist.objectPosition }}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                     />
                   </div>
                   <div className="bg-black border-t border-white/10 px-5 py-5 flex items-center justify-between gap-4">
