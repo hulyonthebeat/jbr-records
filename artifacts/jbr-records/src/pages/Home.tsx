@@ -40,6 +40,7 @@ const FEATURED = [
     title: "invited",
     artist: "joe leone",
     cover: asset("images/jbr/releases/invited-cover.jpg"),
+    coverPosition: "50% 15%",
     listen: "https://joeleone.lnk.to/invited",
     cta: "stream invited",
   },
@@ -897,6 +898,7 @@ function HeroCarousel() {
           exit={{ opacity: 0 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
           className="absolute inset-0 w-full h-full object-cover"
+          style={{ objectPosition: slide.coverPosition ?? "center" }}
         />
       </AnimatePresence>
       {/* Gradient overlays — keep text legible without hiding the artwork */}
