@@ -61,13 +61,14 @@ export default function Nav({ showPromo = true }: Props) {
           </button>
 
           <div className="hidden md:flex flex-1 items-center gap-8 text-sm font-semibold tracking-tight">
-            <a
-              href={home("new")}
-              onClick={goSection("new")}
-              className="hover:text-stone-400 transition-colors"
+            <Link
+              href="/about"
+              className={`hover:text-stone-400 transition-colors ${
+                location === "/about" ? "text-[#F8B830]" : ""
+              }`}
             >
-              new
-            </a>
+              about
+            </Link>
             <a
               href={home("artists")}
               onClick={goSection("artists")}
@@ -98,14 +99,13 @@ export default function Nav({ showPromo = true }: Props) {
 
           <div className="flex flex-1 items-center justify-end gap-6 text-sm font-semibold tracking-tight">
             <div className="hidden md:flex gap-8 mr-8">
-              <Link
-                href="/about"
-                className={`hover:text-stone-400 transition-colors ${
-                  location === "/about" ? "text-[#F8B830]" : ""
-                }`}
+              <a
+                href={home("news")}
+                onClick={goSection("news")}
+                className="hover:text-stone-400 transition-colors"
               >
-                about
-              </Link>
+                news
+              </a>
               <a
                 href={home("contact")}
                 onClick={goSection("contact")}
@@ -137,13 +137,12 @@ export default function Nav({ showPromo = true }: Props) {
 
         {mobileMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-black border-b border-white/10 p-6 flex flex-col gap-6 md:hidden shadow-2xl shadow-black">
-            <a
-              href={home("new")}
-              onClick={goSection("new")}
+            <Link
+              href="/about"
               className="text-lg font-bold hover:text-stone-400 transition-colors"
             >
-              new
-            </a>
+              about
+            </Link>
             <a
               href={home("artists")}
               onClick={goSection("artists")}
@@ -158,12 +157,13 @@ export default function Nav({ showPromo = true }: Props) {
             >
               music
             </a>
-            <Link
-              href="/about"
+            <a
+              href={home("news")}
+              onClick={goSection("news")}
               className="text-lg font-bold hover:text-stone-400 transition-colors"
             >
-              about
-            </Link>
+              news
+            </a>
             <a
               href={home("contact")}
               onClick={goSection("contact")}
