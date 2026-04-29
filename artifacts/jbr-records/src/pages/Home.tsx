@@ -341,7 +341,7 @@ export default function Home() {
       >
         <div className="px-4 md:px-8 max-w-[120rem] mx-auto">
           <div className="relative">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 items-start">
               {/* Lead card */}
               <motion.a
                 href="#artists"
@@ -352,7 +352,7 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
                 className="group flex flex-col bg-black border border-white/10 hover:border-white/30 transition-colors"
               >
-                <div className="flex-1 flex flex-col justify-center p-8 md:p-10">
+                <div className="flex flex-col justify-center p-8 md:p-10 min-h-[14rem]">
                   <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[0.95] text-white">
                     our<br />artists
                   </h2>
@@ -372,11 +372,11 @@ export default function Home() {
                   transition={{ delay: (i + 1) * 0.08, duration: 0.5 }}
                   className="group flex flex-col bg-black"
                 >
-                  <div className="relative aspect-[3/4] w-full overflow-hidden bg-stone-900">
+                  <div className="overflow-hidden">
                     <img
                       src={artist.image}
                       alt={artist.name}
-                      className="absolute inset-0 w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
+                      className="block w-full h-auto transition-transform duration-700 group-hover:scale-[1.03]"
                     />
                   </div>
                   <div className="bg-black border-t border-white/10 px-5 py-5 flex items-center justify-between gap-4">
