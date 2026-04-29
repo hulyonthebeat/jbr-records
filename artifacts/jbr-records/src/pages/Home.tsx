@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronLeft, ArrowUp, ChevronDown } from "lucide-react";
 import Nav from "@/components/jbr/Nav";
@@ -300,32 +301,33 @@ export default function Home() {
       })()}
 
 
-      {/* Artists Carousel — Republic-style row */}
+      {/* Artists — bordered frame to match new-arrivals layout, larger 3-up cards */}
       <section
         id="artists"
-        className="py-16 md:py-20 bg-black relative border-y border-white/15"
+        className="py-16 md:py-24 px-4 md:px-8 bg-black border-b border-white/15"
       >
-        <div className="px-4 md:px-8 max-w-[120rem] mx-auto">
-          <div className="relative">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 items-start">
-              {/* Lead card */}
-              <motion.a
-                href="#artists"
-                onClick={handleNavClick("artists")}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="group flex flex-col bg-black"
-              >
-                <div className="flex flex-col justify-center p-8 md:p-10 min-h-[14rem]">
-                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[0.95] text-white">
-                    our<br />artists
-                  </h2>
-                </div>
-              </motion.a>
+        <div className="max-w-[120rem] mx-auto">
+          {/* Header bar */}
+          <div className="border border-white/15 px-6 md:px-10 py-6 md:py-8 flex items-center justify-between gap-6 flex-wrap">
+            <div>
+              <p className="text-xs font-bold tracking-[0.2em] text-[#C7332E] mb-2 uppercase">
+                the roster
+              </p>
+              <h2 className="text-3xl md:text-5xl font-black tracking-tighter leading-none">
+                our artists
+              </h2>
+            </div>
+            <Link
+              href="/music"
+              className="inline-flex items-center text-sm font-bold tracking-tight bg-white text-black px-6 py-3 hover:bg-stone-200 transition-colors"
+            >
+              all artists
+            </Link>
+          </div>
 
-              {/* Artist cards */}
+          {/* 3-up large cards */}
+          <div className="border-x border-b border-white/15">
+            <div className="grid grid-cols-1 md:grid-cols-3">
               {ROSTER.map((artist, i) => (
                 <motion.a
                   href={musicHref(artistSlugFor(artist.name))}
@@ -333,8 +335,12 @@ export default function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: (i + 1) * 0.08, duration: 0.5 }}
-                  className="group flex flex-col bg-black"
+                  transition={{ delay: i * 0.08, duration: 0.5 }}
+                  className={`group block bg-black ${
+                    i !== ROSTER.length - 1
+                      ? "border-b md:border-b-0 md:border-r border-white/15"
+                      : ""
+                  }`}
                 >
                   <div className="relative w-full aspect-square overflow-hidden bg-stone-900">
                     <img
@@ -344,8 +350,8 @@ export default function Home() {
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                     />
                   </div>
-                  <div className="bg-black border-t border-white/10 px-5 py-5 flex items-center justify-between gap-4">
-                    <span className="text-base md:text-lg font-bold tracking-tight text-white truncate">
+                  <div className="border-t border-white/15 px-6 md:px-8 py-6 md:py-7 flex items-center justify-between gap-4">
+                    <span className="text-lg md:text-2xl font-bold tracking-tight text-white truncate">
                       {artist.name}
                     </span>
                     <span className="text-xs md:text-sm font-bold tracking-tight text-stone-400 group-hover:text-white transition-colors whitespace-nowrap underline underline-offset-4 decoration-stone-600 group-hover:decoration-white">
@@ -355,7 +361,6 @@ export default function Home() {
                 </motion.a>
               ))}
             </div>
-
           </div>
         </div>
       </section>
