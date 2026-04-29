@@ -116,6 +116,7 @@ export default function Home() {
   const [contactEmail, setContactEmail] = useState("");
   const [contactMessage, setContactMessage] = useState("");
   const [contactSent, setContactSent] = useState(false);
+  const [shopIndex, setShopIndex] = useState(0);
 
   // Honor #section URLs on first load (e.g. /#contact from another page)
   useEffect(() => {
@@ -161,94 +162,155 @@ export default function Home() {
       <HeroCarousel />
 
 
-      {/* Shop — Eric Benét merch */}
-      <section
-        id="shop"
-        className="py-20 md:py-28 px-4 md:px-8 bg-stone-950 border-b border-white/15"
-      >
-        <div className="max-w-[120rem] mx-auto">
-          <div className="flex items-end justify-between mb-10 md:mb-14 gap-6 flex-wrap">
-            <div>
-              <p className="text-xs font-bold tracking-[0.2em] text-[#F8B830] mb-3 uppercase">
-                shop
-              </p>
-              <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95]">
-                eric benét: real r&amp;b is back.
-              </h2>
-              <p className="mt-4 text-stone-400 font-medium text-base md:text-lg max-w-xl">
-                official tour merch — tees, hats, posters & more.
-              </p>
-            </div>
-            <a
-              href="https://ericbenet.merchtable.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-bold tracking-tight bg-white text-black px-6 py-3 hover:bg-stone-200 transition-colors"
-            >
-              shop all <ArrowRight className="w-4 h-4" />
-            </a>
-          </div>
+      {/* Shop — Eric Benét merch (3-up carousel) */}
+      {(() => {
+        const shopItems = [
+          {
+            name: "real r+b is back tour tee",
+            price: "$35",
+            img: "images/jbr/shop/tour-tee.png",
+          },
+          {
+            name: "portrait t-shirt",
+            price: "$35",
+            img: "images/jbr/shop/portrait-tee.png",
+          },
+          {
+            name: "trucker hat — black/khaki",
+            price: "$35",
+            img: "images/jbr/shop/trucker-khaki.png",
+          },
+          {
+            name: "trucker hat — khaki/red",
+            price: "$35",
+            img: "images/jbr/shop/trucker-red.png",
+          },
+          {
+            name: "tour poster",
+            price: "$10",
+            img: "images/jbr/shop/tour-poster.png",
+          },
+          {
+            name: "real r&b is back koozie",
+            price: "$6",
+            img: "images/jbr/shop/koozie.png",
+          },
+        ];
+        const VISIBLE = 3;
+        const maxIndex = Math.max(0, shopItems.length - VISIBLE);
+        const clamped = Math.min(Math.max(shopIndex, 0), maxIndex);
+        const goPrev = () => setShopIndex((i) => Math.max(0, i - 1));
+        const goNext = () =>
+          setShopIndex((i) => Math.min(maxIndex, i + 1));
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-            {[
-              {
-                name: "real r+b is back tour tee",
-                price: "$35",
-                img: "images/jbr/shop/tour-tee.png",
-              },
-              {
-                name: "portrait t-shirt",
-                price: "$35",
-                img: "images/jbr/shop/portrait-tee.png",
-              },
-              {
-                name: "trucker hat — black/khaki",
-                price: "$35",
-                img: "images/jbr/shop/trucker-khaki.png",
-              },
-              {
-                name: "trucker hat — khaki/red",
-                price: "$35",
-                img: "images/jbr/shop/trucker-red.png",
-              },
-              {
-                name: "tour poster",
-                price: "$10",
-                img: "images/jbr/shop/tour-poster.png",
-              },
-              {
-                name: "real r&b is back koozie",
-                price: "$6",
-                img: "images/jbr/shop/koozie.png",
-              },
-            ].map((item, i) => (
-              <a
-                key={item.name}
-                href="https://ericbenet.merchtable.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block"
-              >
-                <div className="relative aspect-square overflow-hidden bg-black border border-white/10 group-hover:border-white/40 transition-colors">
-                  <img
-                    src={asset(item.img)}
-                    alt={item.name}
-                    className="w-full h-full object-contain p-4 md:p-6 group-hover:scale-105 transition-transform duration-500"
+        return (
+          <section
+            id="shop"
+            className="py-20 md:py-28 px-4 md:px-8 bg-stone-950 border-b border-white/15"
+          >
+            <div className="max-w-[120rem] mx-auto">
+              <div className="flex items-end justify-between mb-10 md:mb-14 gap-6 flex-wrap">
+                <div>
+                  <p className="text-xs font-bold tracking-[0.2em] text-[#F8B830] mb-3 uppercase">
+                    shop
+                  </p>
+                  <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95]">
+                    eric benét: real r&amp;b is back.
+                  </h2>
+                  <p className="mt-4 text-stone-400 font-medium text-base md:text-lg max-w-xl">
+                    official tour merch — tees, hats, posters & more.
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={goPrev}
+                    disabled={clamped === 0}
+                    aria-label="previous products"
+                    className="hidden md:flex w-11 h-11 items-center justify-center border border-white/20 text-white hover:bg-white hover:text-black transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-white"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={goNext}
+                    disabled={clamped === maxIndex}
+                    aria-label="next products"
+                    className="hidden md:flex w-11 h-11 items-center justify-center border border-white/20 text-white hover:bg-white hover:text-black transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-white"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                  <a
+                    href="https://ericbenet.merchtable.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-bold tracking-tight bg-white text-black px-6 py-3 hover:bg-stone-200 transition-colors ml-2"
+                  >
+                    shop all <ArrowRight className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Carousel viewport */}
+              <div className="overflow-hidden">
+                <div
+                  className="flex transition-transform duration-500 ease-out -mx-2 md:-mx-3"
+                  style={{
+                    transform: `translateX(-${(clamped * 100) / VISIBLE}%)`,
+                  }}
+                >
+                  {shopItems.map((item) => (
+                    <a
+                      key={item.name}
+                      href="https://ericbenet.merchtable.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group block shrink-0 px-2 md:px-3"
+                      style={{ width: `${100 / VISIBLE}%` }}
+                    >
+                      <div className="relative aspect-square overflow-hidden bg-black border border-white/10 group-hover:border-white/40 transition-colors">
+                        <img
+                          src={asset(item.img)}
+                          alt={item.name}
+                          className="w-full h-full object-contain p-4 md:p-6 group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                      <div className="mt-3 flex items-start justify-between gap-2">
+                        <h3 className="text-sm md:text-base font-bold tracking-tight leading-tight">
+                          {item.name}
+                        </h3>
+                        <span className="text-sm md:text-base font-bold text-stone-300 shrink-0">
+                          {item.price}
+                        </span>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Progress bar */}
+              <div className="mt-8 flex items-center gap-4 max-w-md">
+                <span className="text-xs font-bold tracking-[0.2em] text-stone-500">
+                  {String(clamped + 1).padStart(2, "0")}
+                </span>
+                <div className="flex-1 h-px bg-white/10 relative">
+                  <div
+                    className="absolute inset-y-0 left-0 bg-white transition-all duration-500"
+                    style={{
+                      width: `${
+                        ((clamped + VISIBLE) / shopItems.length) * 100
+                      }%`,
+                    }}
                   />
                 </div>
-                <div className="mt-3 flex items-start justify-between gap-2">
-                  <h3 className="text-sm md:text-base font-bold tracking-tight leading-tight">
-                    {item.name}
-                  </h3>
-                  <span className="text-sm md:text-base font-bold text-stone-300 shrink-0">
-                    {item.price}
-                  </span>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
+                <span className="text-xs font-bold tracking-[0.2em] text-stone-500">
+                  {String(shopItems.length).padStart(2, "0")}
+                </span>
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
 
       {/* Artists Carousel — Republic-style row */}
