@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Search, ShoppingCart, User, ArrowRight, Instagram, Twitter, Youtube, Menu, X } from "lucide-react";
+import { Search, ShoppingCart, User, ArrowRight, ChevronRight, Instagram, Twitter, Youtube, Menu, X } from "lucide-react";
 
 const ROSTER = [
   {
@@ -8,16 +8,8 @@ const ROSTER = [
     image: "/__mockup/images/jbr/eric-benet-portrait.jpg",
   },
   {
-    name: "chanté moore",
-    image: "/__mockup/images/jbr/chante-moore.jpg",
-  },
-  {
     name: "joe leone",
     image: "/__mockup/images/jbr/joe-leone-jbr.jpg",
-  },
-  {
-    name: "alison ball",
-    image: "/__mockup/images/jbr/alison-ball.jpg",
   },
   {
     name: "autumn paige",
@@ -110,9 +102,13 @@ export function Home() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         
         <div className="absolute bottom-0 left-0 p-6 md:p-16 max-w-4xl z-10">
-          <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] mb-8 drop-shadow-lg">
-            eric benét &<br />chanté moore
+          <p className="text-xs md:text-sm font-bold tracking-[0.2em] text-[#F8B830] mb-4 uppercase">new release</p>
+          <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] mb-3 drop-shadow-lg">
+            duets
           </h1>
+          <p className="text-lg md:text-2xl font-semibold tracking-tight mb-8 text-white/90 drop-shadow">
+            eric benét with chanté moore
+          </p>
           <div className="flex flex-wrap gap-4">
             <button className="bg-white text-black px-8 py-4 text-sm font-bold tracking-tight hover:bg-stone-200 transition-colors rounded-none">
               listen to duets
@@ -124,33 +120,72 @@ export function Home() {
         </div>
       </section>
 
-      {/* Artists Grid */}
-      <section id="artists" className="py-24 px-4 md:px-8 max-w-[120rem] mx-auto">
-        <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-12">roster</h2>
-        
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
-          {ROSTER.map((artist, i) => (
-            <motion.a 
-              href="#"
-              key={artist.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="group block relative aspect-[3/4] overflow-hidden bg-stone-900"
+      {/* Artists Carousel — Republic-style row */}
+      <section id="artists" className="py-16 md:py-20 bg-black relative">
+        <div className="px-4 md:px-8 max-w-[120rem] mx-auto">
+          <div className="relative">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+
+              {/* Lead "explore" card */}
+              <motion.a
+                href="#artists"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="group flex flex-col bg-black border border-white/10 hover:border-white/30 transition-colors"
+              >
+                <div className="flex-1 flex flex-col justify-center p-8 md:p-10 min-h-[18rem] md:min-h-[22rem]">
+                  <p className="text-xs font-bold tracking-[0.2em] text-[#F8B830] mb-4 uppercase">explore</p>
+                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[0.95] text-white">
+                    our<br />artists
+                  </h2>
+                </div>
+                <div className="bg-white text-black px-6 py-5 text-center text-sm font-bold tracking-tight group-hover:bg-stone-200 transition-colors">
+                  explore all
+                </div>
+              </motion.a>
+
+              {/* Artist cards */}
+              {ROSTER.map((artist, i) => (
+                <motion.a
+                  href="#"
+                  key={artist.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: (i + 1) * 0.08, duration: 0.5 }}
+                  className="group flex flex-col bg-black"
+                >
+                  <div className="relative flex-1 overflow-hidden bg-stone-900 min-h-[18rem] md:min-h-[22rem]">
+                    <img
+                      src={artist.image}
+                      alt={artist.name}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="bg-black border-t border-white/10 px-5 py-5 flex items-center justify-between gap-4">
+                    <span className="text-base md:text-lg font-bold tracking-tight text-white truncate">
+                      {artist.name}
+                    </span>
+                    <span className="text-xs md:text-sm font-bold tracking-tight text-stone-400 group-hover:text-white transition-colors whitespace-nowrap underline underline-offset-4 decoration-stone-600 group-hover:decoration-white">
+                      shop now
+                    </span>
+                  </div>
+                </motion.a>
+              ))}
+
+            </div>
+
+            {/* Right-side scroll cue (decorative, like Republic's chevron) */}
+            <button
+              type="button"
+              aria-label="next"
+              className="hidden lg:flex absolute right-[-1.25rem] top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/0 border border-white/20 items-center justify-center text-white hover:bg-white hover:text-black transition-colors"
             >
-              <img 
-                src={artist.image} 
-                alt={artist.name} 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                <span className="text-2xl font-black tracking-tight leading-none drop-shadow-md translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                  {artist.name}
-                </span>
-              </div>
-            </motion.a>
-          ))}
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
         </div>
       </section>
 
@@ -248,9 +283,7 @@ export function Home() {
             <h4 className="font-bold text-stone-500 mb-6">artists</h4>
             <ul className="space-y-4 font-bold text-sm">
               <li><a href="#" className="hover:text-stone-400 transition-colors">eric benét</a></li>
-              <li><a href="#" className="hover:text-stone-400 transition-colors">chanté moore</a></li>
               <li><a href="#" className="hover:text-stone-400 transition-colors">joe leone</a></li>
-              <li><a href="#" className="hover:text-stone-400 transition-colors">alison ball</a></li>
               <li><a href="#" className="hover:text-stone-400 transition-colors">autumn paige</a></li>
             </ul>
           </div>
